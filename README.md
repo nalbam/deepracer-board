@@ -17,7 +17,6 @@ amplify hosting add
 
 amplify push
 amplify publish
-
 ```
 
 ## rewrite
