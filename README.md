@@ -13,6 +13,7 @@ amplify init
 
 amplify auth add
 amplify analytics add
+amplify hosting add
 
 amplify push
 amplify publish

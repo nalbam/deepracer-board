@@ -1,0 +1,20 @@
+{
+    "appName": "deepracerboard",
+    "roleName": "pinpointLambdaRole6eaa1155",
+    "cloudWatchPolicyName": "cloudWatchPolicy6eaa1155",
+    "pinpointPolicyName": "pinpointPolicy6eaa1155",
+    "authPolicyName": "pinpoint_amplify_6eaa1155",
+    "unauthPolicyName": "pinpoint_amplify_6eaa1155",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
