@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background: #111;
+    color: #eee;
+    font-family: Menlo, Noto Mono;
+}
+
+figure {
+    display: block;
+    margin-block-end: 1em;
+    margin-block-start: 1em;
+    margin-inline-end: 40px;
+    margin-inline-start: 40px;
+}
+
+footer {
+    height: 100px;
+}
+
+div {
+    display: block;
+}
+
+a {
+    text-decoration: none;
+}
+
+.lb-logo {
+    display: block;
+    height: 200px;
+    line-height: 0;
+    margin: 15px 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.lb-logo-front, .lb-logo-back {
+    height: 100%;
+}
+
+.lb-logo-front img, .lb-logo-back img {
+    height: 100%;
+}
+
+.lb-title {
+    height: 30px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.lb-items {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.lb-items .lb-header,
+.lb-items .lb-row {
+    display: flex;
+    width: 100%;
+}
+
+.lb-items .lb-header {
+    color: #aaa;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.lb-items .lb-row {
+    background: linear-gradient(90deg, #405666 0, #3d246b);
+    color: #fff;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.lb-items .lb-header>div,
+.lb-items .lb-row>div {
+    padding: 15px 30px;
+    text-align: center;
+}
+
+.lb-items .lb-header>div:nth-child(1),
+.lb-items .lb-row>div:nth-child(1) {
+    width: 20%;
+}
+
+.lb-items .lb-header>div:nth-child(2),
+.lb-items .lb-row>div:nth-child(2) {
+    /* font-weight: bold; */
+    margin-right: auto;
+    text-align: left;
+    width: 50%;
+}
+
+.lb-items .lb-header>div:nth-child(n+3),
+.lb-items .lb-row>div:nth-child(n+3) {
+    display: block;
+    text-align: left;
+    width: 20%;
+}
+
+.lb-items.lb-initial .lb-row:nth-child(n+2):nth-child(-n+4)>div:nth-child(-n+2) {
+    color: #232f3e;
+}
+
+.lb-items.lb-initial .lb-row:nth-child(2) {
+    background: linear-gradient(90deg, #fbdf47 0, #a66103);
+}
+
+.lb-items.lb-initial .lb-row:nth-child(3) {
+    background: linear-gradient(90deg, #cacacd 0, #64656b);
+}
+
+.lb-items.lb-initial .lb-row:nth-child(4) {
+    background: linear-gradient(90deg, #fac07b 0, #8f6347);
+}
+
+.icon-trophy {
+    height: 28px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

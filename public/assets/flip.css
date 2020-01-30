@@ -1,0 +1,29 @@
+.flip-container {
+    -webkit-perspective: 1000;
+    position: relative;
+    height: 100%;
+}
+
+.flip-container .flip-body.flipped {
+    -webkit-transform: rotatey(360deg);
+}
+
+.flip-container .flip-body {
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: 1s;
+    height: 100%;
+    width: 100%;
+}
+
+.flip-container .flip-body .face {
+    -webkit-backface-visibility: hidden;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+}
+
+.flip-container .flip-body .back {
+    -webkit-transform: rotatey(-180deg);
+}

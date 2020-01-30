@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background: #111;
+    color: #eee;
+    font-family: Menlo, Noto Mono;
+}
+
+.controls {
+    position: fixed;
+    text-align: center;
+    top: 1em;
+    width: 85%;
+}
+
+.button {
+    font-size: 3vw;
+    margin: 0 0.5em;
+    text-decoration: none;
+}
+
+.button:first-child {
+    margin-left: 0;
+}
+
+.button:last-child {
+    margin-right: 0;
+}
+
+.button:hover {
+    color: #eee;
+}
+
+.btn_start {
+    color: #3b7;
+}
+
+.btn_pause {
+    color: #fa3;
+}
+
+.btn_passed {
+    color: #4af;
+}
+
+.btn_reset {
+    color: #e43;
+}
+
+.btn_clear {
+    color: #ddd;
+}
+
+.limiter {
+    font-size: 6vw;
+    position: fixed;
+    text-align: center;
+    top: 15%;
+    width: 85%;
+}
+
+.limiter_normal {
+    color: #ddd;
+}
+
+.limiter_yellow {
+    color: #ea5;
+}
+
+.limiter_red {
+    color: #e55;
+}
+
+.display {
+    font-size: 15vw;
+    position: fixed;
+    text-align: center;
+    top: 35%;
+    width: 85%;
+}
+
+.bestlap {
+    font-size: 5vw;
+    position: fixed;
+    text-align: center;
+    top: 75%;
+    width: 85%;
+}
+
+.results {
+    font-size: 2vw;
+    left: 85%;
+    list-style: none;
+    position: fixed;
+    text-align: center;
+    top: 2em;
+    width: 15%;
+}
