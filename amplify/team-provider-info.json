@@ -10,6 +10,11 @@
             "StackName": "amplify-deepracer-board-dev-165705",
             "StackId": "arn:aws:cloudformation:ap-northeast-2:122547080666:stack/amplify-deepracer-board-dev-165705/26249c90-4336-11ea-b2f5-0a3c9756cdb8",
             "AmplifyAppId": "dpomlpjntl76f"
+        },
+        "categories": {
+            "auth": {
+                "deepracerboard933eca89": {}
+            }
         }
     }
 }
