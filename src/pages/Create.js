@@ -33,7 +33,7 @@ class App extends Component {
 
     const res = await API.post('api39c9f475', '/leagues', {
       body: {
-        league: this.props.match.params.league,
+        league: this.state.league,
         logo: this.state.logo,
         title: this.state.title,
       }
@@ -80,15 +80,6 @@ class App extends Component {
       this.setColor(e.target, league_valid);
     }
 
-    if (e.target.name === 'logo') {
-      let logo_valid = (e.target.value !== '') && this.validateUrl(e.target.value);
-      this.setState({
-        logo: e.target.value,
-        logo_valid: logo_valid
-      })
-      this.setColor(e.target, logo_valid);
-    }
-
     if (e.target.name === 'title') {
       let title_valid = (e.target.value !== '');
       this.setState({
@@ -96,6 +87,15 @@ class App extends Component {
         title_valid: title_valid
       })
       this.setColor(e.target, title_valid);
+    }
+
+    if (e.target.name === 'logo') {
+      let logo_valid = (e.target.value !== '') && this.validateUrl(e.target.value);
+      this.setState({
+        logo: e.target.value,
+        logo_valid: logo_valid
+      })
+      this.setColor(e.target, logo_valid);
     }
 
     this.setState({
@@ -130,12 +130,12 @@ class App extends Component {
                 <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className="lb-email text_normal" autoComplete="off" maxLength="20" /></div>
               </div>
               <div className="lb-row">
-                <div>Logo</div>
-                <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className="lb-name text_normal" autoComplete="off" maxLength="256" /></div>
-              </div>
-              <div className="lb-row">
                 <div>Title</div>
                 <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className="lb-time text_normal" autoComplete="off" maxLength="128" /></div>
+              </div>
+              <div className="lb-row">
+                <div>Logo</div>
+                <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className="lb-name text_normal" autoComplete="off" maxLength="256" /></div>
               </div>
               <div className="lb-row">
                 <div></div>
