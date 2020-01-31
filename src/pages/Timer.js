@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
+import classNames from 'classnames';
 import $ from 'jquery';
 
 import '../timer.css';
@@ -8,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.handleClick = this.handleClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
@@ -16,6 +18,11 @@ class App extends Component {
     display: '00:00.000',
     limiter: '00:00.000',
     results: '',
+    limiterClass: classNames(
+      'tm-limiter', {
+      'tm-limiter_yellow': false,
+      'tm-limiter_red': false,
+    }),
   }
 
   limit = [];
@@ -23,8 +30,16 @@ class App extends Component {
 
   records = [];
   running = false;
-  sorted = [];
   time = null;
+
+  btnMap = {
+    'btn_start': 'start',
+    'btn_pause': 'pause',
+    'btn_passed': 'passed',
+    'btn_reset': 'reset',
+    'btn_clear': 'clear',
+    'btn_squeeze': 'squeeze',
+  };
 
   keyMap = {
     '81': 'start', // q
@@ -44,8 +59,39 @@ class App extends Component {
     $(document.body).off('keydown', this.handleKeyDown);
   }
 
+  handleClick(event) {
+    this.exec(this.btnMap[event.target.id]);
+  }
+
   handleKeyDown(event) {
     this.exec(this.keyMap[event.keyCode]);
+  }
+
+  exec(name) {
+    switch (name) {
+      case 'start':
+        this.start();
+        break;
+      case 'pause':
+        this.pause();
+        break;
+      case 'passed':
+        this.passed();
+        break;
+      case 'press':
+        this.press();
+        break;
+      case 'reset':
+        this.reset();
+        break;
+      case 'clear':
+        this.clear();
+        break;
+      case 'squeeze':
+        this.squeeze();
+        break;
+      default:
+    }
   }
 
   start() {
@@ -84,7 +130,6 @@ class App extends Component {
       return;
     }
     this.records = [];
-    this.sorted = [];
     this.limit = [3, 0, 0];
     this.reset();
 
@@ -163,19 +208,31 @@ class App extends Component {
       display: this.format(this.times),
     });
 
-    // if (this.limit[0] <= 0 && this.limit[1] <= 30) {
-    //   this.limiter.classList.add("limiter_red");
-    //   this.limiter.classList.remove("limiter_yellow");
-    //   this.limiter.classList.remove("limiter_normal");
-    // } else if (this.limit[0] <= 0 && this.limit[1] <= 60) {
-    //   this.limiter.classList.add("limiter_yellow");
-    //   this.limiter.classList.remove("limiter_normal");
-    //   this.limiter.classList.remove("limiter_red");
-    // } else {
-    //   this.limiter.classList.add("limiter_normal");
-    //   this.limiter.classList.remove("limiter_yellow");
-    //   this.limiter.classList.remove("limiter_red");
-    // }
+    if (this.limit[0] <= 0 && this.limit[1] <= 30) {
+      this.setState({
+        limiterClass: classNames(
+          'tm-limiter', {
+          'tm-limiter_yellow': false,
+          'tm-limiter_red': true,
+        }),
+      });
+    } else if (this.limit[0] <= 0 && this.limit[1] <= 60) {
+      this.setState({
+        limiterClass: classNames(
+          'tm-limiter', {
+          'tm-limiter_yellow': true,
+          'tm-limiter_red': false,
+        }),
+      });
+    } else {
+      this.setState({
+        limiterClass: classNames(
+          'tm-limiter', {
+          'tm-limiter_yellow': false,
+          'tm-limiter_red': false,
+        }),
+      });
+    }
   }
 
   record() {
@@ -223,44 +280,17 @@ class App extends Component {
   }
 
   results() {
-    this.sorted = this.records.slice();
-    this.sorted.sort(this.compare);
+    let sorted = this.records.slice();
+    sorted.sort(this.compare);
 
     const list = this.records.map(
       (item, index) => (<li key={index}>{this.format(item)}</li>)
     );
 
     this.setState({
-      bestlap: this.format(this.sorted[0]),
+      bestlap: this.format(sorted[0]),
       results: list,
     });
-  }
-
-  exec(name) {
-    switch (name) {
-      case 'start':
-        this.start();
-        break;
-      case 'pause':
-        this.pause();
-        break;
-      case 'passed':
-        this.passed();
-        break;
-      case 'press':
-        this.press();
-        break;
-      case 'reset':
-        this.reset();
-        break;
-      case 'clear':
-        this.clear();
-        break;
-      case 'squeeze':
-        this.squeeze();
-        break;
-      default:
-    }
   }
 
   format(times) {
@@ -295,13 +325,13 @@ class App extends Component {
     return (
       <Fragment>
         <nav className="tm-controls">
-          <button id="btn_start" className="tm-button tm-btn_start">Start</button>
-          <button id="btn_pause" className="tm-button tm-btn_pause">Pause</button>
-          <button id="btn_passed" className="tm-button tm-btn_passed">Passed</button>
-          <button id="btn_reset" className="tm-button tm-btn_reset">Reset</button>
-          <button id="btn_clear" className="tm-button tm-btn_clear">Clear</button>
+          <button id="btn_start" className="tm-button tm-btn_start" onClick={this.handleClick}>Start</button>
+          <button id="btn_pause" className="tm-button tm-btn_pause" onClick={this.handleClick}>Pause</button>
+          <button id="btn_passed" className="tm-button tm-btn_passed" onClick={this.handleClick}>Passed</button>
+          <button id="btn_reset" className="tm-button tm-btn_reset" onClick={this.handleClick}>Reset</button>
+          <button id="btn_clear" className="tm-button tm-btn_clear" onClick={this.handleClick}>Clear</button>
         </nav>
-        <div className="tm-limiter">{this.state.limiter}</div>
+        <div className={this.state.limiterClass}>{this.state.limiter}</div>
         <div className="tm-display">{this.state.display}</div>
         <div className="tm-bestlap">{this.state.bestlap}</div>
         <ul className="tm-results">{this.state.results}</ul>
