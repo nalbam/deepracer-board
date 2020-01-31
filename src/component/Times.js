@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
+import backend from '../config/backend'
+
 import Pollen from './Pollen';
 import Popup from './Popup';
 import Racer from './Racer';
@@ -32,7 +34,7 @@ class Times extends Component {
 
   getTimes = async () => {
     // console.log('call getTimes');
-    const res = await API.get('apiefea82cc', `/items/${this.props.league}`);
+    const res = await API.get(backend.api.times, `/items/${this.props.league}`);
     // alert(JSON.stringify(res, null, 2));
     if (res && res.length > 0) {
       this.reloaded(res);

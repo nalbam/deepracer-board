@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 import { withAuthenticator, Authenticator } from 'aws-amplify-react'
+
+import backend from '../config/backend'
 import signUpConfig from '../config/signUpConfig'
 
 import Popup from '../component/Popup';
@@ -31,7 +33,7 @@ class App extends Component {
   postLeague = async () => {
     console.log('post api');
 
-    const res = await API.post('api39c9f475', '/leagues', {
+    const res = await API.post(backend.api.leagues, '/leagues', {
       body: {
         league: this.state.league,
         logo: this.state.logo,
