@@ -1,10 +1,10 @@
 {
     "appName": "deepracerboard",
-    "roleName": "pinpointLambdaRole6eaa1155",
-    "cloudWatchPolicyName": "cloudWatchPolicy6eaa1155",
-    "pinpointPolicyName": "pinpointPolicy6eaa1155",
-    "authPolicyName": "pinpoint_amplify_6eaa1155",
-    "unauthPolicyName": "pinpoint_amplify_6eaa1155",
+    "roleName": "pinpointLambdaRole0617377d",
+    "cloudWatchPolicyName": "cloudWatchPolicy0617377d",
+    "pinpointPolicyName": "pinpointPolicy0617377d",
+    "authPolicyName": "pinpoint_amplify_0617377d",
+    "unauthPolicyName": "pinpoint_amplify_0617377d",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },

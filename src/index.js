@@ -10,6 +10,7 @@ import App from './App';
 import Create from './pages/Create'
 import League from './pages/League'
 import Submit from './pages/Submit'
+import Timer from './pages/Timer'
 
 import Amplify, { Analytics } from 'aws-amplify'
 import awsconfig from './aws-exports'
@@ -29,6 +30,7 @@ const routing = (
                 <Route path="/create" component={Create} />
                 <Route path="/league/:league" component={League} />
                 <Route path="/submit/:league" component={Submit} />
+                <Route path="/timer" component={Timer} />
                 <Route component={App} />
             </Switch>
         </Router>

@@ -1,6 +1,12 @@
 {
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation"
+		}
+	},
 	"auth": {
-		"deepracerboard17c342f5": {
+		"deepracerboard040569fa": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [],
@@ -10,12 +16,6 @@
 	"analytics": {
 		"deepracerboard": {
 			"service": "Pinpoint",
-			"providerPlugin": "awscloudformation"
-		}
-	},
-	"hosting": {
-		"S3AndCloudFront": {
-			"service": "S3AndCloudFront",
 			"providerPlugin": "awscloudformation"
 		}
 	}
