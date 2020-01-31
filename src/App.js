@@ -26,9 +26,20 @@ class App extends Component {
   }
 
   reloaded(res) {
-    // let items = res.sort(this.compare);
+    let items = res.reverse(this.compare);
 
-    this.setState({ items: res });
+    this.setState({ items: items });
+  }
+
+  compare(a, b) {
+    let a1 = a.regsterd;
+    let b1 = b.regsterd;
+    if (a1 < b1) {
+      return -1;
+    } else if (a1 > b1) {
+      return 1;
+    }
+    return 0;
   }
 
   render() {
