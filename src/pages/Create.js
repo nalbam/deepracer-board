@@ -39,26 +39,43 @@ class App extends Component {
   postLeague = async () => {
     console.log('post api');
 
-    const res = await API.post(backend.api.leagues, '/leagues', {
-      body: {
-        league: this.state.league,
-        logo: this.state.logo,
-        title: this.state.title,
-      }
-    });
-    // alert(JSON.stringify(res, null, 2));
-    console.log('post api: ' + JSON.stringify(res, null, 2));
+    try {
+      const res = await API.post(backend.api.leagues, '/leagues', {
+        body: {
+          league: this.state.league,
+          logo: this.state.logo,
+          title: this.state.title,
+        }
+      });
 
-    this.popup();
+      console.log('post api: ' + JSON.stringify(res, null, 2));
 
-    this.setState({
-      league: '',
-      logo: '',
-      title: '',
-    });
+      this.popup('Saved!');
+
+      this.setState({
+        league: '',
+        logo: '',
+        title: '',
+      });
+    } catch (err) {
+      console.log('post api: ' + JSON.stringify(err, null, 2));
+
+      this.popup(err.message);
+    }
   };
 
-  popup() {
+  popup(message) {
+    if (message) {
+      this.setState({
+        popInfo: {
+          footer: '',
+          header: '',
+          message: message,
+          rank: '',
+        },
+      });
+    }
+
     this.setState({ popup: true });
 
     setTimeout(

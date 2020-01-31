@@ -39,27 +39,44 @@ class App extends Component {
   postLapTime = async () => {
     console.log('post api');
 
-    const res = await API.post(backend.api.times, '/items', {
-      body: {
-        league: this.props.match.params.league,
-        email: this.state.email,
-        racerName: this.state.racerName,
-        laptime: this.state.laptime,
-      }
-    });
-    // alert(JSON.stringify(res, null, 2));
-    console.log('post api: ' + JSON.stringify(res, null, 2));
+    try {
+      const res = await API.post(backend.api.times, '/items', {
+        body: {
+          league: this.props.match.params.league,
+          email: this.state.email,
+          racerName: this.state.racerName,
+          laptime: this.state.laptime,
+        }
+      });
 
-    this.popup();
+      console.log('post api: ' + JSON.stringify(res, null, 2));
 
-    this.setState({
-      email: '',
-      racerName: '',
-      laptime: '',
-    });
+      this.popup('Saved!');
+
+      this.setState({
+        league: '',
+        logo: '',
+        title: '',
+      });
+    } catch (err) {
+      console.log('post api: ' + JSON.stringify(err, null, 2));
+
+      this.popup(err.message);
+    }
   };
 
-  popup() {
+  popup(message) {
+    if (message) {
+      this.setState({
+        popInfo: {
+          footer: '',
+          header: '',
+          message: message,
+          rank: '',
+        },
+      });
+    }
+
     this.setState({ popup: true });
 
     setTimeout(
