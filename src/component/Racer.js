@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 class Racer extends Component {
   render() {
     let racerClass = `lb-row lb-rank${this.props.rank}`;
-    let racerRank = this.props.rank + 1;
+    let racerRank = this.props.rank;
     let trophy = "";
 
     if (racerRank < 4) {

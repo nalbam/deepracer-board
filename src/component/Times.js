@@ -7,14 +7,9 @@ import backend from '../config/backend'
 import Pollen from './Pollen';
 import Popup from './Popup';
 import Racer from './Racer';
+import Scroll from './Scroll';
 
 class Times extends Component {
-  constructor(props) {
-    super(props);
-
-    this.getTimes();
-  }
-
   state = {
     items: [],
     pollen: false,
@@ -25,9 +20,11 @@ class Times extends Component {
       rank: '',
     },
     popup: false,
+    scroll: '',
   }
 
   componentDidMount() {
+    this.getTimes();
     this.intervalId = setInterval(this.getTimes.bind(this), 10000);
   }
 
@@ -36,9 +33,7 @@ class Times extends Component {
   }
 
   getTimes = async () => {
-    // console.log('call getTimes');
     const res = await API.get(backend.api.times, `/items/${this.props.league}`);
-    // alert(JSON.stringify(res, null, 2));
     if (res && res.length > 0) {
       this.reloaded(res);
     }
@@ -119,7 +114,15 @@ class Times extends Component {
   }
 
   scroll(rank) {
+    this.setState({
+      scroll: rank,
+    });
 
+    setTimeout(
+      function () {
+        this.setState({ scroll: 0 });
+      }.bind(this), 5000
+    );
   }
 
   pollen() {
@@ -163,13 +166,13 @@ class Times extends Component {
 
   render() {
     const list = this.state.items.map(
-      (item, index) => (<Racer key={index} rank={index} item={item} />)
+      (item, index) => (<Racer key={index} rank={index + 1} item={item} />)
     );
 
     return (
       <Fragment>
         <div className="lb-items">
-          <div className="lb-header">
+          <div className="lb-header lb-rank0">
             <div>Rank</div>
             <div>Name</div>
             <div>Time</div>
@@ -186,6 +189,8 @@ class Times extends Component {
         <Pollen status={this.state.pollen} />
 
         <Popup status={this.state.popup} popInfo={this.state.popInfo} />
+
+        <Scroll status={this.state.scroll} items={this.state.items.length} />
 
         <footer className="lb-footer"></footer>
       </Fragment>
