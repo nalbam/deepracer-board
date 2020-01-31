@@ -15,6 +15,12 @@ class App extends Component {
     league: '',
     logo_valid: false,
     logo: '',
+    popInfo: {
+      footer: '',
+      header: '',
+      message: 'Saved!',
+      rank: '',
+    },
     popup: false,
     title_valid: false,
     title: '',
@@ -147,7 +153,7 @@ class App extends Component {
           </form>
         </div>
 
-        <Popup status={this.state.popup} racer="Saved!" />
+        <Popup status={this.state.popup} popInfo={this.state.popInfo} />
       </Fragment>
     );
   }

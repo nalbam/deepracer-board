@@ -36,14 +36,16 @@ class Popup extends Component {
   }
 
   render() {
+    let messageClass = `pop-message pop-rank${this.props.popInfo.rank}`;
+
     return (
       <Fragment>
         <div className="pop-layer">
           <div className="pop-bg"></div>
           <div className="pop-container">
-            <div className="pop-title">{this.props.title}</div>
-            <div className="pop-racer">{this.props.racer}</div>
-            <div className="pop-time">{this.props.time}</div>
+            <div className="pop-header">{this.props.popInfo.header}</div>
+            <div className={messageClass}>{this.props.popInfo.message}</div>
+            <div className="pop-footer">{this.props.popInfo.footer}</div>
           </div>
         </div>
       </Fragment>

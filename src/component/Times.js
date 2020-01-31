@@ -18,9 +18,12 @@ class Times extends Component {
   state = {
     items: [],
     pollen: false,
-    popRacer: '',
-    popTime: '',
-    popTitle: '',
+    popInfo: {
+      footer: '',
+      header: '',
+      message: '',
+      rank: '',
+    },
     popup: false,
   }
 
@@ -93,9 +96,12 @@ class Times extends Component {
       }
 
       this.setState({
-        popTitle: popTitle,
-        popRacer: racerName,
-        popTime: laptime,
+        popInfo: {
+          footer: laptime,
+          header: popTitle,
+          message: racerName,
+          rank: rank,
+        },
       });
 
       this.fanfare(rank);
@@ -179,7 +185,7 @@ class Times extends Component {
 
         <Pollen status={this.state.pollen} />
 
-        <Popup status={this.state.popup} title={this.state.popTitle} racer={this.state.popRacer} time={this.state.popTime} />
+        <Popup status={this.state.popup} popInfo={this.state.popInfo} />
 
         <footer className="lb-footer"></footer>
       </Fragment>

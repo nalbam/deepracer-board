@@ -49,26 +49,21 @@
     width: 100%;
 }
 
-.pop-layer .pop-container .pop-title {
+.pop-layer .pop-container .pop-header {
     font-size: 5vw;
     margin-top: 8%;
     padding: 1%;
 }
 
-.pop-layer .pop-container .pop-racer {
+.pop-layer .pop-container .pop-message {
     font-size: 13vw;
     font-weight: bold;
     padding: 1%;
 }
 
-.pop-layer .pop-container .pop-time {
+.pop-layer .pop-container .pop-footer {
     font-size: 7vw;
     padding: 1%;
-}
-
-.pop-layer .pop-container .pop-message {
-    font-size: 5vw;
-    margin-top: 10%;
 }
 
 .pop-rank1 {

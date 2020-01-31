@@ -15,6 +15,12 @@ class App extends Component {
     email: '',
     laptime_valid: false,
     laptime: '',
+    popInfo: {
+      footer: '',
+      header: '',
+      message: 'Saved!',
+      rank: '',
+    },
     popup: false,
     racerName_valid: false,
     racerName: '',
@@ -149,7 +155,7 @@ class App extends Component {
           </form>
         </div>
 
-        <Popup status={this.state.popup} racer="Saved!" />
+        <Popup status={this.state.popup} popInfo={this.state.popInfo} />
       </Fragment>
     );
   }
