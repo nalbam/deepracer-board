@@ -156,7 +156,7 @@ class App extends Component {
               </div>
               <div className="lb-row">
                 <div>Title</div>
-                <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className="lb-time text_normal" autoComplete="off" maxLength="128" /></div>
+                <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className="lb-time text_normal" autoComplete="off" maxLength="64" /></div>
               </div>
               <div className="lb-row">
                 <div>Logo</div>

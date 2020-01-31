@@ -92,34 +92,37 @@ footer {
 .lb-items .lb-row>div:nth-child(n+3) {
   display: block;
   text-align: left;
-  width: 20%;
+  width: 30%;
 }
 
-.lb-items .lb-row:nth-child(n+2):nth-child(-n+4)>div:nth-child(-n+2) {
+.lb-items .lb-rank1,
+.lb-items .lb-rank2,
+.lb-items .lb-rank3 {
   color: #222;
 }
 
-.lb-items .lb-row:nth-child(2) {
+.lb-items .lb-rank1 {
   background: linear-gradient(90deg, #fd4 0, #a61);
 }
 
-.lb-items .lb-row:nth-child(3) {
+.lb-items .lb-rank2 {
   background: linear-gradient(90deg, #ccc 0, #666);
 }
 
-.lb-items .lb-row:nth-child(4) {
+.lb-items .lb-rank3 {
   background: linear-gradient(90deg, #fc7 0, #864);
 }
 
 .lb-items .icon-trophy {
-  height: 28px;
+  height: 26px;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .lb-items .icon-logo {
-  height: 45px;
+  height: 40px;
+  position: relative;
 }
 
 .lb-submit {
