@@ -43,17 +43,7 @@ class App extends Component {
     // alert(JSON.stringify(res, null, 2));
     console.log('post api: ' + JSON.stringify(res, null, 2));
 
-    this.setState({
-      popup: true,
-    });
-
-    setTimeout(
-      function () {
-        this.setState({
-          popup: false,
-        });
-      }.bind(this), 3000
-    );
+    this.popup();
 
     this.setState({
       league: '',
@@ -61,6 +51,16 @@ class App extends Component {
       title: '',
     });
   };
+
+  popup() {
+    this.setState({ popup: true });
+
+    setTimeout(
+      function () {
+        this.setState({ popup: false });
+      }.bind(this), 3000
+    );
+  }
 
   setColor(e, b) {
     if (b) {

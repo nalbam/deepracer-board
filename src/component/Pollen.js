@@ -29,7 +29,6 @@ class Pollen extends Component {
   lastFrameTime = Date.now();
   particles = [];
   streaming = false;
-  timeout = 5000;
   waveAngle = 0;
 
   componentDidMount() {

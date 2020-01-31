@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 import $ from 'jquery';
-// window.$ = window.jQuery = jQuery;
 
 class Popup extends Component {
   streaming = false;

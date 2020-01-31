@@ -45,9 +45,7 @@ class Times extends Component {
     let items = res.sort(this.compare);
 
     if (items.length < this.state.items.length) {
-      this.setState({
-        items: items,
-      });
+      this.setState({ items: items });
       return;
     }
 
@@ -76,9 +74,7 @@ class Times extends Component {
       laptime = items[rank - 1].laptime;
     }
 
-    this.setState({
-      items: items,
-    });
+    this.setState({ items: items });
 
     // // TODO REMOVE
     // rank = 1;
@@ -88,61 +84,62 @@ class Times extends Component {
     if (racerName) {
       console.log(`new ${rank} ${racerName} ${laptime}`);
 
+      let popTitle;
+
       if (isNew) {
-        this.setState({
-          popTitle: 'New Challenger!',
-        });
+        popTitle = 'New Challenger!';
       } else {
-        this.setState({
-          popTitle: 'New Record!',
-        });
+        popTitle = 'New Record!';
       }
 
       this.setState({
+        popTitle: popTitle,
         popRacer: racerName,
         popTime: laptime,
       });
 
-      this.popup(rank);
+      this.fanfare(rank);
     }
   }
 
-  popup(rank) {
+  fanfare(rank) {
     this.scroll(rank);
 
-    this.setState({
-      pollen: true,
-    });
+    this.pollen();
 
-    setTimeout(
-      function () {
-        this.setState({
-          popup: true,
-        });
-      }.bind(this), 1000
-    );
-
-    setTimeout(
-      function () {
-        this.setState({
-          pollen: false,
-        });
-      }.bind(this), 5000
-    );
-
-    setTimeout(
-      function () {
-        this.setState({
-          popup: false,
-        });
-      }.bind(this), 6000
-    );
+    this.popup();
 
     // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
   }
 
   scroll(rank) {
 
+  }
+
+  pollen() {
+    this.setState({
+      pollen: true,
+    });
+
+    setTimeout(
+      function () {
+        this.setState({ pollen: false });
+      }.bind(this), 5000
+    );
+  }
+
+  popup() {
+    setTimeout(
+      function () {
+        this.setState({ popup: true });
+      }.bind(this), 1000
+    );
+
+    setTimeout(
+      function () {
+        this.setState({ popup: false });
+      }.bind(this), 6000
+    );
   }
 
   compare(a, b) {
