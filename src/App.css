@@ -14,6 +14,7 @@ div {
 }
 
 a {
+  color: #fff;
   text-decoration: none;
 }
 
@@ -82,7 +83,6 @@ footer {
 
 .lb-items .lb-header>div:nth-child(2),
 .lb-items .lb-row>div:nth-child(2) {
-  /* font-weight: bold; */
   margin-right: auto;
   text-align: left;
   width: 50%;
@@ -116,6 +116,10 @@ footer {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.lb-items .icon-logo {
+  height: 45px;
 }
 
 .lb-submit {

@@ -63,19 +63,19 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
-app.get(path + hashKeyPath, function (req, res) {
-  var condition = {}
+app.get(path, function (req, res) {
+  // var condition = {}
 
-  condition[partitionKeyName] = {
-    ComparisonOperator: 'EQ'
-  }
+  // condition[partitionKeyName] = {
+  //   ComparisonOperator: 'EQ'
+  // }
 
-  try {
-    condition[partitionKeyName]['AttributeValueList'] = [convertUrlType(req.params[partitionKeyName], partitionKeyType)];
-  } catch (err) {
-    res.statusCode = 500;
-    res.json({ error: 'Wrong column type ' + err });
-  }
+  // try {
+  //   condition[partitionKeyName]['AttributeValueList'] = [convertUrlType(req.params[partitionKeyName], partitionKeyType)];
+  // } catch (err) {
+  //   res.statusCode = 500;
+  //   res.json({ error: 'Wrong column type ' + err });
+  // }
 
   // if (userIdPresent && req.apiGateway) {
   //   condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH];
@@ -83,11 +83,11 @@ app.get(path + hashKeyPath, function (req, res) {
 
   let queryParams = {
     TableName: tableName,
-    KeyConditions: condition
+    // KeyConditions: condition,
   }
 
-  console.log(`get: ${JSON.stringify(queryParams)}`);
-  dynamodb.query(queryParams, (err, data) => {
+  console.log(`scan: ${JSON.stringify(queryParams)}`);
+  dynamodb.scan(queryParams, (err, data) => {
     if (err) {
       res.statusCode = 500;
       res.json({ error: 'Could not load items: ' + err });
@@ -127,7 +127,7 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 
   let getItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
 
   console.log(`get: ${JSON.stringify(getItemParams)}`);
@@ -166,7 +166,7 @@ app.put(path, function (req, res) {
 
   let getItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
 
   let datetime = new Date().getTime();
@@ -263,7 +263,7 @@ app.post(path, function (req, res) {
 
   let getItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
 
   let datetime = new Date().getTime();
@@ -367,7 +367,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 
   let removeItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
   dynamodb.delete(removeItemParams, (err, data) => {
     if (err) {

@@ -83,10 +83,10 @@ app.get(path + hashKeyPath, function (req, res) {
 
   let queryParams = {
     TableName: tableName,
-    KeyConditions: condition
+    KeyConditions: condition,
   }
 
-  console.log(`get: ${JSON.stringify(queryParams)}`);
+  console.log(`query: ${JSON.stringify(queryParams)}`);
   dynamodb.query(queryParams, (err, data) => {
     if (err) {
       res.statusCode = 500;
@@ -127,7 +127,7 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 
   let getItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
 
   console.log(`get: ${JSON.stringify(getItemParams)}`);
@@ -167,7 +167,7 @@ app.put(path, function (req, res) {
 
   let getItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
 
   let datetime = new Date().getTime();
@@ -276,7 +276,7 @@ app.post(path, function (req, res) {
 
   let getItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
 
   let datetime = new Date().getTime();
@@ -391,7 +391,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 
   let removeItemParams = {
     TableName: tableName,
-    Key: params
+    Key: params,
   }
   dynamodb.delete(removeItemParams, (err, data) => {
     if (err) {
