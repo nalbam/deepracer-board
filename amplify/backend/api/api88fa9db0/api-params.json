@@ -1,0 +1,44 @@
+{
+    "paths": [
+        {
+            "name": "/leagues",
+            "lambdaFunction": "deepracerboarda9af815a",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            }
+        }
+    ],
+    "resourceName": "api88fa9db0",
+    "apiName": "api88fa9db0",
+    "functionArns": [
+        {
+            "lambdaFunction": "deepracerboarda9af815a"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "amplify-deepracer-board-dev-113355-authRole",
+        "unAuthRoleName": "amplify-deepracer-board-dev-113355-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "deepracerboarda9af815a",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

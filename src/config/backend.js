@@ -1,7 +1,7 @@
 const backend = {
   'api': {
-    'leagues': 'api39c9f475',
-    'times': 'apiefea82cc',
+    'leagues': 'api88fa9db0',
+    'times': 'apifa77988a',
   },
 };
 

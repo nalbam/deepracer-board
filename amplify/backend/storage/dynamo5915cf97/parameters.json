@@ -1,0 +1,7 @@
+{
+    "tableName": "dynamo5915cf97",
+    "partitionKeyName": "league",
+    "partitionKeyType": "S",
+    "sortKeyName": "email",
+    "sortKeyType": "S"
+}

@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   validateString(val) {
-    var re = /^[a-z]+[a-z0-9-_]{5,19}$/g;;
+    var re = /^[a-z]+[a-z0-9-_]{3,19}$/g;;
     return re.test(val);
   }
 

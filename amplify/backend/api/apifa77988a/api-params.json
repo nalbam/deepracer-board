@@ -1,0 +1,44 @@
+{
+    "paths": [
+        {
+            "name": "/items",
+            "lambdaFunction": "deepracerboarddb492152",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            }
+        }
+    ],
+    "resourceName": "apifa77988a",
+    "apiName": "apifa77988a",
+    "functionArns": [
+        {
+            "lambdaFunction": "deepracerboarddb492152"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "amplify-deepracer-board-dev-113355-authRole",
+        "unAuthRoleName": "amplify-deepracer-board-dev-113355-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "deepracerboarddb492152",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
