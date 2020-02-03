@@ -164,7 +164,6 @@ footer {
   height: 40px;
   line-height: 20px;
   padding: 4px 10px;
-  /* width: 100%; */
 }
 
 .lb-submit .lb-row input:focus {
@@ -179,6 +178,10 @@ footer {
 
 .text_red {
   color: #e55;
+}
+
+.width_80 {
+  width: 80%;
 }
 
 .checkbox {

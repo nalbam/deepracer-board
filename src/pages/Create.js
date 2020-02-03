@@ -11,8 +11,10 @@ import Title from '../component/Title';
 
 class App extends Component {
   state = {
+    league_class: 'text_normal width_80',
     league_valid: false,
     league: '',
+    logo_class: 'text_normal width_80',
     logo_valid: false,
     logo: '',
     popInfo: {
@@ -22,6 +24,7 @@ class App extends Component {
       rank: '',
     },
     popup: false,
+    title_class: 'text_normal width_80',
     title_valid: false,
     title: '',
   }
@@ -85,13 +88,11 @@ class App extends Component {
     );
   }
 
-  setColor(e, b) {
+  getClass(b) {
     if (b) {
-      e.classList.add('text_normal');
-      e.classList.remove('text_red');
+      return 'text_normal';
     } else {
-      e.classList.remove('text_normal');
-      e.classList.add('text_red');
+      return 'text_red';
     }
   }
 
@@ -100,7 +101,8 @@ class App extends Component {
       let league_valid = (e.target.value !== '') && this.validateString(e.target.value);
       this.setState({
         league: e.target.value,
-        league_valid: league_valid
+        email_class: `${this.getClass(league_valid)} width_80`,
+        league_valid: league_valid,
       })
       this.setColor(e.target, league_valid);
     }
@@ -109,7 +111,8 @@ class App extends Component {
       let title_valid = (e.target.value !== '');
       this.setState({
         title: e.target.value,
-        title_valid: title_valid
+        email_class: `${this.getClass(title_valid)} width_80`,
+        title_valid: title_valid,
       })
       this.setColor(e.target, title_valid);
     }
@@ -118,7 +121,8 @@ class App extends Component {
       let logo_valid = (e.target.value !== '') && this.validateUrl(e.target.value);
       this.setState({
         logo: e.target.value,
-        logo_valid: logo_valid
+        email_class: `${this.getClass(logo_valid)} width_80`,
+        logo_valid: logo_valid,
       })
       this.setColor(e.target, logo_valid);
     }
@@ -152,15 +156,15 @@ class App extends Component {
             <div className="lb-submit">
               <div className="lb-row">
                 <div>League</div>
-                <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className="lb-email text_normal" autoComplete="off" maxLength="20" /></div>
+                <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className={this.state.league_class} autoComplete="off" maxLength="20" /></div>
               </div>
               <div className="lb-row">
                 <div>Title</div>
-                <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className="lb-time text_normal" autoComplete="off" maxLength="64" /></div>
+                <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="64" /></div>
               </div>
               <div className="lb-row">
                 <div>Logo</div>
-                <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className="lb-name text_normal" autoComplete="off" maxLength="256" /></div>
+                <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className={this.state.logo_class} autoComplete="off" maxLength="256" /></div>
               </div>
               <div className="lb-row">
                 <div></div>

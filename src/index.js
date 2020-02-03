@@ -27,7 +27,8 @@ const routing = (
         <Router>
             <Switch>
                 <Route exact path="/" component={App} />
-                <Route path="/create" component={Create} />
+                <Route path="/manage/league/:league" component={Create} />
+                <Route path="/manage/league/" component={Create} />
                 <Route path="/league/:league" component={League} />
                 <Route path="/submit/:league" component={Submit} />
                 <Route path="/timer" component={Timer} />

@@ -11,7 +11,7 @@ import Title from '../component/Title';
 
 class App extends Component {
   state = {
-    email_class: 'text_normal',
+    email_class: 'text_normal width_80',
     email_valid: false,
     email: '',
     forceUpdate: false,
@@ -25,7 +25,7 @@ class App extends Component {
       rank: '',
     },
     popup: false,
-    racerName_class: 'text_normal',
+    racerName_class: 'text_normal width_80',
     racerName_valid: false,
     racerName: '',
   }
@@ -105,7 +105,7 @@ class App extends Component {
       let email_valid = (e.target.value !== '') && this.validateEmail(e.target.value);
       this.setState({
         email: e.target.value,
-        email_class: this.getClass(email_valid),
+        email_class: `${this.getClass(email_valid)} width_80`,
         email_valid: email_valid,
       })
     }
@@ -114,7 +114,7 @@ class App extends Component {
       let racerName_valid = (e.target.value !== '');
       this.setState({
         racerName: e.target.value,
-        racerName_class: this.getClass(racerName_valid),
+        email_class: `${this.getClass(racerName_valid)} width_80`,
         racerName_valid: racerName_valid,
       })
     }
