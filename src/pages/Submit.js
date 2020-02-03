@@ -30,31 +30,24 @@ class App extends Component {
     racerName: '',
   }
 
-  validateEmail(val) {
-    var re = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\].,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(val);
-  }
-
-  validateTime(val) {
-    var re = /^([0-9]{2}:[0-9]{2}\.[0-9]{3})$/;
-    return re.test(val);
-  }
-
   postLapTime = async () => {
-    console.log('post api');
+    console.log('postLapTime');
 
     try {
+      let body = {
+        league: this.props.match.params.league,
+        email: this.state.email,
+        racerName: this.state.racerName,
+        laptime: this.state.laptime,
+        forceUpdate: this.state.forceUpdate,
+      };
+
       const res = await API.post(backend.api.times, '/items', {
-        body: {
-          league: this.props.match.params.league,
-          email: this.state.email,
-          racerName: this.state.racerName,
-          laptime: this.state.laptime,
-          forceUpdate: this.state.forceUpdate,
-        }
+        body: body
       });
 
-      console.log('post api: ' + JSON.stringify(res, null, 2));
+      console.log('postLapTime: ' + JSON.stringify(body, null, 2));
+      console.log('postLapTime: ' + JSON.stringify(res, null, 2));
 
       this.popup('Saved!');
 
@@ -65,11 +58,21 @@ class App extends Component {
         forceUpdate: false,
       });
     } catch (err) {
-      console.log('post api: ' + JSON.stringify(err, null, 2));
+      console.log('postLapTime: ' + JSON.stringify(err, null, 2));
 
       this.popup(err.message);
     }
   };
+
+  validateEmail(val) {
+    var re = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\].,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(val);
+  }
+
+  validateTime(val) {
+    var re = /^([0-9]{2}:[0-9]{2}\.[0-9]{3})$/;
+    return re.test(val);
+  }
 
   popup(message) {
     if (message) {
@@ -114,7 +117,7 @@ class App extends Component {
       let racerName_valid = (e.target.value !== '');
       this.setState({
         racerName: e.target.value,
-        email_class: `${this.getClass(racerName_valid)} width_80`,
+        racerName_class: `${this.getClass(racerName_valid)} width_80`,
         racerName_valid: racerName_valid,
       })
     }
@@ -127,10 +130,6 @@ class App extends Component {
         laptime_valid: laptime_valid,
       })
     }
-
-    this.setState({
-      [e.target.name]: e.target.value
-    })
   }
 
   handleCheckBox = (e) => {

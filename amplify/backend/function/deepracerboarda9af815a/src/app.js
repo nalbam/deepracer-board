@@ -193,10 +193,13 @@ app.put(path, function (req, res) {
         let upateItemParams = {
           TableName: tableName,
           Key: params,
-          UpdateExpression: 'SET logo = :logo, title = :title, modified = :modified',
+          UpdateExpression: 'SET title = :title, logo = :logo, dateOpen = :dateOpen, dateClose = :dateClose, dateTZ = :dateTZ, modified = :modified',
           ExpressionAttributeValues: {
-            ':logo': req.body.logo,
             ':title': req.body.title,
+            ':logo': req.body.logo,
+            ':dateOpen': req.body.dateOpen,
+            ':dateClose': req.body.dateClose,
+            ':dateTZ': req.body.dateTZ,
             ':modified': datetime,
           },
         };
@@ -217,8 +220,11 @@ app.put(path, function (req, res) {
           TableName: tableName,
           Item: {
             league: req.body.league,
-            logo: req.body.logo,
             title: req.body.title,
+            logo: req.body.logo,
+            dateOpen: req.body.dateOpen,
+            dateClose: req.body.dateClose,
+            dateTZ: req.body.dateTZ,
             registered: datetime,
           },
         }
@@ -290,10 +296,13 @@ app.post(path, function (req, res) {
         let upateItemParams = {
           TableName: tableName,
           Key: params,
-          UpdateExpression: 'SET logo = :logo, title = :title, modified = :modified',
+          UpdateExpression: 'SET title = :title, logo = :logo, dateOpen = :dateOpen, dateClose = :dateClose, dateTZ = :dateTZ, modified = :modified',
           ExpressionAttributeValues: {
-            ':logo': req.body.logo,
             ':title': req.body.title,
+            ':logo': req.body.logo,
+            ':dateOpen': req.body.dateOpen,
+            ':dateClose': req.body.dateClose,
+            ':dateTZ': req.body.dateTZ,
             ':modified': datetime,
           },
         };
@@ -314,8 +323,11 @@ app.post(path, function (req, res) {
           TableName: tableName,
           Item: {
             league: req.body.league,
-            logo: req.body.logo,
             title: req.body.title,
+            logo: req.body.logo,
+            dateOpen: req.body.dateOpen,
+            dateClose: req.body.dateClose,
+            dateTZ: req.body.dateTZ,
             registered: datetime,
           },
         }

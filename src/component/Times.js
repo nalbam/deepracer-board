@@ -33,6 +33,8 @@ class Times extends Component {
   }
 
   getTimes = async () => {
+    console.log(`getTimes ${this.props.league}`);
+
     const res = await API.get(backend.api.times, `/items/${this.props.league}`);
     if (res && res.length > 0) {
       this.reloaded(res);

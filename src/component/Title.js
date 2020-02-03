@@ -5,25 +5,29 @@ import { API } from 'aws-amplify'
 import backend from '../config/backend'
 
 class Title extends Component {
-  constructor(props) {
-    super(props);
-
-    this.getLeague();
-  }
-
   state = {
     logo: '/icon-trophy.png',
     title: '',
+    dateClose: '',
+    dateOpen: '',
+    timeZone: '',
+  }
+
+  componentDidMount() {
+    this.getLeague();
   }
 
   getLeague = async () => {
-    // console.log('calling getLeague');
+    console.log(`getLeague ${this.props.league}`);
+
     const res = await API.get(backend.api.leagues, `/leagues/object/${this.props.league}`);
-    // alert(JSON.stringify(res, null, 2));
     if (res && res.league) {
       this.setState({
         logo: res.logo,
         title: res.title,
+        dateClose: res.dateClose,
+        dateOpen: res.dateOpen,
+        timeZone: res.timeZone,
       });
     }
   };

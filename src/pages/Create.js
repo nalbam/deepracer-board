@@ -3,15 +3,24 @@ import React, { Component, Fragment } from 'react';
 import { API } from 'aws-amplify'
 import { withAuthenticator, Authenticator } from 'aws-amplify-react'
 
+import DatePicker from 'react-datepicker';
+import Select from 'react-select'
+
 import backend from '../config/backend'
 import signUpConfig from '../config/signUpConfig'
+import timezones from '../config/timezones'
 
 import Popup from '../component/Popup';
-import Title from '../component/Title';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 class App extends Component {
   state = {
+    dateClose: '',
+    dateOpen: '',
+    dateTZ: '',
     league_class: 'text_normal width_80',
+    league_read: false,
     league_valid: false,
     league: '',
     logo_class: 'text_normal width_80',
@@ -29,6 +38,77 @@ class App extends Component {
     title: '',
   }
 
+  componentDidMount() {
+    this.getLeague();
+  }
+
+  getLeague = async () => {
+    if (!this.props.match.params.league) {
+      return;
+    }
+
+    console.log(`getLeague ${this.props.match.params.league}`);
+
+    const res = await API.get(backend.api.leagues, `/leagues/object/${this.props.match.params.league}`);
+
+    console.log('getLeague ' + JSON.stringify(res, null, 2));
+
+    if (res && res.league) {
+      this.setState({
+        league: res.league,
+        title: res.title,
+        logo: res.logo,
+        dateClose: res.dateClose,
+        dateOpen: res.dateOpen,
+        dateTZ: res.dateTZ,
+        league_read: true,
+      });
+
+      this.validateLeague(res.league);
+      this.validateTitle(res.title);
+      this.validateLogo(res.logo);
+    }
+  };
+
+  postLeague = async () => {
+    console.log('postLeague');
+
+    try {
+      let body = {
+        league: this.state.league,
+        title: this.state.title,
+        logo: this.state.logo,
+        dateClose: this.state.dateClose,
+        dateOpen: this.state.dateOpen,
+        dateTZ: this.state.dateTZ,
+      };
+
+      const res = await API.post(backend.api.leagues, '/leagues', {
+        body: body
+      });
+
+      console.log('postLeague: ' + JSON.stringify(body, null, 2));
+      console.log('postLeague: ' + JSON.stringify(res, null, 2));
+
+      this.popup('Saved!');
+
+      if (!this.props.match.params.league) {
+        this.setState({
+          league: '',
+          title: '',
+          logo: '',
+          dateClose: '',
+          dateOpen: '',
+          dateTZ: '',
+        });
+      }
+    } catch (err) {
+      console.log('postLeague: ' + JSON.stringify(err, null, 2));
+
+      this.popup(err.message);
+    }
+  };
+
   validateString(val) {
     var re = /^[a-z]+[a-z0-9-_]{3,19}$/g;;
     return re.test(val);
@@ -38,34 +118,6 @@ class App extends Component {
     var re = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/g;
     return re.test(val);
   }
-
-  postLeague = async () => {
-    console.log('post api');
-
-    try {
-      const res = await API.post(backend.api.leagues, '/leagues', {
-        body: {
-          league: this.state.league,
-          logo: this.state.logo,
-          title: this.state.title,
-        }
-      });
-
-      console.log('post api: ' + JSON.stringify(res, null, 2));
-
-      this.popup('Saved!');
-
-      this.setState({
-        league: '',
-        logo: '',
-        title: '',
-      });
-    } catch (err) {
-      console.log('post api: ' + JSON.stringify(err, null, 2));
-
-      this.popup(err.message);
-    }
-  };
 
   popup(message) {
     if (message) {
@@ -96,44 +148,69 @@ class App extends Component {
     }
   }
 
+  validateLeague(v) {
+    let league_valid = (v !== '') && this.validateString(v);
+    this.setState({
+      league: v,
+      league_class: `${this.getClass(league_valid)} width_80`,
+      league_valid: league_valid,
+    });
+  }
+
+  validateTitle(v) {
+    let title_valid = (v !== '');
+    this.setState({
+      title: v,
+      title_class: `${this.getClass(title_valid)} width_80`,
+      title_valid: title_valid,
+    });
+  }
+
+  validateLogo(v) {
+    let logo_valid = (v !== '') && this.validateUrl(v);
+    this.setState({
+      logo: v,
+      logo_class: `${this.getClass(logo_valid)} width_80`,
+      logo_valid: logo_valid,
+    });
+  }
+
   handleChange = (e) => {
     if (e.target.name === 'league') {
-      let league_valid = (e.target.value !== '') && this.validateString(e.target.value);
-      this.setState({
-        league: e.target.value,
-        email_class: `${this.getClass(league_valid)} width_80`,
-        league_valid: league_valid,
-      })
-      this.setColor(e.target, league_valid);
+      this.validateLeague(e.target.value);
     }
 
     if (e.target.name === 'title') {
-      let title_valid = (e.target.value !== '');
-      this.setState({
-        title: e.target.value,
-        email_class: `${this.getClass(title_valid)} width_80`,
-        title_valid: title_valid,
-      })
-      this.setColor(e.target, title_valid);
+      this.validateTitle(e.target.value);
     }
 
     if (e.target.name === 'logo') {
-      let logo_valid = (e.target.value !== '') && this.validateUrl(e.target.value);
-      this.setState({
-        logo: e.target.value,
-        email_class: `${this.getClass(logo_valid)} width_80`,
-        logo_valid: logo_valid,
-      })
-      this.setColor(e.target, logo_valid);
+      this.validateLogo(e.target.value);
     }
+  }
 
+  handleChangeDateOpen = v => {
     this.setState({
-      [e.target.name]: e.target.value
-    })
+      dateOpen: v
+    });
+  }
+
+  handleChangeDateClose = v => {
+    this.setState({
+      dateClose: v
+    });
+  }
+
+  handleChangeTimeZone = e => {
+    this.setState({
+      dateTZ: e.value
+    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log(`handleSubmit: ${this.state.league_valid} ${this.state.logo_valid} ${this.state.title_valid}`);
 
     if (this.state.league_valid && this.state.logo_valid && this.state.title_valid) {
       this.postLeague();
@@ -149,14 +226,14 @@ class App extends Component {
           <Authenticator usernameAttributes='email' />
         </header>
         <header className="App-header">
-          <Title league={this.props.match.params.league} />
+          <h1 className="title">{this.state.title}</h1>
         </header>
         <div className="App-body">
           <form onSubmit={this.handleSubmit}>
             <div className="lb-submit">
               <div className="lb-row">
                 <div>League</div>
-                <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className={this.state.league_class} autoComplete="off" maxLength="20" /></div>
+                <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete="off" maxLength="20" /></div>
               </div>
               <div className="lb-row">
                 <div>Title</div>
@@ -165,6 +242,41 @@ class App extends Component {
               <div className="lb-row">
                 <div>Logo</div>
                 <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className={this.state.logo_class} autoComplete="off" maxLength="256" /></div>
+              </div>
+              <div className="lb-row">
+                <div>Date</div>
+                <div>
+                  <DatePicker
+                    selected={this.state.dateOpen}
+                    onChange={this.handleChangeDateOpen}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    timeCaption="time"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    className="text_normal"
+                  />
+                  <DatePicker
+                    selected={this.state.dateClose}
+                    onChange={this.handleChangeDateClose}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    timeCaption="time"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    className="text_normal"
+                  />
+                </div>
+              </div>
+              <div className="lb-row">
+                <div>Zone</div>
+                <div>
+                  <Select
+                    options={timezones}
+                    onChange={this.handleChangeTimeZone}
+                    className="select_tz"
+                  />
+                </div>
               </div>
               <div className="lb-row">
                 <div></div>

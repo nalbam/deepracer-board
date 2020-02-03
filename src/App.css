@@ -147,13 +147,13 @@ footer {
 .lb-submit .lb-row>div:nth-child(1) {
   margin-top: 10px;
   min-width: 100px;
-  width: 20%;
+  width: 15%;
 }
 
 .lb-submit .lb-row>div:nth-child(2) {
   margin-right: auto;
   text-align: left;
-  width: 80%;
+  width: 85%;
 }
 
 .lb-submit .lb-row input {
@@ -164,6 +164,7 @@ footer {
   height: 40px;
   line-height: 20px;
   padding: 4px 10px;
+  margin-right: 20px;
 }
 
 .lb-submit .lb-row input:focus {
@@ -187,6 +188,11 @@ footer {
 .checkbox {
   width: 20px;
   margin-left: 20px;
+}
+
+.select_tz {
+  font-size: 18px;
+  color: #111;
 }
 
 .lb-btn-submit {
