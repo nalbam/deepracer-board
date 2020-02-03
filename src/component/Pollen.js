@@ -70,6 +70,10 @@ class App extends Component {
       this.particles.push(this.particle(width, height));
     }
 
+    if (!timeout) {
+      timeout = this.state.timeout;
+    }
+
     setTimeout(
       function () {
         this.stop();

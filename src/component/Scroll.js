@@ -3,11 +3,10 @@ import React, { Component, Fragment } from 'react';
 import $ from 'jquery';
 
 class App extends Component {
-  interval = 1000;
+  interval = 200;
 
   defaultTimeout = (10 * 60 * 1000) / this.interval;
   timeout = this.defaultTimeout;
-  // streaming = false;
 
   componentDidMount() {
     this.intervalId = setInterval(this.countdown.bind(this), this.interval);
@@ -19,9 +18,8 @@ class App extends Component {
 
   countdown() {
     this.timeout--;
-    // console.log(`timeout: ${this.timeout}`);
 
-    if (this.timeout === 0) {
+    if (this.timeout <= 0) {
       this.scroll('down');
     }
   }
@@ -30,6 +28,10 @@ class App extends Component {
     console.log(`scroll: ${dir}`);
 
     this.timeout = this.defaultTimeout;
+
+    if (!dir) {
+      dir = 'down';
+    }
 
     let scrollTop = 0;
     let duration = 1000;

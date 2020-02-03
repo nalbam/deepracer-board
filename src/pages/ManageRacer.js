@@ -50,7 +50,7 @@ class App extends Component {
           <LeagueHeader league={this.props.match.params.league} />
         </header>
         <div className="App-body">
-          <RacerForm />
+          <RacerForm league={this.props.match.params.league} />
         </div>
 
         <Popup status={this.state.popup} popInfo={this.state.popInfo} />

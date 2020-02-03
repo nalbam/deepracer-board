@@ -4,10 +4,18 @@ import { API } from 'aws-amplify'
 
 import Select from 'react-select'
 
+import Popup from './Popup';
+
 import backend from '../config/backend'
 import timezones from '../config/timezones'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.popupCmp = React.createRef();
+  }
+
   state = {
     dateClose: '',
     dateOpen: '',
@@ -29,13 +37,13 @@ class App extends Component {
   }
 
   getLeague = async () => {
-    if (!this.props.match.params.league) {
+    if (!this.props.league) {
       return;
     }
 
-    console.log(`getLeague ${this.props.match.params.league}`);
+    console.log(`getLeague ${this.props.league}`);
 
-    const res = await API.get(backend.api.leagues, `/leagues/object/${this.props.match.params.league}`);
+    const res = await API.get(backend.api.leagues, `/leagues/object/${this.props.league}`);
 
     console.log('getLeague ' + JSON.stringify(res, null, 2));
 
@@ -69,16 +77,18 @@ class App extends Component {
         dateTZ: this.state.dateTZ,
       };
 
+      console.log('postLeague: ' + JSON.stringify(body, null, 2));
+
       const res = await API.post(backend.api.leagues, '/leagues', {
         body: body
       });
 
-      console.log('postLeague: ' + JSON.stringify(body, null, 2));
       console.log('postLeague: ' + JSON.stringify(res, null, 2));
 
-      this.popup('Saved!');
+      // this.popup('Saved!');
+      this.popupCmp.current.start(3000, 'Saved!');
 
-      if (!this.props.match.params.league) {
+      if (!this.props.league) {
         this.setState({
           league: '',
           title: '',
@@ -91,7 +101,8 @@ class App extends Component {
     } catch (err) {
       console.log('postLeague: ' + JSON.stringify(err, null, 2));
 
-      this.popup(err.message);
+      // this.popup(err.message);
+      this.popupCmp.current.start(3000, err.message);
     }
   };
 
@@ -224,6 +235,7 @@ class App extends Component {
             </div>
           </div>
         </form>
+
       </Fragment>
     );
   }

@@ -2,9 +2,17 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
+import Popup from './Popup';
+
 import backend from '../config/backend'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.popupCmp = React.createRef();
+  }
+
   state = {
     email_class: 'text_normal width_80',
     email_valid: false,
@@ -23,21 +31,23 @@ class App extends Component {
 
     try {
       let body = {
-        league: this.props.match.params.league,
+        league: this.props.league,
         email: this.state.email,
         racerName: this.state.racerName,
         laptime: this.state.laptime,
         forceUpdate: this.state.forceUpdate,
       };
 
+      console.log('postLapTime: ' + JSON.stringify(body, null, 2));
+
       const res = await API.post(backend.api.times, '/items', {
         body: body
       });
 
-      console.log('postLapTime: ' + JSON.stringify(body, null, 2));
       console.log('postLapTime: ' + JSON.stringify(res, null, 2));
 
-      this.popup('Saved!');
+      // this.popup('Saved!');
+      this.popupCmp.current.start(3000, 'Saved!');
 
       this.setState({
         email: '',
@@ -48,7 +58,8 @@ class App extends Component {
     } catch (err) {
       console.log('postLapTime: ' + JSON.stringify(err, null, 2));
 
-      this.popup(err.message);
+      // this.popup(err.message);
+      this.popupCmp.current.start(3000, err.message);
     }
   };
 
@@ -121,7 +132,6 @@ class App extends Component {
     return (
       <Fragment>
         <form onSubmit={this.handleSubmit}>
-          <input type="hidden" name="league" value={this.props.match.params.league} />
           <div className="lb-submit">
             <div className="lb-row">
               <div>Email</div>
@@ -144,6 +154,8 @@ class App extends Component {
             </div>
           </div>
         </form>
+
+        <Popup ref={this.popupCmp} />
       </Fragment>
     );
   }

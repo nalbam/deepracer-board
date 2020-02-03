@@ -13,28 +13,29 @@ class App extends Component {
     timeout: 1000,
   }
 
-  streaming = false;
+  start(timeout, message) {
+    if (this.props.popInfo) {
+      this.setState({
+        popInfo: this.props.popInfo,
+      });
+    }
 
-  start(timeout) {
-    this.setState({
-      popInfo: this.props.popInfo,
-    });
+    if (!timeout) {
+      timeout = this.state.timeout;
+    }
 
-    this.streaming = true;
+    if (message) {
+      this.setState({
+        popInfo: {
+          footer: this.state.footer,
+          header: this.state.header,
+          message: message,
+          rank: this.state.rank,
+        }
+      });
+    }
 
-    $('.pop-layer').fadeIn();
-
-    setTimeout(
-      function () {
-        this.stop();
-      }.bind(this), timeout
-    );
-  }
-
-  stop() {
-    this.streaming = false;
-
-    $('.pop-layer').fadeOut();
+    $('.pop-layer').fadeIn().delay(timeout).fadeOut();
   }
 
   render() {
