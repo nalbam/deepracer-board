@@ -2,31 +2,33 @@ import React, { Component, Fragment } from 'react';
 
 import $ from 'jquery';
 
-class Popup extends Component {
+class App extends Component {
+  state = {
+    popInfo: {
+      footer: '',
+      header: '',
+      message: '',
+      rank: '',
+    },
+    timeout: 1000,
+  }
+
   streaming = false;
 
-  componentDidMount() {
-    this.status();
-    this.intervalId = setInterval(this.status.bind(this), 1000);
-  }
+  start(timeout) {
+    this.setState({
+      popInfo: this.props.popInfo,
+    });
 
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
-
-  status() {
-    if (this.streaming && !this.props.status) {
-      this.stop();
-    }
-    if (!this.streaming && this.props.status) {
-      this.start();
-    }
-  }
-
-  start() {
     this.streaming = true;
 
     $('.pop-layer').fadeIn();
+
+    setTimeout(
+      function () {
+        this.stop();
+      }.bind(this), timeout
+    );
   }
 
   stop() {
@@ -36,16 +38,16 @@ class Popup extends Component {
   }
 
   render() {
-    let messageClass = `pop-message pop-rank${this.props.popInfo.rank}`;
+    let messageClass = `pop-message pop-rank${this.state.popInfo.rank}`;
 
     return (
       <Fragment>
         <div className="pop-layer">
           <div className="pop-bg"></div>
           <div className="pop-container">
-            <div className="pop-header">{this.props.popInfo.header}</div>
-            <div className={messageClass}>{this.props.popInfo.message}</div>
-            <div className="pop-footer">{this.props.popInfo.footer}</div>
+            <div className="pop-header">{this.state.popInfo.header}</div>
+            <div className={messageClass}>{this.state.popInfo.message}</div>
+            <div className="pop-footer">{this.state.popInfo.footer}</div>
           </div>
         </div>
       </Fragment>
@@ -53,4 +55,4 @@ class Popup extends Component {
   }
 }
 
-export default Popup;
+export default App;

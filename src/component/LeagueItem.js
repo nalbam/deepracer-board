@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-class League extends Component {
+class App extends Component {
   render() {
     let leagueUrl = `/league/${this.props.item.league}`;
 
@@ -16,4 +16,4 @@ class League extends Component {
   }
 }
 
-export default League;
+export default App;

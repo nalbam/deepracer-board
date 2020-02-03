@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 
-class Pollen extends Component {
+class App extends Component {
   state = {
     alpha: 0.8,
     count: 300,
     frameInterval: 15,
     gradient: false,
     speed: 2,
+    timeout: 1000,
   }
 
   supportsAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -33,21 +34,6 @@ class Pollen extends Component {
 
   componentDidMount() {
     this.init();
-    this.status();
-    this.intervalId = setInterval(this.status.bind(this), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
-
-  status() {
-    if (this.streaming && !this.props.status) {
-      this.stop();
-    }
-    if (!this.streaming && this.props.status) {
-      this.start();
-    }
   }
 
   init() {
@@ -74,7 +60,7 @@ class Pollen extends Component {
     this.animate(this.context);
   }
 
-  start() {
+  start(timeout) {
     this.streaming = true;
 
     var width = window.innerWidth;
@@ -84,8 +70,11 @@ class Pollen extends Component {
       this.particles.push(this.particle(width, height));
     }
 
-    // this.animate(this.context);
-    // requestAnimationFrame(() => this.animate(this.context));
+    setTimeout(
+      function () {
+        this.stop();
+      }.bind(this), timeout
+    );
   }
 
   stop() {
@@ -181,4 +170,4 @@ class Pollen extends Component {
   }
 }
 
-export default Pollen;
+export default App;

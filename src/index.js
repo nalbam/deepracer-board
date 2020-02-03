@@ -7,9 +7,9 @@ import * as serviceWorker from './serviceWorker';
 import AppProvider from './context/AppProvider'
 
 import App from './App';
-import Create from './pages/Create'
-import League from './pages/League'
-import Submit from './pages/Submit'
+import Leaderboard from './pages/Leaderboard'
+import ManageLeague from './pages/ManageLeague'
+import ManageRacer from './pages/ManageRacer'
 import Timer from './pages/Timer'
 
 import Amplify, { Analytics } from 'aws-amplify'
@@ -27,10 +27,10 @@ const routing = (
         <Router>
             <Switch>
                 <Route exact path="/" component={App} />
-                <Route path="/manage/league/:league" component={Create} />
-                <Route path="/manage/league/" component={Create} />
-                <Route path="/league/:league" component={League} />
-                <Route path="/submit/:league" component={Submit} />
+                <Route path="/manage/racer/:league" component={ManageRacer} />
+                <Route path="/manage/league/:league" component={ManageLeague} />
+                <Route path="/manage/league/" component={ManageLeague} />
+                <Route path="/league/:league" component={Leaderboard} />
                 <Route path="/timer" component={Timer} />
                 <Route component={App} />
             </Switch>

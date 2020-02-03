@@ -4,7 +4,7 @@ import { API } from 'aws-amplify'
 
 import backend from '../config/backend'
 
-class Title extends Component {
+class App extends Component {
   state = {
     logo: '/icon-trophy.png',
     title: '',
@@ -46,4 +46,4 @@ class Title extends Component {
   }
 }
 
-export default Title;
+export default App;

@@ -1,18 +1,11 @@
 import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
-import { withAuthenticator, Authenticator } from 'aws-amplify-react'
 
-import DatePicker from 'react-datepicker';
 import Select from 'react-select'
 
 import backend from '../config/backend'
-import signUpConfig from '../config/signUpConfig'
 import timezones from '../config/timezones'
-
-import Popup from '../component/Popup';
-
-import 'react-datepicker/dist/react-datepicker.css';
 
 class App extends Component {
   state = {
@@ -26,13 +19,6 @@ class App extends Component {
     logo_class: 'text_normal width_80',
     logo_valid: false,
     logo: '',
-    popInfo: {
-      footer: '',
-      header: '',
-      message: 'Saved!',
-      rank: '',
-    },
-    popup: false,
     title_class: 'text_normal width_80',
     title_valid: false,
     title: '',
@@ -119,27 +105,6 @@ class App extends Component {
     return re.test(val);
   }
 
-  popup(message) {
-    if (message) {
-      this.setState({
-        popInfo: {
-          footer: '',
-          header: '',
-          message: message,
-          rank: '',
-        },
-      });
-    }
-
-    this.setState({ popup: true });
-
-    setTimeout(
-      function () {
-        this.setState({ popup: false });
-      }.bind(this), 3000
-    );
-  }
-
   getClass(b) {
     if (b) {
       return 'text_normal';
@@ -222,76 +187,46 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <header className="App-header auth">
-          <Authenticator usernameAttributes='email' />
-        </header>
-        <header className="App-header">
-          <h1 className="title">{this.state.title}</h1>
-        </header>
-        <div className="App-body">
-          <form onSubmit={this.handleSubmit}>
-            <div className="lb-submit">
-              <div className="lb-row">
-                <div>League</div>
-                <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete="off" maxLength="20" /></div>
-              </div>
-              <div className="lb-row">
-                <div>Title</div>
-                <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="64" /></div>
-              </div>
-              <div className="lb-row">
-                <div>Logo</div>
-                <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className={this.state.logo_class} autoComplete="off" maxLength="256" /></div>
-              </div>
-              <div className="lb-row">
-                <div>Date</div>
-                <div>
-                  <DatePicker
-                    selected={this.state.dateOpen}
-                    onChange={this.handleChangeDateOpen}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={30}
-                    timeCaption="time"
-                    dateFormat="yyyy-MM-dd HH:mm"
-                    className="text_normal"
-                  />
-                  <DatePicker
-                    selected={this.state.dateClose}
-                    onChange={this.handleChangeDateClose}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={30}
-                    timeCaption="time"
-                    dateFormat="yyyy-MM-dd HH:mm"
-                    className="text_normal"
-                  />
-                </div>
-              </div>
-              <div className="lb-row">
-                <div>Zone</div>
-                <div>
-                  <Select
-                    options={timezones}
-                    onChange={this.handleChangeTimeZone}
-                    className="select_tz"
-                  />
-                </div>
-              </div>
-              <div className="lb-row">
-                <div></div>
-                <div><button type="submit" className="lb-btn-submit">Submit</button></div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="lb-submit">
+            <div className="lb-row">
+              <div>League</div>
+              <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete="off" maxLength="20" /></div>
+            </div>
+            <div className="lb-row">
+              <div>Title</div>
+              <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="64" /></div>
+            </div>
+            <div className="lb-row">
+              <div>Logo</div>
+              <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className={this.state.logo_class} autoComplete="off" maxLength="256" /></div>
+            </div>
+            <div className="lb-row">
+              <div>Date</div>
+              <div>
+                <input type="text" name="dateOpen" value={this.state.dateOpen} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="16" />
+                <input type="text" name="dateClose" value={this.state.dateClose} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="16" />
               </div>
             </div>
-          </form>
-        </div>
-
-        <Popup status={this.state.popup} popInfo={this.state.popInfo} />
+            <div className="lb-row">
+              <div>Zone</div>
+              <div>
+                <Select
+                  options={timezones}
+                  onChange={this.handleChangeTimeZone}
+                  className="select_tz"
+                />
+              </div>
+            </div>
+            <div className="lb-row">
+              <div></div>
+              <div><button type="submit" className="lb-btn-submit">Submit</button></div>
+            </div>
+          </div>
+        </form>
       </Fragment>
     );
   }
 }
 
-// export default App;
-// export default withAuthenticator(App, true);
-export default withAuthenticator(App, { usernameAttributes: 'email', signUpConfig });
+export default App;

@@ -4,7 +4,7 @@ import { API } from 'aws-amplify'
 
 import backend from './config/backend'
 
-import League from './component/League';
+import LeagueItem from './component/LeagueItem';
 
 import './App.css';
 import './pop.css';
@@ -43,8 +43,8 @@ class App extends Component {
   }
 
   render() {
-    const list = this.state.items.map(
-      (item, index) => (<League key={index} item={item} />)
+    const leagueList = this.state.items.map(
+      (item, index) => (<LeagueItem key={index} item={item} />)
     );
 
     return (
@@ -60,7 +60,7 @@ class App extends Component {
             <div>Title</div>
             <div>League</div>
           </div>
-          {list}
+          {leagueList}
         </div>
       </Fragment>
     );

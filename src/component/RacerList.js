@@ -6,10 +6,18 @@ import backend from '../config/backend'
 
 import Pollen from './Pollen';
 import Popup from './Popup';
-import Racer from './Racer';
+import RacerItem from './RacerItem';
 import Scroll from './Scroll';
 
-class Times extends Component {
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.pollenCmp = React.createRef();
+    this.popupCmp = React.createRef();
+    this.scrollCmp = React.createRef();
+  }
+
   state = {
     items: [],
     pollen: false,
@@ -106,52 +114,28 @@ class Times extends Component {
   }
 
   fanfare(rank) {
-    this.scroll(rank);
+    // this.scroll(rank);
 
-    this.pollen();
+    this.scrollCmp.current.scroll(rank);
 
-    this.popup();
+    this.pollenCmp.current.start(5000);
+
+    this.popupCmp.current.start(5000);
 
     // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
   }
 
-  scroll(rank) {
-    this.setState({
-      scroll: rank,
-    });
+  // scroll(rank) {
+  //   this.setState({
+  //     scroll: rank,
+  //   });
 
-    setTimeout(
-      function () {
-        this.setState({ scroll: 0 });
-      }.bind(this), 5000
-    );
-  }
-
-  pollen() {
-    this.setState({
-      pollen: true,
-    });
-
-    setTimeout(
-      function () {
-        this.setState({ pollen: false });
-      }.bind(this), 5000
-    );
-  }
-
-  popup() {
-    setTimeout(
-      function () {
-        this.setState({ popup: true });
-      }.bind(this), 1000
-    );
-
-    setTimeout(
-      function () {
-        this.setState({ popup: false });
-      }.bind(this), 6000
-    );
-  }
+  //   setTimeout(
+  //     function () {
+  //       this.setState({ scroll: 0 });
+  //     }.bind(this), 5000
+  //   );
+  // }
 
   compare(a, b) {
     let a1 = a.laptime.split(':');
@@ -167,8 +151,8 @@ class Times extends Component {
   }
 
   render() {
-    const list = this.state.items.map(
-      (item, index) => (<Racer key={index} rank={index + 1} item={item} />)
+    const racerList = this.state.items.map(
+      (item, index) => (<RacerItem key={index} rank={index + 1} item={item} />)
     );
 
     return (
@@ -179,7 +163,7 @@ class Times extends Component {
             <div>Name</div>
             <div>Time</div>
           </div>
-          {list}
+          {racerList}
         </div>
 
         <div className="pop-logo">
@@ -188,11 +172,11 @@ class Times extends Component {
           </div>
         </div>
 
-        <Pollen status={this.state.pollen} />
+        <Pollen ref={this.pollenCmp} />
 
-        <Popup status={this.state.popup} popInfo={this.state.popInfo} />
+        <Popup ref={this.popupCmp} popInfo={this.state.popInfo} />
 
-        <Scroll status={this.state.scroll} items={this.state.items.length} />
+        <Scroll ref={this.scrollCmp} items={this.state.items.length} />
 
         <footer className="lb-footer"></footer>
       </Fragment>
@@ -200,4 +184,4 @@ class Times extends Component {
   }
 }
 
-export default Times;
+export default App;

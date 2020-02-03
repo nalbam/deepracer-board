@@ -2,56 +2,41 @@ import React, { Component, Fragment } from 'react';
 
 import $ from 'jquery';
 
-class Scroll extends Component {
-  interval = 200;
-  scroller = (1000 / this.interval) * 600;
-  streaming = false;
+class App extends Component {
+  interval = 1000;
+
+  defaultTimeout = (10 * 60 * 1000) / this.interval;
+  timeout = this.defaultTimeout;
+  // streaming = false;
 
   componentDidMount() {
-    this.intervalId = setInterval(this.status.bind(this), this.interval);
+    this.intervalId = setInterval(this.countdown.bind(this), this.interval);
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
 
-  status() {
-    if (!this.streaming && this.props.status > 0) {
-      this.streaming = true;
-      this.scroller = 0
+  countdown() {
+    this.timeout--;
+    // console.log(`timeout: ${this.timeout}`);
 
-      this.scroll(this.props.status);
-    }
-    if (this.streaming && this.props.status <= 0) {
-      this.streaming = false;
-    }
-    if (this.streaming) {
-      return;
-    }
-
-    this.scroller--;
-    // console.log(`scroller: ${this.scroller}`);
-
-    if (this.scroller === 0) {
+    if (this.timeout === 0) {
       this.scroll('down');
-    }
-
-    if (this.scroller < ((1000 / this.interval) * -10)) {
-      this.scroller = (1000 / this.interval) * 600;
-      this.scroll('up');
     }
   }
 
   scroll(dir) {
+    console.log(`scroll: ${dir}`);
+
+    this.timeout = this.defaultTimeout;
+
     let scrollTop = 0;
     let duration = 1000;
+    let delay = 1000;
     let max = 5;
 
-    if (dir === 'up') {
-      scrollTop = 0;
-      // duration = 1000;
-      // this.scroller = 0;
-    } else if (dir === 'down') {
+    if (dir === 'down') {
       dir = this.props.items;
       if (dir <= max) {
         return;
@@ -62,20 +47,22 @@ class Scroll extends Component {
       dir = dir - max;
       scrollTop = $(`.lb-rank${dir}`).offset().top;
       duration = dir * 1000;
-      // this.scroller = parseInt(duration / 1000);
+      delay = 3000;
     } else {
       if (dir <= max) {
         return;
       }
       dir = dir - max;
       scrollTop = $(`.lb-rank${dir}`).offset().top;
-      // duration = 1000;
-      // this.scroller = 20;
+      duration = 1000;
+      delay = 10000;
     }
 
     $('html, body').stop().animate({
       scrollTop: scrollTop
-    }, duration);
+    }, duration).delay(delay).animate({
+      scrollTop: 0
+    }, 1000);
   }
 
   render() {
@@ -87,4 +74,4 @@ class Scroll extends Component {
   }
 }
 
-export default Scroll;
+export default App;

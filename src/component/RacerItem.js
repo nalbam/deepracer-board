@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-class Racer extends Component {
+class App extends Component {
   render() {
     let racerClass = `lb-row lb-rank${this.props.rank}`;
     let racerRank = this.props.rank;
@@ -22,4 +22,4 @@ class Racer extends Component {
   }
 }
 
-export default Racer;
+export default App;
