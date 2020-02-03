@@ -11,8 +11,11 @@ import Title from '../component/Title';
 
 class App extends Component {
   state = {
+    email_class: 'text_normal',
     email_valid: false,
     email: '',
+    forceUpdate: false,
+    laptime_class: 'text_normal',
     laptime_valid: false,
     laptime: '',
     popInfo: {
@@ -22,6 +25,7 @@ class App extends Component {
       rank: '',
     },
     popup: false,
+    racerName_class: 'text_normal',
     racerName_valid: false,
     racerName: '',
   }
@@ -46,6 +50,7 @@ class App extends Component {
           email: this.state.email,
           racerName: this.state.racerName,
           laptime: this.state.laptime,
+          forceUpdate: this.state.forceUpdate,
         }
       });
 
@@ -54,9 +59,10 @@ class App extends Component {
       this.popup('Saved!');
 
       this.setState({
-        league: '',
-        logo: '',
-        title: '',
+        email: '',
+        racerName: '',
+        laptime: '',
+        forceUpdate: false,
       });
     } catch (err) {
       console.log('post api: ' + JSON.stringify(err, null, 2));
@@ -86,13 +92,11 @@ class App extends Component {
     );
   }
 
-  setColor(e, b) {
+  getClass(b) {
     if (b) {
-      e.classList.add('text_normal');
-      e.classList.remove('text_red');
+      return 'text_normal';
     } else {
-      e.classList.remove('text_normal');
-      e.classList.add('text_red');
+      return 'text_red';
     }
   }
 
@@ -101,32 +105,40 @@ class App extends Component {
       let email_valid = (e.target.value !== '') && this.validateEmail(e.target.value);
       this.setState({
         email: e.target.value,
-        email_valid: email_valid
+        email_class: this.getClass(email_valid),
+        email_valid: email_valid,
       })
-      this.setColor(e.target, email_valid);
     }
 
     if (e.target.name === 'racerName') {
       let racerName_valid = (e.target.value !== '');
       this.setState({
         racerName: e.target.value,
-        racerName_valid: racerName_valid
+        racerName_class: this.getClass(racerName_valid),
+        racerName_valid: racerName_valid,
       })
-      this.setColor(e.target, racerName_valid);
     }
 
     if (e.target.name === 'laptime') {
       let laptime_valid = (e.target.value !== '') && this.validateTime(e.target.value);
       this.setState({
         laptime: e.target.value,
-        laptime_valid: laptime_valid
+        laptime_class: this.getClass(laptime_valid),
+        laptime_valid: laptime_valid,
       })
-      this.setColor(e.target, laptime_valid);
     }
 
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  handleCheckBox = (e) => {
+    if (e.target.name === 'forceUpdate') {
+      this.setState({
+        [e.target.name]: e.target.checked
+      })
+    }
   }
 
   handleSubmit = (e) => {
@@ -154,15 +166,18 @@ class App extends Component {
             <div className="lb-submit">
               <div className="lb-row">
                 <div>Email</div>
-                <div><input type="text" name="email" value={this.state.email} placeholder="" onChange={this.handleChange} className="lb-email text_normal" autoComplete="off" maxLength="256" /></div>
+                <div><input type="text" name="email" value={this.state.email} placeholder="" onChange={this.handleChange} className={this.state.email_class} autoComplete="off" maxLength="256" /></div>
               </div>
               <div className="lb-row">
                 <div>Name</div>
-                <div><input type="text" name="racerName" value={this.state.racerName} placeholder="" onChange={this.handleChange} className="lb-name text_normal" autoComplete="off" maxLength="32" /></div>
+                <div><input type="text" name="racerName" value={this.state.racerName} placeholder="" onChange={this.handleChange} className={this.state.racerName_class} autoComplete="off" maxLength="32" /></div>
               </div>
               <div className="lb-row">
                 <div>Time</div>
-                <div><input type="text" name="laptime" value={this.state.laptime} placeholder="00:00.000" onChange={this.handleChange} className="lb-time text_normal" autoComplete="off" maxLength="9" /></div>
+                <div>
+                  <input type="text" name="laptime" value={this.state.laptime} placeholder="00:00.000" onChange={this.handleChange} className={this.state.laptime_class} autoComplete="off" maxLength="9" />
+                  <label><input type="checkbox" name="forceUpdate" value="Y" checked={this.state.forceUpdate} onChange={this.handleCheckBox} className="checkbox" /> Force update</label>
+                </div>
               </div>
               <div className="lb-row">
                 <div></div>

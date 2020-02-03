@@ -300,14 +300,16 @@ app.post(path, function (req, res) {
           }
         }
 
-        let a1 = data.Item.laptime.split(':');
-        let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
+        if (!req.body.forceUpdate) {
+          let a1 = data.Item.laptime.split(':');
+          let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
 
-        let a2 = req.body.laptime.split(':');
-        let newlaptime = ((+a2[0]) * 60) + (+a2[1]);
+          let a2 = req.body.laptime.split(':');
+          let newlaptime = ((+a2[0]) * 60) + (+a2[1]);
 
-        if (oldlaptime < newlaptime) {
-          req.body.laptime = data.Item.laptime;
+          if (oldlaptime < newlaptime) {
+            req.body.laptime = data.Item.laptime;
+          }
         }
 
         let upateItemParams = {

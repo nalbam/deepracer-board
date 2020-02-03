@@ -133,6 +133,9 @@ footer {
 .lb-submit .lb-row {
   display: flex;
   width: 100%;
+  background: linear-gradient(90deg, #405666 0, #3d246b);
+  color: #fff;
+  margin-bottom: 5px;
 }
 
 .lb-submit .lb-row>div {
@@ -144,30 +147,24 @@ footer {
 .lb-submit .lb-row>div:nth-child(1) {
   margin-top: 10px;
   min-width: 100px;
-  width: 15%;
+  width: 20%;
 }
 
 .lb-submit .lb-row>div:nth-child(2) {
   margin-right: auto;
   text-align: left;
-  width: 60%;
-}
-
-.lb-submit .lb-row {
-  background: linear-gradient(90deg, #405666 0, #3d246b);
-  color: #fff;
-  margin-bottom: 5px;
+  width: 80%;
 }
 
 .lb-submit .lb-row input {
   background-color: transparent;
-  border-radius: 2px;
+  border-radius: 3px;
   border: 1px solid #aab7b8;
   font-size: 32px;
   height: 40px;
   line-height: 20px;
   padding: 4px 10px;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .lb-submit .lb-row input:focus {
@@ -182,6 +179,11 @@ footer {
 
 .text_red {
   color: #e55;
+}
+
+.checkbox {
+  width: 20px;
+  margin-left: 20px;
 }
 
 .lb-btn-submit {
