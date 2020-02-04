@@ -104,7 +104,7 @@ class App extends Component {
     if (!v) {
       v = this.state.laptime;
     }
-    let b = (v !== '' && this.validateUrl(v));
+    let b = (v !== '' && this.validateTime(v));
     this.setState({
       laptime_class: this.getClassValue(b),
     });
@@ -142,7 +142,7 @@ class App extends Component {
 
   handleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.checked
+      [e.target.name]: e.target.value
     });
 
     this.validate(e.target.name, e.target.value);
