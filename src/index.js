@@ -8,6 +8,7 @@ import AppProvider from './context/AppProvider'
 
 import App from './App';
 import Leaderboard from './pages/Leaderboard'
+import Manage from './pages/Manage'
 import ManageLeague from './pages/ManageLeague'
 import ManageRacer from './pages/ManageRacer'
 import Timer from './pages/Timer'
@@ -30,6 +31,7 @@ const routing = (
                 <Route path="/manage/racer/:league" component={ManageRacer} />
                 <Route path="/manage/league/:league" component={ManageLeague} />
                 <Route path="/manage/league/" component={ManageLeague} />
+                <Route path="/manage/" component={Manage} />
                 <Route path="/league/:league" component={Leaderboard} />
                 <Route path="/timer" component={Timer} />
                 <Route component={App} />

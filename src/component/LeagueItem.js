@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 class App extends Component {
   render() {
-    let leagueUrl = `/league/${this.props.item.league}`;
+    let leagueUrl = `${this.props.pathPrefix}/league/${this.props.item.league}`;
 
     return (
       <Fragment>
