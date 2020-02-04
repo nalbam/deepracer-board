@@ -127,9 +127,6 @@ class App extends Component {
   }
 
   validateLeague(v) {
-    if (!v) {
-      v = this.state.league;
-    }
     let b = (v !== '' && this.validateString(v));
     this.setState({
       league_class: this.getClassValue(v, 'width_80'),
@@ -138,9 +135,6 @@ class App extends Component {
   }
 
   validateTitle(v) {
-    if (!v) {
-      v = this.state.title;
-    }
     let b = (v !== '');
     this.setState({
       title_class: this.getClassValue(b, 'width_80'),
@@ -149,9 +143,6 @@ class App extends Component {
   }
 
   validateLogo(v) {
-    if (!v) {
-      v = this.state.logo;
-    }
     let b = (v !== '' && this.validateUrl(v));
     this.setState({
       logo_class: this.getClassValue(b, 'width_80'),
@@ -160,10 +151,7 @@ class App extends Component {
   }
 
   validateDateClose(v) {
-    if (!v) {
-      v = this.state.dateClose;
-    }
-    let b = (this.validateDate(v));
+    let b = (v === '' || this.validateDate(v));
     this.setState({
       dateClose_class: this.getClassValue(b),
     });
@@ -171,10 +159,7 @@ class App extends Component {
   }
 
   validateDateOpen(v) {
-    if (!v) {
-      v = this.state.dateOpen;
-    }
-    let b = (this.validateDate(v));
+    let b = (v === '' || this.validateDate(v));
     this.setState({
       dateOpen_class: this.getClassValue(b),
     });
@@ -182,11 +167,11 @@ class App extends Component {
   }
 
   validateAll() {
-    let b = this.validateLeague();
-    b = this.validateTitle() && b;
-    b = this.validateLogo() && b;
-    b = this.validateDateClose() && b;
-    b = this.validateDateOpen() && b;
+    let b = this.validateLeague(this.state.league);
+    b = this.validateTitle(this.state.title) && b;
+    b = this.validateLogo(this.state.logo) && b;
+    b = this.validateDateClose(this.state.dateClose) && b;
+    b = this.validateDateOpen(this.state.dateOpen) && b;
     return b;
   }
 
@@ -223,9 +208,9 @@ class App extends Component {
     this.validate(e.target.name, e.target.value);
   }
 
-  handleChangeTZ = (v) => {
+  handleChangeTZ = (e) => {
     this.setState({
-      dateTZ: v,
+      dateTZ: e,
     });
   }
 

@@ -79,9 +79,6 @@ class App extends Component {
   }
 
   validateRacerEmail(v) {
-    if (!v) {
-      v = this.state.email;
-    }
     let b = (v !== '' && this.validateEmail(v));
     this.setState({
       email_class: this.getClassValue(v, 'width_80'),
@@ -90,9 +87,6 @@ class App extends Component {
   }
 
   validateRacerName(v) {
-    if (!v) {
-      v = this.state.racerName;
-    }
     let b = (v !== '');
     this.setState({
       racerName_class: this.getClassValue(b, 'width_80'),
@@ -101,9 +95,6 @@ class App extends Component {
   }
 
   validateRacerTime(v) {
-    if (!v) {
-      v = this.state.laptime;
-    }
     let b = (v !== '' && this.validateTime(v));
     this.setState({
       laptime_class: this.getClassValue(b),
@@ -112,9 +103,9 @@ class App extends Component {
   }
 
   validateAll() {
-    let b = this.validateRacerEmail();
-    b = this.validateRacerName() && b;
-    b = this.validateRacerTime() && b;
+    let b = this.validateRacerEmail(this.state.email);
+    b = this.validateRacerName(this.state.racerName) && b;
+    b = this.validateRacerTime(this.state.laptime) && b;
     return b;
   }
 
