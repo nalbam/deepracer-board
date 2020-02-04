@@ -16,7 +16,7 @@ jobs:
             curl -sLo target/builder.sh toast.sh/builder
             bash ./target/builder.sh
             npm install
-            npm run build
+            # npm run build
       - persist_to_workspace:
           root: ~/works
           paths:
