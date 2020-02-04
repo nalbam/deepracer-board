@@ -17,18 +17,17 @@ class App extends Component {
   }
 
   state = {
+    dateClose_class: 'text_normal',
     dateClose: '',
+    dateOpen_class: 'text_normal',
     dateOpen: '',
     dateTZ: '',
     league_class: 'text_normal width_80',
     league_read: false,
-    league_valid: false,
     league: '',
     logo_class: 'text_normal width_80',
-    logo_valid: false,
     logo: '',
     title_class: 'text_normal width_80',
-    title_valid: false,
     title: '',
   }
 
@@ -41,26 +40,24 @@ class App extends Component {
       return;
     }
 
-    console.log(`getLeague ${this.props.league}`);
+    console.log(`getLeague: ${this.props.league}`);
 
     const res = await API.get(backend.api.leagues, `/leagues/object/${this.props.league}`);
 
-    console.log('getLeague ' + JSON.stringify(res, null, 2));
+    console.log(`getLeague: ${JSON.stringify(res, null, 2)}`);
 
     if (res && res.league) {
       this.setState({
         league: res.league,
         title: res.title,
         logo: res.logo,
-        dateClose: res.dateClose,
-        dateOpen: res.dateOpen,
-        dateTZ: res.dateTZ,
+        dateClose: res.dateClose ? res.dateClose : '',
+        dateOpen: res.dateOpen ? res.dateOpen : '',
+        dateTZ: res.dateTZ ? res.dateTZ : '',
         league_read: true,
       });
 
-      this.validateLeague(res.league);
-      this.validateTitle(res.title);
-      this.validateLogo(res.logo);
+      this.validateAll();
     }
   };
 
@@ -77,13 +74,13 @@ class App extends Component {
         dateTZ: this.state.dateTZ,
       };
 
-      console.log('postLeague: ' + JSON.stringify(body, null, 2));
+      console.log(`postLeague: ${JSON.stringify(body, null, 2)}`);
 
       const res = await API.post(backend.api.leagues, '/leagues', {
         body: body
       });
 
-      console.log('postLeague: ' + JSON.stringify(res, null, 2));
+      console.log(`postLeague: ${JSON.stringify(res, null, 2)}`);
 
       // this.popup('Saved!');
       this.popupCmp.current.start(3000, 'Saved!');
@@ -99,7 +96,7 @@ class App extends Component {
         });
       }
     } catch (err) {
-      console.log('postLeague: ' + JSON.stringify(err, null, 2));
+      console.log(`postLeague: ${JSON.stringify(err, null, 2)}`);
 
       // this.popup(err.message);
       this.popupCmp.current.start(3000, err.message);
@@ -116,83 +113,130 @@ class App extends Component {
     return re.test(val);
   }
 
-  getClass(b) {
+  validateDate(val) {
+    var re = /^[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}$/;
+    return re.test(val);
+  }
+
+  getClassValue(b, v) {
     if (b) {
-      return 'text_normal';
+      return `text_normal ${v}`;
     } else {
-      return 'text_red';
+      return `text_red ${v}`;
     }
   }
 
   validateLeague(v) {
-    let league_valid = (v !== '') && this.validateString(v);
+    if (!v) {
+      v = this.state.league;
+    }
+    let b = (v !== '' && this.validateString(v));
     this.setState({
-      league: v,
-      league_class: `${this.getClass(league_valid)} width_80`,
-      league_valid: league_valid,
+      league_class: this.getClassValue(v, 'width_80'),
     });
+    return b;
   }
 
   validateTitle(v) {
-    let title_valid = (v !== '');
+    if (!v) {
+      v = this.state.title;
+    }
+    let b = (v !== '');
     this.setState({
-      title: v,
-      title_class: `${this.getClass(title_valid)} width_80`,
-      title_valid: title_valid,
+      title_class: this.getClassValue(b, 'width_80'),
     });
+    return b;
   }
 
   validateLogo(v) {
-    let logo_valid = (v !== '') && this.validateUrl(v);
+    if (!v) {
+      v = this.state.logo;
+    }
+    let b = (v !== '' && this.validateUrl(v));
     this.setState({
-      logo: v,
-      logo_class: `${this.getClass(logo_valid)} width_80`,
-      logo_valid: logo_valid,
+      logo_class: this.getClassValue(b, 'width_80'),
     });
+    return b;
+  }
+
+  validateDateClose(v) {
+    if (!v) {
+      v = this.state.dateClose;
+    }
+    let b = (this.validateDate(v));
+    this.setState({
+      dateClose_class: this.getClassValue(b),
+    });
+    return b;
+  }
+
+  validateDateOpen(v) {
+    if (!v) {
+      v = this.state.dateOpen;
+    }
+    let b = (this.validateDate(v));
+    this.setState({
+      dateOpen_class: this.getClassValue(b),
+    });
+    return b;
+  }
+
+  validateAll() {
+    let b = this.validateLeague();
+    b = this.validateTitle() && b;
+    b = this.validateLogo() && b;
+    b = this.validateDateClose() && b;
+    b = this.validateDateOpen() && b;
+    return b;
+  }
+
+  validate(k, v) {
+    let b = false;
+
+    switch (k) {
+      case 'league':
+        b = this.validateLeague(v);
+        break;
+      case 'title':
+        b = this.validateTitle(v);
+        break;
+      case 'logo':
+        b = this.validateLogo(v);
+        break;
+      case 'dateClose':
+        b = this.validateDateClose(v);
+        break;
+      case 'dateOpen':
+        b = this.validateDateOpen(v);
+        break;
+      default:
+    }
+
+    return b;
   }
 
   handleChange = (e) => {
-    if (e.target.name === 'league') {
-      this.validateLeague(e.target.value);
-    }
-
-    if (e.target.name === 'title') {
-      this.validateTitle(e.target.value);
-    }
-
-    if (e.target.name === 'logo') {
-      this.validateLogo(e.target.value);
-    }
-  }
-
-  handleChangeDateOpen = v => {
     this.setState({
-      dateOpen: v
+      [e.target.name]: e.target.value,
     });
+
+    this.validate(e.target.name, e.target.value);
   }
 
-  handleChangeDateClose = v => {
+  handleChangeTZ = (v) => {
     this.setState({
-      dateClose: v
-    });
-  }
-
-  handleChangeTimeZone = e => {
-    this.setState({
-      dateTZ: e.value
+      dateTZ: v,
     });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(`handleSubmit: ${this.state.league_valid} ${this.state.logo_valid} ${this.state.title_valid}`);
-
-    if (this.state.league_valid && this.state.logo_valid && this.state.title_valid) {
-      this.postLeague();
+    if (!this.validateAll()) {
+      return;
     }
 
-    return false;
+    this.postLeague();
   }
 
   render() {
@@ -215,8 +259,8 @@ class App extends Component {
             <div className="lb-row">
               <div>Date</div>
               <div>
-                <input type="text" name="dateOpen" value={this.state.dateOpen} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="16" />
-                <input type="text" name="dateClose" value={this.state.dateClose} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="16" />
+                <input type="text" name="dateOpen" value={this.state.dateOpen} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.dateOpen_class} autoComplete="off" maxLength="16" />
+                <input type="text" name="dateClose" value={this.state.dateClose} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.dateClose_class} autoComplete="off" maxLength="16" />
               </div>
             </div>
             <div className="lb-row">
@@ -224,7 +268,7 @@ class App extends Component {
               <div>
                 <Select
                   options={timezones}
-                  onChange={this.handleChangeTimeZone}
+                  onChange={this.handleChangeTZ}
                   className="select_tz"
                 />
               </div>
@@ -236,6 +280,7 @@ class App extends Component {
           </div>
         </form>
 
+        <Popup ref={this.popupCmp} />
       </Fragment>
     );
   }

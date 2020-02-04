@@ -6,40 +6,8 @@ import signUpConfig from '../config/signUpConfig'
 
 import LeagueHeader from '../component/LeagueHeader';
 import RacerForm from '../component/RacerForm';
-import Popup from '../component/Popup';
 
 class App extends Component {
-  state = {
-    popInfo: {
-      footer: '',
-      header: '',
-      message: 'Saved!',
-      rank: '',
-    },
-    popup: false,
-  }
-
-  popup(v) {
-    if (v) {
-      this.setState({
-        popInfo: {
-          footer: '',
-          header: '',
-          message: v,
-          rank: '',
-        },
-      });
-    }
-
-    this.setState({ popup: true });
-
-    setTimeout(
-      function () {
-        this.setState({ popup: false });
-      }.bind(this), 3000
-    );
-  }
-
   render() {
     return (
       <Fragment>
@@ -52,8 +20,6 @@ class App extends Component {
         <div className="App-body">
           <RacerForm league={this.props.match.params.league} />
         </div>
-
-        <Popup status={this.state.popup} popInfo={this.state.popInfo} />
       </Fragment>
     );
   }

@@ -133,7 +133,7 @@ footer {
 .lb-submit .lb-row {
   display: flex;
   width: 100%;
-  background: linear-gradient(90deg, #405666 0, #3d246b);
+  background: linear-gradient(90deg, #456 0, #326);
   color: #fff;
   margin-bottom: 5px;
 }
@@ -159,7 +159,6 @@ footer {
 .lb-submit .lb-row input {
   background-color: transparent;
   border-radius: 3px;
-  border: 1px solid #aab7b8;
   font-size: 32px;
   height: 40px;
   line-height: 20px;
@@ -168,17 +167,19 @@ footer {
 }
 
 .lb-submit .lb-row input:focus {
-  border: 1px solid #00a1c9;
-  box-shadow: 0 0 0 1px #00a1c9;
+  border: 1px solid #0ac;
+  box-shadow: 0 0 0 1px #0ac;
   outline: 0;
 }
 
 .text_normal {
   color: #fff;
+  border: 1px solid #aaa;
 }
 
 .text_red {
   color: #e55;
+  border: 1px solid #e55;
 }
 
 .width_80 {
@@ -196,9 +197,9 @@ footer {
 }
 
 .lb-btn-submit {
-  background-color: #ec7211;
-  background-image: linear-gradient(180deg, #f67c1b 0, #e15500);
-  border-color: #e76d0c #e15500 #e15500;
+  background-color: #e71;
+  background-image: linear-gradient(180deg, #f71 0, #e50);
+  border-color: #e60 #e50 #e50;
   border-radius: 3px;
   color: #fff;
   cursor: pointer;

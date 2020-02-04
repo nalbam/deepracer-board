@@ -15,14 +15,11 @@ class App extends Component {
 
   state = {
     email_class: 'text_normal width_80',
-    email_valid: false,
     email: '',
     forceUpdate: false,
     laptime_class: 'text_normal',
-    laptime_valid: false,
     laptime: '',
     racerName_class: 'text_normal width_80',
-    racerName_valid: false,
     racerName: '',
   }
 
@@ -73,59 +70,98 @@ class App extends Component {
     return re.test(val);
   }
 
-  getClass(b) {
+  getClassValue(b, v) {
     if (b) {
-      return 'text_normal';
+      return `text_normal ${v}`;
     } else {
-      return 'text_red';
+      return `text_red ${v}`;
     }
+  }
+
+  validateRacerEmail(v) {
+    if (!v) {
+      v = this.state.email;
+    }
+    let b = (v !== '' && this.validateEmail(v));
+    this.setState({
+      email_class: this.getClassValue(v, 'width_80'),
+    });
+    return b;
+  }
+
+  validateRacerName(v) {
+    if (!v) {
+      v = this.state.racerName;
+    }
+    let b = (v !== '');
+    this.setState({
+      racerName_class: this.getClassValue(b, 'width_80'),
+    });
+    return b;
+  }
+
+  validateRacerTime(v) {
+    if (!v) {
+      v = this.state.laptime;
+    }
+    let b = (v !== '' && this.validateUrl(v));
+    this.setState({
+      laptime_class: this.getClassValue(b),
+    });
+    return b;
+  }
+
+  validateAll() {
+    let b = this.validateRacerEmail();
+    b = this.validateRacerName() && b;
+    b = this.validateRacerTime() && b;
+    return b;
+  }
+
+  validate(k, v) {
+    let b = false;
+
+    switch (k) {
+      case 'email':
+        b = this.validateRacerEmail(v);
+        break;
+      case 'racerName':
+        b = this.validateRacerName(v);
+        break;
+      case 'laptime':
+        b = this.validateRacerTime(v);
+        break;
+      case 'forceUpdate':
+        b = true;
+        break;
+      default:
+    }
+
+    return b;
   }
 
   handleChange = (e) => {
-    if (e.target.name === 'email') {
-      let email_valid = (e.target.value !== '') && this.validateEmail(e.target.value);
-      this.setState({
-        email: e.target.value,
-        email_class: `${this.getClass(email_valid)} width_80`,
-        email_valid: email_valid,
-      })
-    }
+    this.setState({
+      [e.target.name]: e.target.checked
+    });
 
-    if (e.target.name === 'racerName') {
-      let racerName_valid = (e.target.value !== '');
-      this.setState({
-        racerName: e.target.value,
-        racerName_class: `${this.getClass(racerName_valid)} width_80`,
-        racerName_valid: racerName_valid,
-      })
-    }
-
-    if (e.target.name === 'laptime') {
-      let laptime_valid = (e.target.value !== '') && this.validateTime(e.target.value);
-      this.setState({
-        laptime: e.target.value,
-        laptime_class: this.getClass(laptime_valid),
-        laptime_valid: laptime_valid,
-      })
-    }
+    this.validate(e.target.name, e.target.value);
   }
 
   handleCheckBox = (e) => {
-    if (e.target.name === 'forceUpdate') {
-      this.setState({
-        [e.target.name]: e.target.checked
-      })
-    }
+    this.setState({
+      [e.target.name]: e.target.checked
+    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (this.state.email_valid && this.state.racerName_valid && this.state.laptime_valid) {
-      this.postLapTime();
+    if (!this.validateAll()) {
+      return;
     }
 
-    return false;
+    this.postLapTime();
   }
 
   render() {
