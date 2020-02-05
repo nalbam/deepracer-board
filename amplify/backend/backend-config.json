@@ -20,14 +20,6 @@
 		}
 	},
 	"storage": {
-		"dynamo5915cf97": {
-			"service": "DynamoDB",
-			"providerPlugin": "awscloudformation"
-		},
-		"dynamo5c3cf64d": {
-			"service": "DynamoDB",
-			"providerPlugin": "awscloudformation"
-		},
 		"leagues": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
@@ -38,36 +30,6 @@
 		}
 	},
 	"function": {
-		"deepracerboarddb492152": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "storage",
-					"resourceName": "dynamo5915cf97",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		},
-		"deepracerboarda9af815a": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "storage",
-					"resourceName": "dynamo5c3cf64d",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		},
 		"leagues": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
@@ -100,34 +62,6 @@
 		}
 	},
 	"api": {
-		"apifa77988a": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "deepracerboarddb492152",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		},
-		"api88fa9db0": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "deepracerboarda9af815a",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		},
 		"leagues": {
 			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
