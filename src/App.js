@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import LeagueList from './component/LeagueList';
+import LeagueAll from './component/LeagueAll';
 
 import './App.css';
 import './pop.css';
@@ -14,7 +14,7 @@ class App extends Component {
             <img alt="deepracer" src="https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo_deepracer.png" />
           </div>
         </header>
-        <LeagueList pathPrefix='' />
+        <LeagueAll pathPrefix='' />
       </Fragment>
     );
   }
