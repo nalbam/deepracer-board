@@ -2,11 +2,11 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
-import Select from 'react-select'
+// import Select from 'react-select'
 
 import Popup from './Popup';
 
-import timezones from '../config/timezones'
+// import timezones from '../config/timezones'
 
 class App extends Component {
   constructor(props) {
@@ -93,6 +93,8 @@ class App extends Component {
           // dateOpen: '',
           // dateTZ: '',
         });
+
+        this.props.history.push(`/manage/league/${this.state.league}`);
       }
     } catch (err) {
       console.log(`postLeague: ${JSON.stringify(err, null, 2)}`);
