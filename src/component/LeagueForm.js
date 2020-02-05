@@ -103,7 +103,7 @@ class App extends Component {
   };
 
   validateString(val) {
-    var re = /^[a-z]+[a-z0-9-_]{3,19}$/g;;
+    var re = /^([a-z][a-z0-9-_]{3,19})$/g;
     return re.test(val);
   }
 
@@ -113,7 +113,7 @@ class App extends Component {
   }
 
   validateDate(val) {
-    var re = /^[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}$/;
+    var re = /^([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2})$/;
     return re.test(val);
   }
 
@@ -200,11 +200,17 @@ class App extends Component {
   }
 
   handleChange = (e) => {
+    let v = e.target.value;
+
+    if (e.target.name === 'league') {
+      v = v.replace(/[^a-z0-9-_]/g, '');
+    }
+
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: v,
     });
 
-    this.validate(e.target.name, e.target.value);
+    this.validate(e.target.name, v);
   }
 
   handleChangeTZ = (e) => {
