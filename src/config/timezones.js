@@ -1,422 +1,420 @@
 const timezones = [
   {
     value: -12,
-    label: "(-12:00) International Date Line West",
+    label: '(-12:00) International Date Line West',
   },
   {
     value: -11,
-    label: "(-11:00) Coordinated Universal Time-11",
+    label: '(-11:00) Coordinated Universal Time-11',
   },
   {
     value: -10,
-    label: "(-10:00) Hawaii",
+    label: '(-10:00) Hawaii',
   },
   {
     value: -9,
-    label: "(-09:00) Alaska",
+    label: '(-09:00) Alaska',
   },
   {
     value: -8,
-    label: "(-08:00) Baja California",
+    label: '(-08:00) Baja California',
   },
   {
     value: -8,
-    label: "(-08:00) Pacific Time (US & Canada)",
+    label: '(-08:00) Pacific Time (US & Canada)',
   },
   {
     value: -7,
-    label: "(-07:00) Arizona",
+    label: '(-07:00) Arizona',
   },
   {
     value: -7,
-    label: "(-07:00) Chihuahua, La Paz, Mazatlan",
+    label: '(-07:00) Chihuahua, La Paz, Mazatlan',
   },
   {
     value: -7,
-    label: "(-07:00) Mountain Time (US & Canada)",
+    label: '(-07:00) Mountain Time (US & Canada)',
   },
   {
     value: -6,
-    label: "(-06:00) Central America",
+    label: '(-06:00) Central America',
   },
   {
     value: -6,
-    label: "(-06:00) Central Time (US & Canada)",
+    label: '(-06:00) Central Time (US & Canada)',
   },
   {
     value: -6,
-    label: "(-06:00) Guadalajara, Mexico City, Monterrey",
+    label: '(-06:00) Guadalajara, Mexico City, Monterrey',
   },
   {
     value: -6,
-    label: "(-06:00) Saskatchewan",
+    label: '(-06:00) Saskatchewan',
   },
   {
     value: -5,
-    label: "(-05:00) Bogota, Lima, Quito",
+    label: '(-05:00) Bogota, Lima, Quito',
   },
   {
     value: -5,
-    label: "(-05:00) Eastern Time (US & Canada)",
+    label: '(-05:00) Eastern Time (US & Canada)',
   },
   {
     value: -5,
-    label: "(-05:00) Indiana (East)",
+    label: '(-05:00) Indiana (East)',
   },
   {
     value: -4.5,
-    label: "(-04:30) Caracas",
+    label: '(-04:30) Caracas',
   },
   {
     value: -4,
-    label: "(-04:00) Asuncion",
+    label: '(-04:00) Asuncion',
   },
   {
     value: -4,
-    label: "(-04:00) Atlantic Time (Canada)",
+    label: '(-04:00) Atlantic Time (Canada)',
   },
   {
     value: -4,
-    label: "(-04:00) Cuiaba",
+    label: '(-04:00) Cuiaba',
   },
   {
     value: -4,
-    label: "(-04:00) Georgetown, La Paz, Manaus, San Juan",
+    label: '(-04:00) Georgetown, La Paz, Manaus, San Juan',
   },
   {
     value: -4,
-    label: "(-04:00) Santiago",
+    label: '(-04:00) Santiago',
   },
   {
     value: -3.5,
-    label: "(-03:30) Newfoundland",
+    label: '(-03:30) Newfoundland',
   },
   {
     value: -3,
-    label: "(-03:00) Brasilia",
+    label: '(-03:00) Brasilia',
   },
   {
     value: -3,
-    label: "(-03:00) Buenos Aires",
+    label: '(-03:00) Buenos Aires',
   },
   {
     value: -3,
-    label: "(-03:00) Cayenne, Fortaleza",
+    label: '(-03:00) Cayenne, Fortaleza',
   },
   {
     value: -3,
-    label: "(-03:00) Greenland",
+    label: '(-03:00) Greenland',
   },
   {
     value: -3,
-    label: "(-03:00) Montevideo",
+    label: '(-03:00) Montevideo',
   },
   {
     value: -3,
-    label: "(-03:00) Salvador",
+    label: '(-03:00) Salvador',
   },
   {
     value: -2,
-    label: "(-02:00) Coordinated Universal Time-02",
+    label: '(-02:00) Coordinated Universal Time-02',
   },
   {
     value: -2,
-    label: "(-02:00) Mid-Atlantic - Old",
+    label: '(-02:00) Mid-Atlantic - Old',
   },
   {
     value: -1,
-    label: "(-01:00) Azores",
+    label: '(-01:00) Azores',
   },
   {
     value: -1,
-    label: "(-01:00) Cape Verde Is.",
+    label: '(-01:00) Cape Verde Is.',
   },
   {
     value: 0,
-    label: "(+00:00) Coordinated Universal Time",
+    label: '(+00:00) Coordinated Universal Time',
   },
   {
     value: 0,
-    label: "(+00:00) Edinburgh, London",
+    label: '(+00:00) Edinburgh, London',
   },
   {
     value: 0,
-    label: "(+00:00) Monrovia, Reykjavik",
+    label: '(+00:00) Monrovia, Reykjavik',
   },
   {
     value: 0,
-    label: "(+00:00) Dublin, Lisbon",
+    label: '(+00:00) Dublin, Lisbon',
   },
   {
     value: 1,
-    label: "(+01:00) Casablanca",
+    label: '(+01:00) Casablanca',
   },
   {
     value: 1,
-    label: "(+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
+    label: '(+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna',
   },
   {
     value: 1,
-    label: "(+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague",
+    label: '(+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague',
   },
   {
     value: 1,
-    label: "(+01:00) Brussels, Copenhagen, Madrid, Paris",
+    label: '(+01:00) Brussels, Copenhagen, Madrid, Paris',
   },
   {
     value: 1,
-    label: "(+01:00) Sarajevo, Skopje, Warsaw, Zagreb",
+    label: '(+01:00) Sarajevo, Skopje, Warsaw, Zagreb',
   },
   {
     value: 1,
-    label: "(+01:00) West Central Africa",
+    label: '(+01:00) West Central Africa',
   },
   {
     value: 1,
-    label: "(+01:00) Windhoek",
+    label: '(+01:00) Windhoek',
   },
   {
     value: 2,
-    label: "(+02:00) Athens, Bucharest",
+    label: '(+02:00) Athens, Bucharest',
   },
   {
     value: 2,
-    label: "(+02:00) Beirut",
+    label: '(+02:00) Beirut',
   },
   {
     value: 2,
-    label: "(+02:00) Cairo",
+    label: '(+02:00) Cairo',
   },
   {
     value: 2,
-    label: "(+02:00) Damascus",
+    label: '(+02:00) Damascus',
   },
   {
     value: 2,
-    label: "(+02:00) E. Europe",
+    label: '(+02:00) E. Europe',
   },
   {
     value: 2,
-    label: "(+02:00) Harare, Pretoria",
+    label: '(+02:00) Harare, Pretoria',
   },
   {
     value: 2,
-    label: "(+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius",
+    label: '(+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius',
   },
   {
     value: 2,
-    label: "(+02:00) Jerusalem",
+    label: '(+02:00) Jerusalem',
   },
   {
     value: 2,
-    label: "(+02:00) Tripoli",
+    label: '(+02:00) Tripoli',
   },
   {
     value: 3,
-    label: "(+03:00) Istanbul",
+    label: '(+03:00) Istanbul',
   },
   {
     value: 3,
-    label: "(+03:00) Amman",
+    label: '(+03:00) Amman',
   },
   {
     value: 3,
-    label: "(+03:00) Baghdad",
+    label: '(+03:00) Baghdad',
   },
   {
     value: 2,
-    label: "(+02:00) Kaliningrad",
+    label: '(+02:00) Kaliningrad',
   },
   {
     value: 3,
-    label: "(+03:00) Kuwait, Riyadh",
+    label: '(+03:00) Kuwait, Riyadh',
   },
   {
     value: 3,
-    label: "(+03:00) Nairobi",
+    label: '(+03:00) Nairobi',
   },
   {
     value: 3,
-    label: "(+03:00) Moscow, St. Petersburg, Volgograd, Minsk",
+    label: '(+03:00) Moscow, St. Petersburg, Volgograd, Minsk',
   },
   {
     value: 4,
-    label: "(+04:00) Samara, Ulyanovsk, Saratov",
+    label: '(+04:00) Samara, Ulyanovsk, Saratov',
   },
   {
     value: 3.5,
-    label: "(+03:30) Tehran",
+    label: '(+03:30) Tehran',
   },
   {
     value: 4,
-    label: "(+04:00) Abu Dhabi, Muscat",
+    label: '(+04:00) Abu Dhabi, Muscat',
   },
   {
     value: 4,
-    label: "(+04:00) Baku",
+    label: '(+04:00) Baku',
   },
   {
     value: 4,
-    label: "(+04:00) Port Louis",
+    label: '(+04:00) Port Louis',
   },
   {
     value: 4,
-    label: "(+04:00) Tbilisi",
+    label: '(+04:00) Tbilisi',
   },
   {
     value: 4,
-    label: "(+04:00) Yerevan",
+    label: '(+04:00) Yerevan',
   },
   {
     value: 4.5,
-    label: "(+04:30) Kabul",
+    label: '(+04:30) Kabul',
   },
   {
     value: 5,
-    label: "(+05:00) Ashgabat, Tashkent",
+    label: '(+05:00) Ashgabat, Tashkent',
   },
   {
     value: 5,
-    label: "(+05:00) Yekaterinburg",
+    label: '(+05:00) Yekaterinburg',
   },
   {
     value: 5,
-    label: "(+05:00) Islamabad, Karachi",
+    label: '(+05:00) Islamabad, Karachi',
   },
   {
     value: 5.5,
-    label: "(+05:30) Chennai, Kolkata, Mumbai, New Delhi",
+    label: '(+05:30) Chennai, Kolkata, Mumbai, New Delhi',
   },
   {
     value: 5.5,
-    label: "(+05:30) Sri Jayawardenepura",
+    label: '(+05:30) Sri Jayawardenepura',
   },
   {
     value: 5.75,
-    label: "(+05:45) Kathmandu",
+    label: '(+05:45) Kathmandu',
   },
   {
     value: 6,
-    label: "(+06:00) Nur-Sultan (Astana)",
+    label: '(+06:00) Nur-Sultan (Astana)',
   },
   {
     value: 6,
-    label: "(+06:00) Dhaka",
+    label: '(+06:00) Dhaka',
   },
   {
     value: 6.5,
-    label: "(+06:30) Yangon (Rangoon)",
+    label: '(+06:30) Yangon (Rangoon)',
   },
   {
     value: 7,
-    label: "(+07:00) Bangkok, Hanoi, Jakarta",
+    label: '(+07:00) Bangkok, Hanoi, Jakarta',
   },
   {
     value: 7,
-    label: "(+07:00) Novosibirsk",
+    label: '(+07:00) Novosibirsk',
   },
   {
     value: 8,
-    label: "(+08:00) Beijing, Chongqing, Hong Kong, Urumqi",
+    label: '(+08:00) Beijing, Chongqing, Hong Kong, Urumqi',
   },
   {
     value: 8,
-    label: "(+08:00) Krasnoyarsk",
+    label: '(+08:00) Krasnoyarsk',
   },
   {
     value: 8,
-    label: "(+08:00) Kuala Lumpur, Singapore",
+    label: '(+08:00) Kuala Lumpur, Singapore',
   },
   {
     value: 8,
-    label: "(+08:00) Perth",
+    label: '(+08:00) Perth',
   },
   {
     value: 8,
-    label: "(+08:00) Taipei",
+    label: '(+08:00) Taipei',
   },
   {
     value: 8,
-    label: "(+08:00) Ulaanbaatar",
+    label: '(+08:00) Ulaanbaatar',
   },
   {
     value: 8,
-    label: "(+08:00) Irkutsk",
+    label: '(+08:00) Irkutsk',
   },
   {
     value: 9,
-    label: "(+09:00) Osaka, Sapporo, Tokyo",
+    label: '(+09:00) Osaka, Sapporo, Tokyo',
   },
   {
     value: 9,
-    label: "(+09:00) Seoul",
+    label: '(+09:00) Seoul',
   },
   {
     value: 9.5,
-    label: "(+09:30) Adelaide",
+    label: '(+09:30) Adelaide',
   },
   {
     value: 9.5,
-    label: "(+09:30) Darwin",
+    label: '(+09:30) Darwin',
   },
   {
     value: 10,
-    label: "(+10:00) Brisbane",
+    label: '(+10:00) Brisbane',
   },
   {
     value: 10,
-    label: "(+10:00) Canberra, Melbourne, Sydney",
+    label: '(+10:00) Canberra, Melbourne, Sydney',
   },
   {
     value: 10,
-    label: "(+10:00) Guam, Port Moresby",
+    label: '(+10:00) Guam, Port Moresby',
   },
   {
     value: 10,
-    label: "(+10:00) Hobart",
+    label: '(+10:00) Hobart',
   },
   {
     value: 9,
-    label: "(+09:00) Yakutsk",
+    label: '(+09:00) Yakutsk',
   },
   {
     value: 11,
-    label: "(+11:00) Solomon Is., New Caledonia",
+    label: '(+11:00) Solomon Is., New Caledonia',
   },
   {
     value: 11,
-    label: "(+11:00) Vladivostok",
+    label: '(+11:00) Vladivostok',
   },
   {
     value: 12,
-    label: "(+12:00) Auckland, Wellington",
+    label: '(+12:00) Auckland, Wellington',
   },
   {
     value: 12,
-    label: "(+12:00) Coordinated Universal Time+12",
+    label: '(+12:00) Coordinated Universal Time+12',
   },
   {
     value: 12,
-    label: "(+12:00) Fiji",
+    label: '(+12:00) Fiji',
   },
   {
     value: 12,
-    label: "(+12:00) Magadan",
+    label: '(+12:00) Magadan',
   },
   {
     value: 12,
-    label: "(+12:00) Petropavlovsk-Kamchatsky - Old",
+    label: '(+12:00) Petropavlovsk-Kamchatsky - Old',
   },
   {
     value: 13,
-    label: "(+13:00) Nuku'alofa",
+    label: '(+13:00) Nuku\'alofa',
   },
   {
     value: 14,
-    label: "(+14:00) Samoa",
+    label: '(+14:00) Samoa',
   }
 ];
 
 export default timezones
-
-// utc: \[\n(\s+"[a-zA-Z\/_+\-0-9]+",*\n)+\s+\]\n

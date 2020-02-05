@@ -43,12 +43,12 @@ class App extends Component {
 
     return (
       <Fragment>
-        <div className="pop-layer">
-          <div className="pop-bg"></div>
-          <div className="pop-container">
-            <div className="pop-header">{this.state.popInfo.header}</div>
+        <div className='pop-layer'>
+          <div className='pop-bg'></div>
+          <div className='pop-container'>
+            <div className='pop-header'>{this.state.popInfo.header}</div>
             <div className={messageClass}>{this.state.popInfo.message}</div>
-            <div className="pop-footer">{this.state.popInfo.footer}</div>
+            <div className='pop-footer'>{this.state.popInfo.footer}</div>
           </div>
         </div>
       </Fragment>

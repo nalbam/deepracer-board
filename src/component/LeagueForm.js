@@ -227,39 +227,39 @@ class App extends Component {
     return (
       <Fragment>
         <form onSubmit={this.handleSubmit}>
-          <div className="lb-submit">
-            <div className="lb-row">
+          <div className='lb-submit'>
+            <div className='lb-row'>
               <div>League</div>
-              <div><input type="text" name="league" value={this.state.league} placeholder="" onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete="off" maxLength="20" /></div>
+              <div><input type='text' name='league' value={this.state.league} placeholder='' onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete='off' maxLength='20' /></div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div>Title</div>
-              <div><input type="text" name="title" value={this.state.title} placeholder="" onChange={this.handleChange} className={this.state.title_class} autoComplete="off" maxLength="64" /></div>
+              <div><input type='text' name='title' value={this.state.title} placeholder='' onChange={this.handleChange} className={this.state.title_class} autoComplete='off' maxLength='64' /></div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div>Logo</div>
-              <div><input type="text" name="logo" value={this.state.logo} placeholder="" onChange={this.handleChange} className={this.state.logo_class} autoComplete="off" maxLength="256" /></div>
+              <div><input type='text' name='logo' value={this.state.logo} placeholder='' onChange={this.handleChange} className={this.state.logo_class} autoComplete='off' maxLength='256' /></div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div>Date</div>
               <div>
-                <input type="text" name="dateOpen" value={this.state.dateOpen} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.dateOpen_class} autoComplete="off" maxLength="16" />
-                <input type="text" name="dateClose" value={this.state.dateClose} placeholder="yyyy-MM-dd HH:mm" onChange={this.handleChange} className={this.state.dateClose_class} autoComplete="off" maxLength="16" />
+                <input type='text' name='dateOpen' value={this.state.dateOpen} placeholder='yyyy-MM-dd HH:mm' onChange={this.handleChange} className={this.state.dateOpen_class} autoComplete='off' maxLength='16' />
+                <input type='text' name='dateClose' value={this.state.dateClose} placeholder='yyyy-MM-dd HH:mm' onChange={this.handleChange} className={this.state.dateClose_class} autoComplete='off' maxLength='16' />
               </div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div>Zone</div>
               <div>
                 <Select
                   options={timezones}
                   onChange={this.handleChangeTZ}
-                  className="select_tz"
+                  className='select_tz'
                 />
               </div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div></div>
-              <div><button type="submit" className="lb-btn-submit">Submit</button></div>
+              <div><button type='submit' className='lb-btn-submit'>Submit</button></div>
             </div>
           </div>
         </form>

@@ -10,10 +10,10 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <header className="App-header auth">
+        <header className='App-header auth'>
           <Authenticator usernameAttributes='email' />
         </header>
-        <div className="App-body">
+        <div className='App-body'>
           <LeagueList pathPrefix='/manage' />
         </div>
       </Fragment>

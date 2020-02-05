@@ -70,7 +70,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <div id="scroller"></div>
+        <div id='scroller'></div>
       </Fragment>
     );
   }

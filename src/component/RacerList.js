@@ -155,8 +155,8 @@ class App extends Component {
 
     return (
       <Fragment>
-        <div className="lb-items">
-          <div className="lb-header lb-rank0">
+        <div className='lb-items'>
+          <div className='lb-header lb-rank0'>
             <div>Rank</div>
             <div>Name</div>
             <div>Time</div>
@@ -164,9 +164,9 @@ class App extends Component {
           {racerList}
         </div>
 
-        <div className="pop-logo">
-          <div className="pop-container">
-            <div className="lb-logo-back"><img alt="trophy" src="/icon-trophy.png" /></div>
+        <div className='pop-logo'>
+          <div className='pop-container'>
+            <div className='lb-logo-back'><img alt='trophy' src='/icon-trophy.png' /></div>
           </div>
         </div>
 
@@ -176,7 +176,7 @@ class App extends Component {
 
         <Scroll ref={this.scrollCmp} items={this.state.items.length} />
 
-        <footer className="lb-footer"></footer>
+        <footer className='lb-footer'></footer>
       </Fragment>
     );
   }

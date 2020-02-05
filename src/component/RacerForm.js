@@ -157,25 +157,25 @@ class App extends Component {
     return (
       <Fragment>
         <form onSubmit={this.handleSubmit}>
-          <div className="lb-submit">
-            <div className="lb-row">
+          <div className='lb-submit'>
+            <div className='lb-row'>
               <div>Email</div>
-              <div><input type="text" name="email" value={this.state.email} placeholder="" onChange={this.handleChange} className={this.state.email_class} autoComplete="off" maxLength="256" /></div>
+              <div><input type='text' name='email' value={this.state.email} placeholder='' onChange={this.handleChange} className={this.state.email_class} autoComplete='off' maxLength='256' /></div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div>Name</div>
-              <div><input type="text" name="racerName" value={this.state.racerName} placeholder="" onChange={this.handleChange} className={this.state.racerName_class} autoComplete="off" maxLength="32" /></div>
+              <div><input type='text' name='racerName' value={this.state.racerName} placeholder='' onChange={this.handleChange} className={this.state.racerName_class} autoComplete='off' maxLength='32' /></div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div>Time</div>
               <div>
-                <input type="text" name="laptime" value={this.state.laptime} placeholder="00:00.000" onChange={this.handleChange} className={this.state.laptime_class} autoComplete="off" maxLength="9" />
-                <label><input type="checkbox" name="forceUpdate" value="Y" checked={this.state.forceUpdate} onChange={this.handleCheckBox} className="checkbox" /> Force update</label>
+                <input type='text' name='laptime' value={this.state.laptime} placeholder='00:00.000' onChange={this.handleChange} className={this.state.laptime_class} autoComplete='off' maxLength='9' />
+                <label><input type='checkbox' name='forceUpdate' value='Y' checked={this.state.forceUpdate} onChange={this.handleCheckBox} className='checkbox' /> Force update</label>
               </div>
             </div>
-            <div className="lb-row">
+            <div className='lb-row'>
               <div></div>
-              <div><button type="submit" className="lb-btn-submit">Submit</button></div>
+              <div><button type='submit' className='lb-btn-submit'>Submit</button></div>
             </div>
           </div>
         </form>

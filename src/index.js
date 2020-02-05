@@ -27,14 +27,14 @@ const routing = (
     <AppProvider>
         <Router>
             <Switch>
-                <Route exact path="/" component={App} />
-                <Route path="/manage/racers/:league" component={ManageRacer} />
-                <Route path="/manage/league/:league" component={ManageLeague} />
-                <Route path="/manage/league/" component={ManageLeague} />
-                <Route path="/manage/" component={Manage} />
-                <Route path="/racers/:league" component={Leaderboard} />
-                <Route path="/league/:league" component={Leaderboard} />
-                <Route path="/timer" component={Timer} />
+                <Route exact path='/' component={App} />
+                <Route path='/manage/racers/:league' component={ManageRacer} />
+                <Route path='/manage/league/:league' component={ManageLeague} />
+                <Route path='/manage/league/' component={ManageLeague} />
+                <Route path='/manage/' component={Manage} />
+                <Route path='/racers/:league' component={Leaderboard} />
+                <Route path='/league/:league' component={Leaderboard} />
+                <Route path='/timer' component={Timer} />
                 <Route component={App} />
             </Switch>
         </Router>

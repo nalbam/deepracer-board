@@ -12,18 +12,18 @@ class App extends Component {
 
   supportsAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame;
   colors = [
-    "rgba(30,144,255,",
-    "rgba(107,142,35,",
-    "rgba(255,215,0,",
-    "rgba(255,192,203,",
-    "rgba(106,90,205,",
-    "rgba(173,216,230,",
-    "rgba(238,130,238,",
-    "rgba(152,251,152,",
-    "rgba(70,130,180,",
-    "rgba(244,164,96,",
-    "rgba(210,105,30,",
-    "rgba(220,20,60,"
+    'rgba(30,144,255,',
+    'rgba(107,142,35,',
+    'rgba(255,215,0,',
+    'rgba(255,192,203,',
+    'rgba(106,90,205,',
+    'rgba(173,216,230,',
+    'rgba(238,130,238,',
+    'rgba(152,251,152,',
+    'rgba(70,130,180,',
+    'rgba(244,164,96,',
+    'rgba(210,105,30,',
+    'rgba(220,20,60,'
   ];
 
   context = null;
@@ -40,21 +40,21 @@ class App extends Component {
     var width = window.innerWidth;
     var height = window.innerHeight;
 
-    var canvas = document.getElementById("pollen-canvas");
+    var canvas = document.getElementById('pollen-canvas');
     if (canvas === null) {
-      canvas = document.createElement("canvas");
-      canvas.setAttribute("id", "pollen-canvas");
-      canvas.setAttribute("style", "display:block;z-index:999999;pointer-events:none;position:fixed;top:0");
+      canvas = document.createElement('canvas');
+      canvas.setAttribute('id', 'pollen-canvas');
+      canvas.setAttribute('style', 'display:block;z-index:999999;pointer-events:none;position:fixed;top:0');
       document.body.prepend(canvas);
       canvas.width = width;
       canvas.height = height;
-      window.addEventListener("resize", function () {
+      window.addEventListener('resize', function () {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       }, true);
-      this.context = canvas.getContext("2d");
+      this.context = canvas.getContext('2d');
     } else if (this.context === null) {
-      this.context = canvas.getContext("2d");
+      this.context = canvas.getContext('2d');
     }
 
     this.animate(this.context);
@@ -106,8 +106,8 @@ class App extends Component {
 
   particle(width, height) {
     return {
-      color1: this.colors[(Math.random() * this.colors.length) | 0] + (this.state.alpha + ")"),
-      color2: this.colors[(Math.random() * this.colors.length) | 0] + (this.state.alpha + ")"),
+      color1: this.colors[(Math.random() * this.colors.length) | 0] + (this.state.alpha + ')'),
+      color2: this.colors[(Math.random() * this.colors.length) | 0] + (this.state.alpha + ')'),
       diameter: Math.random() * 10 + 10,
       tilt: Math.random() * 10 - 10,
       tiltAngle: Math.random() * Math.PI,
@@ -153,8 +153,8 @@ class App extends Component {
       y2 = particle.y + particle.tilt + particle.diameter / 2;
       if (this.state.gradient) {
         var gradient = context.createLinearGradient(x, particle.y, x2, y2);
-        gradient.addColorStop("0.0", particle.color1);
-        gradient.addColorStop("1.0", particle.color2);
+        gradient.addColorStop('0.0', particle.color1);
+        gradient.addColorStop('1.0', particle.color2);
         context.strokeStyle = gradient;
       } else {
         context.strokeStyle = particle.color1;
@@ -168,7 +168,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <div id="canvas" className="pollen"></div>
+        <div id='canvas' className='pollen'></div>
       </Fragment>
     );
   }

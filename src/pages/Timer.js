@@ -324,17 +324,17 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <nav className="tm-controls">
-          <button id="btn_start" className="tm-button tm-btn_start" onClick={this.handleClick}>Start</button>
-          <button id="btn_pause" className="tm-button tm-btn_pause" onClick={this.handleClick}>Pause</button>
-          <button id="btn_passed" className="tm-button tm-btn_passed" onClick={this.handleClick}>Passed</button>
-          <button id="btn_reset" className="tm-button tm-btn_reset" onClick={this.handleClick}>Reset</button>
-          <button id="btn_clear" className="tm-button tm-btn_clear" onClick={this.handleClick}>Clear</button>
+        <nav className='tm-controls'>
+          <button id='btn_start' className='tm-button tm-btn_start' onClick={this.handleClick}>Start</button>
+          <button id='btn_pause' className='tm-button tm-btn_pause' onClick={this.handleClick}>Pause</button>
+          <button id='btn_passed' className='tm-button tm-btn_passed' onClick={this.handleClick}>Passed</button>
+          <button id='btn_reset' className='tm-button tm-btn_reset' onClick={this.handleClick}>Reset</button>
+          <button id='btn_clear' className='tm-button tm-btn_clear' onClick={this.handleClick}>Clear</button>
         </nav>
         <div className={this.state.limiterClass}>{this.state.limiter}</div>
-        <div className="tm-display">{this.state.display}</div>
-        <div className="tm-bestlap">{this.state.bestlap}</div>
-        <ul className="tm-results">{this.state.results}</ul>
+        <div className='tm-display'>{this.state.display}</div>
+        <div className='tm-bestlap'>{this.state.bestlap}</div>
+        <ul className='tm-results'>{this.state.results}</ul>
       </Fragment>
     );
   }

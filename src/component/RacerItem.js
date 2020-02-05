@@ -4,10 +4,10 @@ class App extends Component {
   render() {
     let racerClass = `lb-row lb-rank${this.props.rank}`;
     let racerRank = this.props.rank;
-    let trophy = "";
+    let trophy = '';
 
     if (racerRank < 4) {
-      trophy = <img src="/icon-trophy.png" alt="trophy" className="icon-trophy" />
+      trophy = <img src='/icon-trophy.png' alt='trophy' className='icon-trophy' />
     }
 
     return (
