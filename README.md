@@ -22,5 +22,5 @@ amplify publish
 ## rewrite
 
 ```
-</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$)([^.]+$)/>    /index.html    200
+</^[^.]+$|\.(?!(js|css|gif|ico|jpg|png|svg|txt|json|map|woff|ttf)$)([^.]+$)/>    /index.html    200
 ```
