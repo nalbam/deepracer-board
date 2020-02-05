@@ -175,7 +175,7 @@ class App extends Component {
             </div>
             <div className='lb-row'>
               <div></div>
-              <div><button type='submit' className='lb-btn-submit'>Submit</button></div>
+              <div><button type='submit' className='btn-submit'>Save</button></div>
             </div>
           </div>
         </form>

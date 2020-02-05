@@ -182,6 +182,10 @@ footer {
   border: 1px solid #e55;
 }
 
+.center {
+  text-align: center;
+}
+
 .width_80 {
   width: 80%;
 }
@@ -196,7 +200,23 @@ footer {
   color: #111;
 }
 
-.lb-btn-submit {
+.btn-link {
+  background-color: #e71;
+  background-image: linear-gradient(180deg, #f71 0, #e50);
+  border-color: #e60 #e50 #e50;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 24px;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 10px;
+  width: 250px;
+  height: 40px;
+}
+
+.btn-submit {
   background-color: #e71;
   background-image: linear-gradient(180deg, #f71 0, #e50);
   border-color: #e60 #e50 #e50;

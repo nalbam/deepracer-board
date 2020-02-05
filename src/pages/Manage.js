@@ -16,6 +16,9 @@ class App extends Component {
         <div className='App-body'>
           <LeagueList pathPrefix='/manage' />
         </div>
+        <div className='center'>
+          <a href='/manage/league' className='btn-link'>Create</a>
+        </div>
       </Fragment>
     );
   }

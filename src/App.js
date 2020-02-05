@@ -15,6 +15,9 @@ class App extends Component {
           </div>
         </header>
         <LeagueAll pathPrefix='' />
+        <div className='center'>
+          <a href='/manage' className='btn-link'>Manage</a>
+        </div>
       </Fragment>
     );
   }
