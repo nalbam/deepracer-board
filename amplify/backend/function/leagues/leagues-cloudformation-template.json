@@ -71,7 +71,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-deepracer-board-dev-113355-deployment",
-					"S3Key": "amplify-builds/leagues-7931643854746e523547-build.zip"
+					"S3Key": "amplify-builds/leagues-6c347543346d42386772-build.zip"
 				}
 			}
 		},

@@ -64,25 +64,33 @@ const convertUrlType = (param, type) => {
  ************************************/
 
 app.get(path, function (req, res) {
-  var condition = {}
+  // var condition = {}
 
-  condition['userId'] = {
-    ComparisonOperator: 'EQ'
-  }
+  // condition['userId'] = {
+  //   ComparisonOperator: 'EQ'
+  // }
 
-  if (userIdPresent && req.apiGateway) {
-    condition['userId']['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH];
-  }
+  // if (userIdPresent && req.apiGateway) {
+  //   condition['userId']['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH];
+  // }
+
+  let userId = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
 
   let queryParams = {
     TableName: tableName,
-    KeyConditions: condition,
+    FilterExpression: "#userId = :userId",
+    ExpressionAttributeNames: {
+      "#userId": "userId",
+    },
+    ExpressionAttributeValues: {
+      ":userId": userId
+    },
   }
 
-  console.log(`query: ${JSON.stringify(queryParams)}`);
-  dynamodb.query(queryParams, (err, data) => {
+  console.log(`scan: ${JSON.stringify(queryParams)}`);
+  dynamodb.scan(queryParams, (err, data) => {
     if (err) {
-      console.log('query: ' + err.message);
+      console.log('scan: ' + err.message);
       res.statusCode = 500;
       res.json({ error: 'Could not load items: ' + err });
     } else {
@@ -96,10 +104,10 @@ app.get(path + '/all', function (req, res) {
     TableName: tableName,
   }
 
-  console.log(`scan: ${JSON.stringify(queryParams)}`);
+  console.log(`scan-all: ${JSON.stringify(queryParams)}`);
   dynamodb.scan(queryParams, (err, data) => {
     if (err) {
-      console.log('scan: ' + err.message);
+      console.log('scan-all: ' + err.message);
       res.statusCode = 500;
       res.json({ error: 'Could not load items: ' + err });
     } else {

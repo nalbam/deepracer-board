@@ -46,9 +46,9 @@ class App extends Component {
       <Fragment>
         <div className="lb-items">
           <div className="lb-header lb-rank0">
-            <div>Rank</div>
-            <div>Name</div>
-            <div>Time</div>
+            <div>Logo</div>
+            <div>Title</div>
+            <div>Code</div>
           </div>
           {leagueList}
         </div>

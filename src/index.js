@@ -32,6 +32,7 @@ const routing = (
                 <Route path="/manage/league/:league" component={ManageLeague} />
                 <Route path="/manage/league/" component={ManageLeague} />
                 <Route path="/manage/" component={Manage} />
+                <Route path="/racers/:league" component={Leaderboard} />
                 <Route path="/league/:league" component={Leaderboard} />
                 <Route path="/timer" component={Timer} />
                 <Route component={App} />
