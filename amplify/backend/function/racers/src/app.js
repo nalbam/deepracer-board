@@ -89,6 +89,7 @@ app.get(path + hashKeyPath, function (req, res) {
   console.log(`query: ${JSON.stringify(queryParams)}`);
   dynamodb.query(queryParams, (err, data) => {
     if (err) {
+      console.log('query: ' + err.message);
       res.statusCode = 500;
       res.json({ error: 'Could not load items: ' + err });
     } else {
@@ -133,6 +134,7 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
   console.log(`get: ${JSON.stringify(getItemParams)}`);
   dynamodb.get(getItemParams, (err, data) => {
     if (err) {
+      console.log('get: ' + err.message);
       res.statusCode = 500;
       res.json({ error: 'Could not load items: ' + err.message });
     } else {
