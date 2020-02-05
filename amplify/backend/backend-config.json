@@ -27,6 +27,10 @@
 		"leagues": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
+		},
+		"images": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	},
 	"function": {
