@@ -16,6 +16,10 @@ class App extends Component {
   }
 
   getLeague = async () => {
+    if (!this.props.league || this.props.league === 'undefined') {
+      return;
+    }
+
     console.log(`getLeague ${this.props.league}`);
 
     const res = await API.get('leagues', `/items/object/${this.props.league}`);

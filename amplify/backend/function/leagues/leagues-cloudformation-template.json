@@ -71,7 +71,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-deepracer-board-dev-113355-deployment",
-					"S3Key": "amplify-builds/leagues-2b5a66423038456f5349-build.zip"
+					"S3Key": "amplify-builds/leagues-7931643854746e523547-build.zip"
 				}
 			}
 		},
@@ -81,12 +81,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"deepracerboardLambdaRoleec0a12c7",
+						"deepracerboardLambdaRole25335b44",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"deepracerboardLambdaRoleec0a12c7",
+									"deepracerboardLambdaRole25335b44",
 									"-",
 									{
 										"Ref": "env"
