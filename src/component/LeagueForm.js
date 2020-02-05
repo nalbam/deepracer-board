@@ -16,11 +16,11 @@ class App extends Component {
   }
 
   state = {
-    dateClose_class: 'text_normal',
-    dateClose: '',
-    dateOpen_class: 'text_normal',
-    dateOpen: '',
-    dateTZ: '',
+    // dateClose_class: 'text_normal',
+    // dateClose: '',
+    // dateOpen_class: 'text_normal',
+    // dateOpen: '',
+    // dateTZ: '',
     league_class: 'text_normal width_80',
     league_read: false,
     league: '',
@@ -50,9 +50,9 @@ class App extends Component {
         league: res.league,
         title: res.title,
         logo: res.logo,
-        dateClose: res.dateClose ? res.dateClose : '',
-        dateOpen: res.dateOpen ? res.dateOpen : '',
-        dateTZ: res.dateTZ ? res.dateTZ : '',
+        // dateClose: res.dateClose ? res.dateClose : '',
+        // dateOpen: res.dateOpen ? res.dateOpen : '',
+        // dateTZ: res.dateTZ ? res.dateTZ : '',
         league_read: true,
       });
 
@@ -68,9 +68,9 @@ class App extends Component {
         league: this.state.league,
         title: this.state.title,
         logo: this.state.logo,
-        dateClose: this.state.dateClose,
-        dateOpen: this.state.dateOpen,
-        dateTZ: this.state.dateTZ,
+        // dateClose: this.state.dateClose,
+        // dateOpen: this.state.dateOpen,
+        // dateTZ: this.state.dateTZ,
       };
 
       console.log(`postLeague: ${JSON.stringify(body, null, 2)}`);
@@ -89,9 +89,9 @@ class App extends Component {
           league: '',
           title: '',
           logo: '',
-          dateClose: '',
-          dateOpen: '',
-          dateTZ: '',
+          // dateClose: '',
+          // dateOpen: '',
+          // dateTZ: '',
         });
       }
     } catch (err) {
@@ -169,8 +169,8 @@ class App extends Component {
     let b = this.validateLeague(this.state.league);
     b = this.validateTitle(this.state.title) && b;
     b = this.validateLogo(this.state.logo) && b;
-    b = this.validateDateClose(this.state.dateClose) && b;
-    b = this.validateDateOpen(this.state.dateOpen) && b;
+    // b = this.validateDateClose(this.state.dateClose) && b;
+    // b = this.validateDateOpen(this.state.dateOpen) && b;
     return b;
   }
 
@@ -236,7 +236,7 @@ class App extends Component {
           <div className='lb-submit'>
             <div className='lb-row'>
               <div>League</div>
-              <div><input type='text' name='league' value={this.state.league} placeholder='' onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete='off' maxLength='20' /></div>
+              <div><input type='text' name='league' value={this.state.league} placeholder='Only lowercase letters and numbers and -_' onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete='off' maxLength='20' /></div>
             </div>
             <div className='lb-row'>
               <div>Title</div>
@@ -244,24 +244,7 @@ class App extends Component {
             </div>
             <div className='lb-row'>
               <div>Logo</div>
-              <div><input type='text' name='logo' value={this.state.logo} placeholder='' onChange={this.handleChange} className={this.state.logo_class} autoComplete='off' maxLength='256' /></div>
-            </div>
-            <div className='lb-row'>
-              <div>Date</div>
-              <div>
-                <input type='text' name='dateOpen' value={this.state.dateOpen} placeholder='yyyy-MM-dd HH:mm' onChange={this.handleChange} className={this.state.dateOpen_class} autoComplete='off' maxLength='16' />
-                <input type='text' name='dateClose' value={this.state.dateClose} placeholder='yyyy-MM-dd HH:mm' onChange={this.handleChange} className={this.state.dateClose_class} autoComplete='off' maxLength='16' />
-              </div>
-            </div>
-            <div className='lb-row'>
-              <div>Zone</div>
-              <div>
-                <Select
-                  options={timezones}
-                  onChange={this.handleChangeTZ}
-                  className='select_tz'
-                />
-              </div>
+              <div><input type='text' name='logo' value={this.state.logo} placeholder='Image address, including http:// or https://' onChange={this.handleChange} className={this.state.logo_class} autoComplete='off' maxLength='256' /></div>
             </div>
             <div className='lb-row'>
               <div></div>
