@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
-import backend from '../config/backend'
-
 import Pollen from './Pollen';
 import Popup from './Popup';
 import RacerItem from './RacerItem';
@@ -32,18 +30,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getTimes();
-    this.intervalId = setInterval(this.getTimes.bind(this), 10000);
+    this.getRacers();
+    this.intervalId = setInterval(this.getRacers.bind(this), 10000);
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
 
-  getTimes = async () => {
-    console.log(`getTimes ${this.props.league}`);
+  getRacers = async () => {
+    console.log(`getRacers ${this.props.league}`);
 
-    const res = await API.get(backend.api.times, `/items/${this.props.league}`);
+    const res = await API.get('racers', `/items/${this.props.league}`);
     if (res && res.length > 0) {
       this.reloaded(res);
     }

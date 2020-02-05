@@ -5,13 +5,13 @@
 		"env": {
 			"Type": "String"
 		},
-		"storagedynamo5c3cf64dName": {
+		"storageracersName": {
 			"Type": "String",
-			"Default": "storagedynamo5c3cf64dName"
+			"Default": "storageracersName"
 		},
-		"storagedynamo5c3cf64dArn": {
+		"storageracersArn": {
 			"Type": "String",
-			"Default": "storagedynamo5c3cf64dArn"
+			"Default": "storageracersArn"
 		}
 	},
 	"Conditions": {
@@ -36,12 +36,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"deepracerboarda9af815a",
+						"deepracer-board-racers",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"deepracerboarda9af815a",
+									"deepracer-board-racers",
 									"-",
 									{
 										"Ref": "env"
@@ -71,7 +71,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-deepracer-board-dev-113355-deployment",
-					"S3Key": "amplify-builds/deepracerboarda9af815a-533937634d786e354264-build.zip"
+					"S3Key": "amplify-builds/racers-5a64586972527a49666a-build.zip"
 				}
 			}
 		},
@@ -81,12 +81,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"deepracerboardLambdaRole8fecbc3d",
+						"deepracerboardLambdaRole0c4eec58",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"deepracerboardLambdaRole8fecbc3d",
+									"deepracerboardLambdaRole0c4eec58",
 									"-",
 									{
 										"Ref": "env"
@@ -165,14 +165,14 @@
 							],
 							"Resource": [
 								{
-									"Ref": "storagedynamo5c3cf64dArn"
+									"Ref": "storageracersArn"
 								},
 								{
 									"Fn::Join": [
 										"/",
 										[
 											{
-												"Ref": "storagedynamo5c3cf64dArn"
+												"Ref": "storageracersArn"
 											},
 											"index/*"
 										]

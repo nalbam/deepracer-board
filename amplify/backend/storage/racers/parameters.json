@@ -1,0 +1,7 @@
+{
+    "tableName": "deepracer-board-racers",
+    "partitionKeyName": "league",
+    "partitionKeyType": "S",
+    "sortKeyName": "email",
+    "sortKeyType": "S"
+}

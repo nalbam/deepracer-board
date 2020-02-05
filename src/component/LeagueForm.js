@@ -6,7 +6,6 @@ import Select from 'react-select'
 
 import Popup from './Popup';
 
-import backend from '../config/backend'
 import timezones from '../config/timezones'
 
 class App extends Component {
@@ -42,7 +41,7 @@ class App extends Component {
 
     console.log(`getLeague: ${this.props.league}`);
 
-    const res = await API.get(backend.api.leagues, `/leagues/object/${this.props.league}`);
+    const res = await API.get('leagues', `/items/object/${this.props.league}`);
 
     console.log(`getLeague: ${JSON.stringify(res, null, 2)}`);
 
@@ -76,7 +75,7 @@ class App extends Component {
 
       console.log(`postLeague: ${JSON.stringify(body, null, 2)}`);
 
-      const res = await API.post(backend.api.leagues, '/leagues', {
+      const res = await API.post('leagues', '/items', {
         body: body
       });
 

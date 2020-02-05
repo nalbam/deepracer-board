@@ -27,6 +27,14 @@
 		"dynamo5c3cf64d": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
+		},
+		"leagues": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		},
+		"racers": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
 		}
 	},
 	"function": {
@@ -59,6 +67,36 @@
 					]
 				}
 			]
+		},
+		"leagues": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "leagues",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"racers": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "racers",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
 		}
 	},
 	"api": {
@@ -83,6 +121,34 @@
 				{
 					"category": "function",
 					"resourceName": "deepracerboarda9af815a",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"leagues": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "leagues",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"racers": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "racers",
 					"attributes": [
 						"Name",
 						"Arn"

@@ -1,0 +1,5 @@
+{
+    "tableName": "deepracer-board-leagues",
+    "partitionKeyName": "league",
+    "partitionKeyType": "S"
+}

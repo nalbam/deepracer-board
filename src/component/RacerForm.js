@@ -4,8 +4,6 @@ import { API } from 'aws-amplify'
 
 import Popup from './Popup';
 
-import backend from '../config/backend'
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,8 +21,8 @@ class App extends Component {
     racerName: '',
   }
 
-  postLapTime = async () => {
-    console.log('postLapTime');
+  postRacer = async () => {
+    console.log('postRacer');
 
     try {
       let body = {
@@ -35,13 +33,13 @@ class App extends Component {
         forceUpdate: this.state.forceUpdate,
       };
 
-      console.log('postLapTime: ' + JSON.stringify(body, null, 2));
+      console.log('postRacer: ' + JSON.stringify(body, null, 2));
 
-      const res = await API.post(backend.api.times, '/items', {
+      const res = await API.post('racers', '/items', {
         body: body
       });
 
-      console.log('postLapTime: ' + JSON.stringify(res, null, 2));
+      console.log('postRacer: ' + JSON.stringify(res, null, 2));
 
       // this.popup('Saved!');
       this.popupCmp.current.start(3000, 'Saved!');
@@ -53,7 +51,7 @@ class App extends Component {
         forceUpdate: false,
       });
     } catch (err) {
-      console.log('postLapTime: ' + JSON.stringify(err, null, 2));
+      console.log('postRacer: ' + JSON.stringify(err, null, 2));
 
       // this.popup(err.message);
       this.popupCmp.current.start(3000, err.message);
@@ -152,7 +150,7 @@ class App extends Component {
       return;
     }
 
-    this.postLapTime();
+    this.postRacer();
   }
 
   render() {

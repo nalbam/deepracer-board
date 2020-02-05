@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
-import backend from '../config/backend'
-
 import LeagueItem from './LeagueItem';
 
 class App extends Component {
@@ -16,7 +14,7 @@ class App extends Component {
   }
 
   getLeagues = async () => {
-    const res = await API.get(backend.api.leagues, '/leagues');
+    const res = await API.get('leagues', '/items');
     if (res && res.length > 0) {
       this.reloaded(res);
     }
