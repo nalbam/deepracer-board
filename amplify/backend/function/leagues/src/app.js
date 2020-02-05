@@ -242,11 +242,17 @@ app.put(path, function (req, res) {
             league: req.body.league,
             title: req.body.title,
             logo: req.body.logo,
-            dateOpen: req.body.dateOpen,
-            dateClose: req.body.dateClose,
-            dateTZ: req.body.dateTZ,
-            registered: datetime,
           },
+        }
+
+        if (req.body.dateOpen) {
+          putItemParams.Item['dateOpen'] = req.body.dateOpen;
+        }
+        if (req.body.dateClose) {
+          putItemParams.Item['dateClose'] = req.body.dateClose;
+        }
+        if (req.body.dateTZ) {
+          putItemParams.Item['dateTZ'] = req.body.dateTZ;
         }
 
         if (userIdPresent) {
@@ -313,19 +319,34 @@ app.post(path, function (req, res) {
           }
         }
 
+        let updateEx = 'SET title = :title, logo = :logo, modified = :modified';
+        let valuesEx = {
+          ':title': req.body.title,
+          ':logo': req.body.logo,
+          ':modified': datetime,
+        };
+
+        if (req.body.dateOpen) {
+          updateEx = `${updateEx}, dateOpen = :dateOpen`;
+          valuesEx[':dateOpen'] = req.body.dateOpen;
+        }
+        if (req.body.dateClose) {
+          updateEx = `${updateEx}, dateClose = :dateClose`;
+          valuesEx[':dateClose'] = req.body.dateClose;
+        }
+        if (req.body.dateTZ) {
+          updateEx = `${updateEx}, dateTZ = :dateTZ`;
+          valuesEx[':dateTZ'] = req.body.dateTZ;
+        }
+
         let upateItemParams = {
           TableName: tableName,
           Key: params,
-          UpdateExpression: 'SET title = :title, logo = :logo, dateOpen = :dateOpen, dateClose = :dateClose, dateTZ = :dateTZ, modified = :modified',
-          ExpressionAttributeValues: {
-            ':title': req.body.title,
-            ':logo': req.body.logo,
-            ':dateOpen': req.body.dateOpen,
-            ':dateClose': req.body.dateClose,
-            ':dateTZ': req.body.dateTZ,
-            ':modified': datetime,
-          },
+          UpdateExpression: updateEx,
+          ExpressionAttributeValues: valuesEx,
         };
+
+        upateItemParams.ExpressionAttributeValues[':modified'] = datetime;
 
         console.log(`post-update: ${JSON.stringify(upateItemParams)}`);
         dynamodb.update(upateItemParams, (err, data) => {
@@ -345,11 +366,18 @@ app.post(path, function (req, res) {
             league: req.body.league,
             title: req.body.title,
             logo: req.body.logo,
-            dateOpen: req.body.dateOpen,
-            dateClose: req.body.dateClose,
-            dateTZ: req.body.dateTZ,
             registered: datetime,
           },
+        }
+
+        if (req.body.dateOpen) {
+          putItemParams.Item['dateOpen'] = req.body.dateOpen;
+        }
+        if (req.body.dateClose) {
+          putItemParams.Item['dateClose'] = req.body.dateClose;
+        }
+        if (req.body.dateTZ) {
+          putItemParams.Item['dateTZ'] = req.body.dateTZ;
         }
 
         if (userIdPresent) {
