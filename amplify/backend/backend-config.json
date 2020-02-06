@@ -28,7 +28,7 @@
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
 		},
-		"images": {
+		"logos": {
 			"service": "S3",
 			"providerPlugin": "awscloudformation"
 		}
