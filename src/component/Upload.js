@@ -5,36 +5,35 @@ import { Auth, Storage } from 'aws-amplify'
 import { v4 as uuid } from 'uuid';
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.handleUpload = this.handleUpload.bind(this);
-  // }
-
   state = {
-    preview: '',
+    url: '',
     uploading: false,
+  }
+
+  uploadFile = async (file) => {
+    const fileName = uuid();
+    const user = await Auth.currentAuthenticatedUser();
+
+    const result = await Storage.put(
+      fileName,
+      file,
+      {
+        customPrefix: { public: 'origin/' },
+        metadata: { owner: user.username },
+      }
+    );
+
+    console.log('Uploaded: ', result);
   }
 
   handleUpload = async (e) => {
     this.setState({ uploading: true });
 
-    const fileName = uuid();
-    const user = await Auth.currentAuthenticatedUser();
-
-    console.log('user: ', user);
-    console.log('target: ', e.target);
-
-    const result = await Storage.put(
-      fileName,
-      e.target.files[0],
-      {
-        customPrefix: { public: 'origin/' },
-        metadata: { owner: user.username }
-      }
-    );
-
-    console.log('Uploaded file: ', result);
+    let files = [];
+    for (var i = 0; i < e.target.files.length; i++) {
+      files.push(e.target.files.item(i));
+    }
+    Promise.all(files.map(file => this.uploadFile(file)));
 
     this.setState({ uploading: false });
   }
@@ -42,7 +41,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <input type='file' onChange={this.handleUpload} accept='image/png, image/jpeg' />
+        <input type='file' onChange={this.handleUpload} className='input_file' accept='image/png, image/jpeg' />
       </Fragment>
     );
   }
