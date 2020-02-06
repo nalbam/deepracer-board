@@ -6,13 +6,6 @@ import $ from 'jquery';
 import '../timer.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
-
   state = {
     bestlap: '',
     display: '00:00.000',
@@ -59,12 +52,12 @@ class App extends Component {
     $(document.body).off('keydown', this.handleKeyDown);
   }
 
-  handleClick(event) {
-    this.exec(this.btnMap[event.target.id]);
+  handleClick = async (e) => {
+    this.exec(this.btnMap[e.target.id]);
   }
 
-  handleKeyDown(event) {
-    this.exec(this.keyMap[event.keyCode]);
+  handleKeyDown = async (e) => {
+    this.exec(this.keyMap[e.keyCode]);
   }
 
   exec(name) {
