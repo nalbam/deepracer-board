@@ -21,6 +21,7 @@ class App extends Component {
     // dateOpen_class: 'text_normal',
     // dateOpen: '',
     // dateTZ: '',
+    defaultLogo: false,
     league_class: 'text_normal width_80',
     league_read: false,
     league: '',
@@ -29,6 +30,11 @@ class App extends Component {
     title_class: 'text_normal width_80',
     title: '',
   }
+
+  logos = [
+    { url: 'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo_deepracer.png' },
+    // { url: 'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo_circuit_challenge.png' },
+  ]
 
   componentDidMount() {
     this.getLeague();
@@ -204,8 +210,17 @@ class App extends Component {
   handleChange = (e) => {
     let v = e.target.value;
 
-    if (e.target.name === 'league') {
-      v = v.replace(/[^a-z0-9-_]/g, '');
+    switch (e.target.name) {
+      case 'league':
+        v = v.replace(/[^a-z0-9-_]/g, '');
+        break;
+      case 'title':
+        document.getElementById('title').innerText = v;
+        break;
+      case 'logo':
+        document.getElementById('logo').src = v;
+        break;
+      default:
     }
 
     this.setState({
@@ -213,6 +228,14 @@ class App extends Component {
     });
 
     this.validate(e.target.name, v);
+  }
+
+  handleLogo = (e) => {
+    this.setState({
+      logo: e.target.src
+    });
+
+    document.getElementById('logo').src = e.target.src;
   }
 
   handleChangeTZ = (v) => {
@@ -232,6 +255,10 @@ class App extends Component {
   }
 
   render() {
+    const logoList = this.logos.map(
+      (item, index) => (<img key={index} src={item.url} onClick={this.handleLogo} alt='logo' className='icon-logo' />)
+    );
+
     return (
       <Fragment>
         <form onSubmit={this.handleSubmit}>
@@ -239,19 +266,20 @@ class App extends Component {
             <div className='lb-row'>
               <div>League</div>
               <div>
-                <input type='text' name='league' value={this.state.league} placeholder='Only lowercase letters and numbers and -_' onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete='off' maxLength='20' />
+                <input type='text' name='league' value={this.state.league} onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} placeholder='Only lowercase letters and numbers and -_' autoComplete='off' maxLength='20' />
               </div>
             </div>
             <div className='lb-row'>
               <div>Title</div>
               <div>
-                <input type='text' name='title' value={this.state.title} placeholder='' onChange={this.handleChange} className={this.state.title_class} autoComplete='off' maxLength='64' />
+                <input type='text' name='title' value={this.state.title} onChange={this.handleChange} className={this.state.title_class} placeholder='' autoComplete='off' maxLength='64' />
               </div>
             </div>
             <div className='lb-row'>
               <div>Logo</div>
               <div>
-                <input type='text' name='logo' value={this.state.logo} placeholder='Image address, including http:// or https://' onChange={this.handleChange} className={this.state.logo_class} autoComplete='off' maxLength='256' />
+                <input type='text' name='logo' value={this.state.logo} onChange={this.handleChange} className={this.state.logo_class} placeholder='Logo uri, including http:// or https://' autoComplete='off' maxLength='256' />
+                {logoList}
               </div>
             </div>
             <div className='lb-row'>

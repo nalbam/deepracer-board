@@ -18,15 +18,12 @@ class App extends Component {
 
   state = {
     items: [],
-    pollen: false,
     popInfo: {
       footer: '',
       header: '',
       message: '',
       rank: '',
     },
-    popup: false,
-    scroll: '',
   }
 
   componentDidMount() {

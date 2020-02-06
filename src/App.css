@@ -113,18 +113,6 @@ footer {
   background: linear-gradient(90deg, #fc7 0, #864);
 }
 
-.lb-items .icon-trophy {
-  height: 26px;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.lb-items .icon-logo {
-  height: 40px;
-  position: relative;
-}
-
 .lb-submit {
   margin: 0 auto;
   max-width: 1024px;
@@ -172,6 +160,19 @@ footer {
   outline: 0;
 }
 
+.icon-trophy {
+  height: 26px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.icon-logo {
+  height: 40px;
+  position: relative;
+  top: 20%;
+}
+
 .text_normal {
   color: #fff;
   border: 1px solid #aaa;
@@ -198,6 +199,10 @@ footer {
 .select_tz {
   font-size: 18px;
   color: #111;
+}
+
+.input_file {
+  font-size: 18px;
 }
 
 .btn-link {
