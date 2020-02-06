@@ -215,9 +215,9 @@ class App extends Component {
     this.validate(e.target.name, v);
   }
 
-  handleChangeTZ = (e) => {
+  handleChangeTZ = (v) => {
     this.setState({
-      dateTZ: e,
+      dateTZ: v,
     });
   }
 
@@ -238,15 +238,21 @@ class App extends Component {
           <div className='lb-submit'>
             <div className='lb-row'>
               <div>League</div>
-              <div><input type='text' name='league' value={this.state.league} placeholder='Only lowercase letters and numbers and -_' onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete='off' maxLength='20' /></div>
+              <div>
+                <input type='text' name='league' value={this.state.league} placeholder='Only lowercase letters and numbers and -_' onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} autoComplete='off' maxLength='20' />
+              </div>
             </div>
             <div className='lb-row'>
               <div>Title</div>
-              <div><input type='text' name='title' value={this.state.title} placeholder='' onChange={this.handleChange} className={this.state.title_class} autoComplete='off' maxLength='64' /></div>
+              <div>
+                <input type='text' name='title' value={this.state.title} placeholder='' onChange={this.handleChange} className={this.state.title_class} autoComplete='off' maxLength='64' />
+              </div>
             </div>
             <div className='lb-row'>
               <div>Logo</div>
-              <div><input type='text' name='logo' value={this.state.logo} placeholder='Image address, including http:// or https://' onChange={this.handleChange} className={this.state.logo_class} autoComplete='off' maxLength='256' /></div>
+              <div>
+                <input type='text' name='logo' value={this.state.logo} placeholder='Image address, including http:// or https://' onChange={this.handleChange} className={this.state.logo_class} autoComplete='off' maxLength='256' />
+              </div>
             </div>
             <div className='lb-row'>
               <div></div>
