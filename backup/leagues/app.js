@@ -1,8 +1,8 @@
 /*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
+Licensed under the Apache License, Version 2.0 (the 'License'). You may not use this file except in compliance with the License. A copy of the License is located at
     http://aws.amazon.com/apache2.0/
-or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+or in the 'license' file accompanying this file. This file is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
 
@@ -22,18 +22,18 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "deepracer-board-leagues";
-if (process.env.ENV && process.env.ENV !== "NONE") {
+let tableName = 'deepracer-board-leagues';
+if (process.env.ENV && process.env.ENV !== 'NONE') {
   tableName = tableName + '-' + process.env.ENV;
 }
 
 const userIdPresent = true; // TODO: update in case is required to use that definition
-const partitionKeyName = "league";
-const partitionKeyType = "S";
-const sortKeyName = "";
-const sortKeyType = "";
-const hasSortKey = sortKeyName !== "";
-const path = "/items";
+const partitionKeyName = 'league';
+const partitionKeyType = 'S';
+const sortKeyName = '';
+const sortKeyType = '';
+const hasSortKey = sortKeyName !== '';
+const path = '/items';
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
@@ -44,15 +44,15 @@ app.use(awsServerlessExpressMiddleware.eventContext())
 
 // Enable CORS for all methods
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 });
 
 // convert url string param to expected Type
 const convertUrlType = (param, type) => {
   switch (type) {
-    case "N":
+    case 'N':
       return Number.parseInt(param);
     default:
       return param;
@@ -78,12 +78,12 @@ app.get(path, function (req, res) {
 
   let queryParams = {
     TableName: tableName,
-    FilterExpression: "#userId = :userId",
+    FilterExpression: '#userId = :userId',
     ExpressionAttributeNames: {
-      "#userId": "userId",
+      '#userId': 'userId',
     },
     ExpressionAttributeValues: {
-      ":userId": userId
+      ':userId': userId
     },
   }
 
@@ -242,11 +242,17 @@ app.put(path, function (req, res) {
             league: req.body.league,
             title: req.body.title,
             logo: req.body.logo,
-            dateOpen: req.body.dateOpen,
-            dateClose: req.body.dateClose,
-            dateTZ: req.body.dateTZ,
-            registered: datetime,
           },
+        }
+
+        if (req.body.dateOpen) {
+          putItemParams.Item['dateOpen'] = req.body.dateOpen;
+        }
+        if (req.body.dateClose) {
+          putItemParams.Item['dateClose'] = req.body.dateClose;
+        }
+        if (req.body.dateTZ) {
+          putItemParams.Item['dateTZ'] = req.body.dateTZ;
         }
 
         if (userIdPresent) {
@@ -313,19 +319,34 @@ app.post(path, function (req, res) {
           }
         }
 
+        let updateEx = 'SET title = :title, logo = :logo, modified = :modified';
+        let valuesEx = {
+          ':title': req.body.title,
+          ':logo': req.body.logo,
+          ':modified': datetime,
+        };
+
+        if (req.body.dateOpen) {
+          updateEx = `${updateEx}, dateOpen = :dateOpen`;
+          valuesEx[':dateOpen'] = req.body.dateOpen;
+        }
+        if (req.body.dateClose) {
+          updateEx = `${updateEx}, dateClose = :dateClose`;
+          valuesEx[':dateClose'] = req.body.dateClose;
+        }
+        if (req.body.dateTZ) {
+          updateEx = `${updateEx}, dateTZ = :dateTZ`;
+          valuesEx[':dateTZ'] = req.body.dateTZ;
+        }
+
         let upateItemParams = {
           TableName: tableName,
           Key: params,
-          UpdateExpression: 'SET title = :title, logo = :logo, dateOpen = :dateOpen, dateClose = :dateClose, dateTZ = :dateTZ, modified = :modified',
-          ExpressionAttributeValues: {
-            ':title': req.body.title,
-            ':logo': req.body.logo,
-            ':dateOpen': req.body.dateOpen,
-            ':dateClose': req.body.dateClose,
-            ':dateTZ': req.body.dateTZ,
-            ':modified': datetime,
-          },
+          UpdateExpression: updateEx,
+          ExpressionAttributeValues: valuesEx,
         };
+
+        upateItemParams.ExpressionAttributeValues[':modified'] = datetime;
 
         console.log(`post-update: ${JSON.stringify(upateItemParams)}`);
         dynamodb.update(upateItemParams, (err, data) => {
@@ -345,11 +366,18 @@ app.post(path, function (req, res) {
             league: req.body.league,
             title: req.body.title,
             logo: req.body.logo,
-            dateOpen: req.body.dateOpen,
-            dateClose: req.body.dateClose,
-            dateTZ: req.body.dateTZ,
             registered: datetime,
           },
+        }
+
+        if (req.body.dateOpen) {
+          putItemParams.Item['dateOpen'] = req.body.dateOpen;
+        }
+        if (req.body.dateClose) {
+          putItemParams.Item['dateClose'] = req.body.dateClose;
+        }
+        if (req.body.dateTZ) {
+          putItemParams.Item['dateTZ'] = req.body.dateTZ;
         }
 
         if (userIdPresent) {
@@ -412,7 +440,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 });
 
 app.listen(3000, function () {
-  console.log("App started")
+  console.log('App started')
 });
 
 // Export the app object. When executing the application local this does nothing. However,
