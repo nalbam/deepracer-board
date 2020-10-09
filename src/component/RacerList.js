@@ -117,8 +117,6 @@ class App extends Component {
   }
 
   fanfare(rank) {
-    // this.scroll(rank);
-
     this.scrollCmp.current.scroll(rank);
 
     this.pollenCmp.current.start(5000);
@@ -127,17 +125,6 @@ class App extends Component {
 
     // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
   }
-
-  // scroll(rank) {
-  //   this.setState({
-  //     scroll: rank,
-  //   });
-  //   setTimeout(
-  //     function () {
-  //       this.setState({ scroll: 0 });
-  //     }.bind(this), 5000
-  //   );
-  // }
 
   compare(a, b) {
     let a1 = a.laptime.split(':');

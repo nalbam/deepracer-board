@@ -36,26 +36,27 @@ class App extends Component {
     let scrollTop = 0;
     let duration = 1000;
     let delay = 1000;
-    let max = 5;
+    let max = 100;
+    let min = 5;
 
     if (dir === 'down') {
       dir = this.props.items;
-      if (dir <= max) {
+      if (dir <= min) {
         return;
       }
-      if (dir > 100) {
-        dir = 100;
+      if (dir > max) {
+        dir = max;
       }
-      dir = dir - max;
       scrollTop = $(`.lb-rank${dir}`).offset().top;
       duration = dir * 1000;
       delay = 3000;
     } else {
-      if (dir <= max) {
-        return;
+      if (dir <= min) {
+        scrollTop = 0;
+      } else {
+        dir = dir - min;
+        scrollTop = $(`.lb-rank${dir}`).offset().top;
       }
-      dir = dir - max;
-      scrollTop = $(`.lb-rank${dir}`).offset().top;
       duration = 1000;
       delay = 10000;
     }
