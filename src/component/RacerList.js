@@ -37,18 +37,20 @@ class App extends Component {
     document.removeEventListener("keydown", this.handleKey);
   }
 
-  handleKey = (e) => {
-    if (e.keyCode === 13) {
-      this.tada();
-    }
-  }
-
   getRacers = async () => {
     console.log(`getRacers ${this.props.league}`);
 
     const res = await API.get('racers', `/items/${this.props.league}`);
     if (res && res.length > 0) {
       this.reloaded(res);
+    }
+  }
+
+  handleKey = (e) => {
+    console.log(`handleKey ${e.keyCode}`);
+
+    if (e.keyCode === 13) {
+      this.tada(1, 0);
     }
   }
 
@@ -60,33 +62,39 @@ class App extends Component {
       return;
     }
 
-    let rank;
-    let header;
-    let racerName;
-    let laptime;
+    let rank = 0;
+    let type = 0;
 
-    let isNewChallenger = false;
-    let isNewRecord = false;
+    // let header;
+    // let racerName;
+    // let laptime;
 
-    if (items.length > this.state.items.length) {
-      isNewChallenger = true;
+    // let isNewChallenger = false;
+    // let isNewRecord = false;
+
+    if (items.length > this.state.items.length && this.state.items.length > 0) {
+      rank = items.length;
+      type = 2;
+      // isNewChallenger = true;
     }
 
     for (let i = 0; i < this.state.items.length; i++) {
       if (this.state.items[i].racerName !== items[i].racerName || this.state.items[i].laptime !== items[i].laptime) {
         rank = i + 1;
-        racerName = items[i].racerName;
-        laptime = items[i].laptime;
-        isNewRecord = true;
+        type = 1;
+        // racerName = items[i].racerName;
+        // laptime = items[i].laptime;
+        // isNewRecord = true;
         break;
       }
     }
 
-    if (isNewChallenger && !racerName) {
-      rank = items.length;
-      racerName = items[rank - 1].racerName;
-      laptime = items[rank - 1].laptime;
-    }
+    // if (type === 2 && !racerName) {
+    //   rank = items.length;
+    //   type = 2;
+    //   // racerName = items[rank - 1].racerName;
+    //   // laptime = items[rank - 1].laptime;
+    // }
 
     this.setState({ items: items });
 
@@ -95,39 +103,50 @@ class App extends Component {
     // racerName = 'nalbam';
     // laptime = '00:00.000';
 
-    if (racerName) {
-      console.log(`new ${rank} ${racerName} ${laptime}`);
-
-      if (isNewChallenger) {
-        header = 'New Challenger!';
-      } else if (isNewRecord) {
-        header = 'New Record!';
-      } else {
-        header = 'Congratulations!';
-      }
-
-      this.setState({
-        popInfo: {
-          rank: rank,
-          header: header,
-          message: racerName,
-          footer: laptime,
-        },
-      });
-
-      this.fanfare(rank);
+    if (rank > 1) {
+      tada(rank, type);
     }
+
+    // if (racerName) {
+    //   console.log(`new ${rank} ${racerName} ${laptime}`);
+
+    //   if (isNewChallenger) {
+    //     header = 'New Challenger!';
+    //   } else if (isNewRecord) {
+    //     header = 'New Record!';
+    //   } else {
+    //     header = 'Congratulations!';
+    //   }
+
+    //   this.setState({
+    //     popInfo: {
+    //       rank: rank,
+    //       header: header,
+    //       message: racerName,
+    //       footer: laptime,
+    //     },
+    //   });
+
+    //   this.fanfare(rank);
+    // }
   }
 
-  tada() {
+  tada(rank, type) {
     if (this.state.items.length == 0) {
       return;
     }
 
-    let rank = 1;
-    let header = 'Congratulations!';
-    let racerName = this.state.items[0].racerName;
-    let laptime = this.state.items[0].laptime;
+    let header;
+    if (type === 1) {
+      header = 'New Record!';
+    } else if (type === 2) {
+      header = 'New Challenger!';
+    } else {
+      header = 'Congratulations!';
+    }
+
+    let racerName = this.state.items[rank - 1].racerName;
+    let laptime = this.state.items[rank - 1].laptime;
 
     this.setState({
       popInfo: {
@@ -137,6 +156,8 @@ class App extends Component {
         footer: laptime,
       },
     });
+
+    console.log(`tada ${rank} ${racerName} ${laptime}`);
 
     this.fanfare(rank);
   }
