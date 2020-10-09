@@ -104,7 +104,7 @@ class App extends Component {
     // laptime = '00:00.000';
 
     if (rank > 0) {
-      tada(rank, type);
+      this.tada(rank, type);
     }
 
     // if (racerName) {
