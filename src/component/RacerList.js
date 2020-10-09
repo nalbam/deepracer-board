@@ -29,21 +29,17 @@ class App extends Component {
   componentDidMount() {
     this.getRacers();
     this.intervalId = setInterval(this.getRacers.bind(this), 10000);
-    document.addEventListener("keydown", this._handleKeyDown);
+    document.addEventListener("keydown", this.handleKey);
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
-    document.removeEventListener("keydown", this._handleKeyDown);
+    document.removeEventListener("keydown", this.handleKey);
   }
 
-  _handleKeyDown = (event) => {
-    switch (event.keyCode) {
-      case 13:
-        this.tada();
-        break;
-      default:
-        break;
+  handleKey = (e) => {
+    if (e.keyCode === 13) {
+      this.tada();
     }
   }
 
