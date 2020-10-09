@@ -1,6 +1,6 @@
 {
   "name": "deepracer-board",
-  "version": "v0.1.1",
+  "version": "v0.1.2",
   "private": true,
   "dependencies": {
     "aws-amplify": "^2.2.5",
