@@ -63,7 +63,7 @@ class App extends Component {
 
     $('html, body').stop().animate({
       scrollTop: scrollTop
-    }, duration).delay(delay).animate({
+    }, duration).delay(delay).stop().animate({
       scrollTop: 0
     }, 1000);
   }

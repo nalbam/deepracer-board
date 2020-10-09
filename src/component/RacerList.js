@@ -123,7 +123,7 @@ class App extends Component {
 
     this.popupCmp.current.start(5000);
 
-    // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
+    $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
   }
 
   compare(a, b) {
