@@ -29,12 +29,12 @@ class App extends Component {
   componentDidMount() {
     this.getRacers();
     this.intervalId = setInterval(this.getRacers.bind(this), 10000);
-    document.addEventListener("keydown", this._handleKeyDown());
+    document.addEventListener("keydown", this._handleKeyDown);
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
-    document.removeEventListener("keydown", this._handleKeyDown());
+    document.removeEventListener("keydown", this._handleKeyDown);
   }
 
   _handleKeyDown = (event) => {
