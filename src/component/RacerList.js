@@ -65,74 +65,28 @@ class App extends Component {
     let rank = 0;
     let type = 0;
 
-    // let header;
-    // let racerName;
-    // let laptime;
-
-    // let isNewChallenger = false;
-    // let isNewRecord = false;
-
     if (items.length > this.state.items.length && this.state.items.length > 0) {
       rank = items.length;
       type = 2;
-      // isNewChallenger = true;
     }
 
     for (let i = 0; i < this.state.items.length; i++) {
       if (this.state.items[i].racerName !== items[i].racerName || this.state.items[i].laptime !== items[i].laptime) {
         rank = i + 1;
         type = 1;
-        // racerName = items[i].racerName;
-        // laptime = items[i].laptime;
-        // isNewRecord = true;
         break;
       }
     }
 
-    // if (type === 2 && !racerName) {
-    //   rank = items.length;
-    //   type = 2;
-    //   // racerName = items[rank - 1].racerName;
-    //   // laptime = items[rank - 1].laptime;
-    // }
-
     this.setState({ items: items });
-
-    // // TODO REMOVE
-    // rank = 1;
-    // racerName = 'nalbam';
-    // laptime = '00:00.000';
 
     if (rank > 0) {
       this.tada(rank, type);
     }
-
-    // if (racerName) {
-    //   console.log(`new ${rank} ${racerName} ${laptime}`);
-
-    //   if (isNewChallenger) {
-    //     header = 'New Challenger!';
-    //   } else if (isNewRecord) {
-    //     header = 'New Record!';
-    //   } else {
-    //     header = 'Congratulations!';
-    //   }
-
-    //   this.setState({
-    //     popInfo: {
-    //       rank: rank,
-    //       header: header,
-    //       message: racerName,
-    //       footer: laptime,
-    //     },
-    //   });
-
-    //   this.fanfare(rank);
-    // }
   }
 
   tada(rank, type) {
-    if (this.state.items.length == 0) {
+    if (this.state.items.length === 0) {
       return;
     }
 
