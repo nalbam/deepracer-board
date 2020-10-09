@@ -5,10 +5,10 @@ import $ from 'jquery';
 class App extends Component {
   state = {
     popInfo: {
-      footer: '',
+      rank: '',
       header: '',
       message: '',
-      rank: '',
+      footer: '',
     },
     timeout: 1000,
   }
@@ -27,10 +27,10 @@ class App extends Component {
     if (message) {
       this.setState({
         popInfo: {
-          footer: this.state.footer,
+          rank: this.state.rank,
           header: this.state.header,
           message: message,
-          rank: this.state.rank,
+          footer: this.state.footer,
         }
       });
     }

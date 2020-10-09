@@ -19,20 +19,32 @@ class App extends Component {
   state = {
     items: [],
     popInfo: {
-      footer: '',
+      rank: '',
       header: '',
       message: '',
-      rank: '',
+      footer: '',
     },
   }
 
   componentDidMount() {
     this.getRacers();
     this.intervalId = setInterval(this.getRacers.bind(this), 10000);
+    document.addEventListener("keydown", this._handleKeyDown());
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
+    document.removeEventListener("keydown", this._handleKeyDown());
+  }
+
+  _handleKeyDown = (event) => {
+    switch (event.keyCode) {
+      case 13:
+        this.tada();
+        break;
+      default:
+        break;
+    }
   }
 
   getRacers = async () => {
@@ -52,26 +64,29 @@ class App extends Component {
       return;
     }
 
-    let isNew = false;
-    if (this.state.items.length > 0 && items.length > this.state.items.length) {
-      // if (items.length > this.state.items.length) {
-      isNew = true;
-    }
-
     let rank;
+    let header;
     let racerName;
     let laptime;
+
+    let isNewChallenger = false;
+    let isNewRecord = false;
+
+    if (items.length > this.state.items.length) {
+      isNewChallenger = true;
+    }
 
     for (let i = 0; i < this.state.items.length; i++) {
       if (this.state.items[i].racerName !== items[i].racerName || this.state.items[i].laptime !== items[i].laptime) {
         rank = i + 1;
         racerName = items[i].racerName;
         laptime = items[i].laptime;
+        isNewRecord = true;
         break;
       }
     }
 
-    if (isNew && !racerName) {
+    if (isNewChallenger && !racerName) {
       rank = items.length;
       racerName = items[rank - 1].racerName;
       laptime = items[rank - 1].laptime;
@@ -87,25 +102,47 @@ class App extends Component {
     if (racerName) {
       console.log(`new ${rank} ${racerName} ${laptime}`);
 
-      let popTitle;
-
-      if (isNew) {
-        popTitle = 'New Challenger!';
+      if (isNewChallenger) {
+        header = 'New Challenger!';
+      } else if (isNewRecord) {
+        header = 'New Record!';
       } else {
-        popTitle = 'New Record!';
+        header = 'Congratulations!';
       }
 
       this.setState({
         popInfo: {
-          footer: laptime,
-          header: popTitle,
-          message: racerName,
           rank: rank,
+          header: header,
+          message: racerName,
+          footer: laptime,
         },
       });
 
       this.fanfare(rank);
     }
+  }
+
+  tada() {
+    if (this.state.items.length == 0) {
+      return;
+    }
+
+    let rank = 1;
+    let header = 'Congratulations!';
+    let racerName = this.state.items[0].racerName;
+    let laptime = this.state.items[0].laptime;
+
+    this.setState({
+      popInfo: {
+        rank: rank,
+        header: header,
+        message: racerName,
+        footer: laptime,
+      },
+    });
+
+    this.fanfare(rank);
   }
 
   fanfare(rank) {
@@ -124,7 +161,6 @@ class App extends Component {
   //   this.setState({
   //     scroll: rank,
   //   });
-
   //   setTimeout(
   //     function () {
   //       this.setState({ scroll: 0 });
