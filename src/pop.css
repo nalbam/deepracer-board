@@ -32,7 +32,12 @@
 .pop-logo .pop-container .pop-header {
     font-size: 5vw;
     margin-top: 8%;
+    height: 50%;
     padding: 1%;
+}
+
+.pop-logo .pop-container .pop-header img {
+    height: 100%;
 }
 
 .pop-logo .pop-container .pop-message {
