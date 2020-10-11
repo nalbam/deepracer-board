@@ -35,7 +35,7 @@ class App extends Component {
 
     let scrollTop = 0;
     let duration = 1000;
-    let delay = 1000;
+    let delay = 5000;
     let max = 100;
     let min = 5;
 
@@ -49,7 +49,7 @@ class App extends Component {
       }
       scrollTop = $(`.lb-rank${dir}`).offset().top;
       duration = dir * 1000;
-      delay = 3000;
+      // delay = 3000;
     } else {
       if (dir <= min) {
         scrollTop = 0;
@@ -58,14 +58,20 @@ class App extends Component {
         scrollTop = $(`.lb-rank${dir}`).offset().top;
       }
       duration = 1000;
-      delay = 10000;
+      // delay = 5000;
     }
 
-    $('html, body').stop().animate({
-      scrollTop: scrollTop
-    }, duration).delay(delay).animate({
-      scrollTop: 0
-    }, 1000);
+    if (scrollTop === 0) {
+      $('html, body').stop().animate({
+        scrollTop: scrollTop
+      }, duration);
+    } else {
+      $('html, body').stop().animate({
+        scrollTop: scrollTop
+      }, duration).delay(delay).animate({
+        scrollTop: 0
+      }, 1000);
+    }
   }
 
   render() {

@@ -50,7 +50,11 @@ class App extends Component {
     console.log(`handleKey ${e.keyCode}`);
 
     if (e.keyCode === 13) {
-      this.tada(1, 0);
+      setTimeout(
+        function () {
+          this.tada(1, 0);
+        }.bind(this), 3000
+      );
     }
   }
 

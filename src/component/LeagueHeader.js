@@ -2,7 +2,15 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
+import Logo from './Logo';
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.logoCmp = React.createRef();
+  }
+
   state = {
     logo: '/icon-trophy.png',
     title: '',
@@ -13,6 +21,11 @@ class App extends Component {
 
   componentDidMount() {
     this.getLeague();
+    document.addEventListener("keydown", this.handleKey);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKey);
   }
 
   getLeague = async () => {
@@ -34,6 +47,18 @@ class App extends Component {
     }
   };
 
+  handleKey = (e) => {
+    console.log(`handleKey ${e.keyCode}`);
+
+    if (e.keyCode === 13) {
+      this.tada();
+    }
+  }
+
+  tada() {
+    this.logoCmp.current.start(3000);
+  }
+
   render() {
     return (
       <Fragment>
@@ -43,6 +68,9 @@ class App extends Component {
         <h1 id='title' className='title'>
           {this.state.title}
         </h1>
+
+        <Logo ref={this.logoCmp} logo={this.state.title} logo={this.state.title} />
+
       </Fragment>
     );
   }
