@@ -56,7 +56,7 @@ class App extends Component {
   }
 
   tada() {
-    this.logoCmp.current.start(3500);
+    this.logoCmp.current.start(3000);
   }
 
   render() {
@@ -69,7 +69,7 @@ class App extends Component {
           {this.state.title}
         </h1>
 
-        <Logo ref={this.logoCmp} logo={this.state.title} logo={this.state.title} />
+        <Logo ref={this.logoCmp} logo={this.state.logo} title={this.state.title} />
 
       </Fragment>
     );
