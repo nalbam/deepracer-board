@@ -53,7 +53,7 @@ class App extends Component {
       setTimeout(
         function () {
           this.tada(1, 0);
-        }.bind(this), 3000
+        }.bind(this), 4000
       );
     }
   }
