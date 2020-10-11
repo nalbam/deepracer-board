@@ -56,7 +56,7 @@ class App extends Component {
   }
 
   tada() {
-    this.logoCmp.current.start(3000);
+    this.logoCmp.current.start(3500);
   }
 
   render() {
