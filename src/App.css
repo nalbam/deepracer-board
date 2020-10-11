@@ -163,7 +163,7 @@ footer {
 .icon-trophy {
   height: 26px;
   position: relative;
-  top: 50%;
+  top: 10%;
   transform: translateY(-50%);
 }
 

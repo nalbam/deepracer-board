@@ -28,7 +28,7 @@ class App extends Component {
         <div className='pop-logo'>
           <div className='pop-bg'></div>
           <div className='pop-container'>
-            <div className='pop-header'><img id='big-logo' alt='deepracer' src={this.state.logo} /></div>
+            <div className='pop-header'><img src={this.state.logo} alt='deepracer' /></div>
             <div className='pop-message'>{this.state.title}</div>
           </div>
         </div>
