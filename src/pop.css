@@ -13,26 +13,23 @@
     background: #000;
     height: 100%;
     left: 0;
-    opacity: .7;
     position: absolute;
     top: 0;
     width: 100%;
 }
 
 .pop-logo .pop-container {
-    height: 200px;
-    left: 50%;
-    margin-top: 1em;
+    height: 100%;
+    left: 0;
     position: relative;
     text-align: center;
-    transform: translateX(-50%);
-    width: 200%;
+    top: 0;
+    width: 100%;
 }
 
 .pop-logo .pop-container .pop-header {
-    font-size: 5vw;
-    margin-top: 8%;
     height: 50%;
+    margin-top: 8%;
     padding: 1%;
 }
 
@@ -42,7 +39,7 @@
 
 .pop-logo .pop-container .pop-message {
     font-size: 5vw;
-    margin-top: 8%;
+    font-weight: bold;
     padding: 1%;
 }
 
