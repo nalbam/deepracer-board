@@ -159,12 +159,6 @@ class App extends Component {
           {racerList}
         </div>
 
-        <div className='pop-logo'>
-          <div className='pop-container'>
-            <div className='lb-logo-back'><img alt='trophy' src='/icon-trophy.png' /></div>
-          </div>
-        </div>
-
         <Pollen ref={this.pollenCmp} />
 
         <Popup ref={this.popupCmp} popInfo={this.state.popInfo} />
