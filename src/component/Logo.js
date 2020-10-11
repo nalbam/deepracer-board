@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 class App extends Component {
   state = {
-    logo: '/icon-trophy.png',
+    logo: '',
     title: '',
     timeout: 3000,
   }
