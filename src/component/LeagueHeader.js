@@ -63,14 +63,13 @@ class App extends Component {
     return (
       <Fragment>
         <div className='logo'>
-          <img src={this.state.logo} alt='deepracer' />
+          <img id="logo" src={this.state.logo} alt='deepracer' />
         </div>
         <h1 className='title'>
           {this.state.title}
         </h1>
 
         <Logo ref={this.logoCmp} logo={this.state.logo} title={this.state.title} />
-
       </Fragment>
     );
   }
