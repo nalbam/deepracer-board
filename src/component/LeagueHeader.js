@@ -65,7 +65,7 @@ class App extends Component {
         <div className='logo'>
           <img id="logo" src={this.state.logo} alt='deepracer' />
         </div>
-        <h1 className='title'>
+        <h1 id="title" className='title'>
           {this.state.title}
         </h1>
 
