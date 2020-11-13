@@ -123,7 +123,7 @@ class App extends Component {
       return;
     }
     this.records = [];
-    this.limit = [3, 0, 0];
+    this.limit = [4, 0, 0];
     this.reset();
 
     this.setState({
