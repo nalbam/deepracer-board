@@ -119,13 +119,15 @@ class App extends Component {
 
     this.scrollCmp.current.scroll(rank);
 
-    var fanfare = new Audio("/fanfare.mp3");
-    fanfare.loop = false;
-    fanfare.play();
-
     this.pollenCmp.current.start(5000);
 
     this.popupCmp.current.start(5000);
+
+    if (rank === 1) {
+      var fanfare = new Audio("/fanfare.mp3");
+      fanfare.loop = false;
+      fanfare.play();
+    }
 
     // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
   }
