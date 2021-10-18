@@ -123,7 +123,7 @@ class App extends Component {
 
     this.popupCmp.current.start(5000);
 
-    if (rank === 1) {
+    if (type === 0) {
       var fanfare = new Audio("/fanfare.mp3");
       fanfare.loop = false;
       fanfare.play();
