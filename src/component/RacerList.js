@@ -117,15 +117,15 @@ class App extends Component {
 
     console.log(`tada ${rank} ${racerName} ${laptime}`);
 
-    this.fanfare(rank);
-  }
-
-  fanfare(rank) {
     this.scrollCmp.current.scroll(rank);
 
     this.pollenCmp.current.start(5000);
 
     this.popupCmp.current.start(5000);
+
+    var fanfare = new Audio("/fanfare.mp3");
+    fanfare.loop = false;
+    fanfare.play();
 
     // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
   }
