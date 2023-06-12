@@ -18,6 +18,9 @@ class App extends Component {
     }),
   }
 
+  def_times = [0, 0, 0];
+  def_limit = this.props.limit ? this.props.limit.slice() : [4, 0, 0];
+
   limit = [];
   times = [];
 
@@ -113,7 +116,7 @@ class App extends Component {
   }
 
   reset() {
-    this.times = [0, 0, 0];
+    this.times = this.def_times;
     this.print();
     this.pause();
   }
@@ -123,7 +126,7 @@ class App extends Component {
       return;
     }
     this.records = [];
-    this.limit = [4, 0, 0];
+    this.limit = this.def_limit;
     this.reset();
 
     this.setState({
