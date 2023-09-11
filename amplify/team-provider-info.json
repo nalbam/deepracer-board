@@ -19,7 +19,7 @@
       "function": {
         "racers": {
           "deploymentBucketName": "amplify-deepracer-board-dev-113355-deployment",
-          "s3Key": "amplify-builds/racers-6d6f777041744641434d-build.zip"
+          "s3Key": "amplify-builds/racers-6e524b7a774a356a346e-build.zip"
         },
         "leagues": {
           "deploymentBucketName": "amplify-deepracer-board-dev-113355-deployment",
