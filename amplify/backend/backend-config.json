@@ -81,6 +81,40 @@
       "service": "S3AndCloudFront"
     }
   },
+  "parameters": {
+    "AMPLIFY_function_leagues_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "leagues"
+        }
+      ]
+    },
+    "AMPLIFY_function_leagues_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "leagues"
+        }
+      ]
+    },
+    "AMPLIFY_function_racers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "racers"
+        }
+      ]
+    },
+    "AMPLIFY_function_racers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "racers"
+        }
+      ]
+    }
+  },
   "storage": {
     "leagues": {
       "providerPlugin": "awscloudformation",

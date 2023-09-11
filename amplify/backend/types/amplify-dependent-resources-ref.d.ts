@@ -8,10 +8,12 @@ export type AmplifyDependentResourcesAttributes = {
   },
   "api": {
     "leagues": {
+      "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
     },
     "racers": {
+      "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
     }
@@ -31,14 +33,12 @@ export type AmplifyDependentResourcesAttributes = {
     "leagues": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
     "racers": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     }

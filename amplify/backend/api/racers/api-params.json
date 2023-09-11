@@ -1,44 +1,45 @@
 {
-    "paths": [
-        {
-            "name": "/items",
-            "lambdaFunction": "racers",
-            "privacy": {
-                "protected": true,
-                "auth": [
-                    "/POST",
-                    "/GET",
-                    "/PUT",
-                    "/PATCH",
-                    "/DELETE"
-                ],
-                "unauth": [
-                    "/GET"
-                ]
-            }
-        }
-    ],
-    "resourceName": "racers",
-    "apiName": "racers",
-    "functionArns": [
-        {
-            "lambdaFunction": "racers"
-        }
-    ],
-    "privacy": {
-        "auth": 1,
-        "unauth": 1,
-        "authRoleName": "amplify-deepracer-board-dev-113355-authRole",
-        "unAuthRoleName": "amplify-deepracer-board-dev-113355-unauthRole"
-    },
-    "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "racers",
-            "attributes": [
-                "Name",
-                "Arn"
-            ]
-        }
-    ]
+  "paths": [
+    {
+      "name": "/items",
+      "lambdaFunction": "racers",
+      "privacy": {
+        "protected": true,
+        "auth": [
+          "/POST",
+          "/GET",
+          "/PUT",
+          "/PATCH",
+          "/DELETE"
+        ],
+        "unauth": [
+          "/GET"
+        ]
+      },
+      "policyResourceName": "/items"
+    }
+  ],
+  "resourceName": "racers",
+  "apiName": "racers",
+  "functionArns": [
+    {
+      "lambdaFunction": "racers"
+    }
+  ],
+  "privacy": {
+    "auth": 1,
+    "unauth": 1,
+    "authRoleName": "amplify-deepracer-board-dev-113355-authRole",
+    "unAuthRoleName": "amplify-deepracer-board-dev-113355-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "racers",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
 }

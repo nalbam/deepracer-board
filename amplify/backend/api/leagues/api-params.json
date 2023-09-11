@@ -1,44 +1,45 @@
 {
-    "paths": [
-        {
-            "name": "/items",
-            "lambdaFunction": "leagues",
-            "privacy": {
-                "protected": true,
-                "auth": [
-                    "/POST",
-                    "/GET",
-                    "/PUT",
-                    "/PATCH",
-                    "/DELETE"
-                ],
-                "unauth": [
-                    "/GET"
-                ]
-            }
-        }
-    ],
-    "resourceName": "leagues",
-    "apiName": "leagues",
-    "functionArns": [
-        {
-            "lambdaFunction": "leagues"
-        }
-    ],
-    "privacy": {
-        "auth": 1,
-        "unauth": 1,
-        "authRoleName": "amplify-deepracer-board-dev-113355-authRole",
-        "unAuthRoleName": "amplify-deepracer-board-dev-113355-unauthRole"
-    },
-    "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "leagues",
-            "attributes": [
-                "Name",
-                "Arn"
-            ]
-        }
-    ]
+  "paths": [
+    {
+      "name": "/items",
+      "lambdaFunction": "leagues",
+      "privacy": {
+        "protected": true,
+        "auth": [
+          "/POST",
+          "/GET",
+          "/PUT",
+          "/PATCH",
+          "/DELETE"
+        ],
+        "unauth": [
+          "/GET"
+        ]
+      },
+      "policyResourceName": "/items"
+    }
+  ],
+  "resourceName": "leagues",
+  "apiName": "leagues",
+  "functionArns": [
+    {
+      "lambdaFunction": "leagues"
+    }
+  ],
+  "privacy": {
+    "auth": 1,
+    "unauth": 1,
+    "authRoleName": "amplify-deepracer-board-dev-113355-authRole",
+    "unAuthRoleName": "amplify-deepracer-board-dev-113355-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "leagues",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
 }

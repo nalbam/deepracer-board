@@ -15,6 +15,21 @@
     "categories": {
       "auth": {
         "deepracerboard040569fa": {}
+      },
+      "function": {
+        "racers": {
+          "deploymentBucketName": "amplify-deepracer-board-dev-113355-deployment",
+          "s3Key": "amplify-builds/racers-6d633574486c64494d6c-build.zip"
+        },
+        "leagues": {
+          "deploymentBucketName": "amplify-deepracer-board-dev-113355-deployment",
+          "s3Key": "amplify-builds/leagues-4f395735577a6d4e2b30-build.zip"
+        }
+      },
+      "storage": {
+        "racers": {},
+        "leagues": {},
+        "logos": {}
       }
     }
   }
