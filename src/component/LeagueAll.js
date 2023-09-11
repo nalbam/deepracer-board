@@ -47,8 +47,8 @@ class App extends Component {
         <div className='lb-items'>
           <div className='lb-header lb-rank0'>
             <div>Logo</div>
-            <div>Title</div>
             <div>Code</div>
+            <div>Title</div>
           </div>
           {leagueList}
         </div>

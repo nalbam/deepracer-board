@@ -10,6 +10,7 @@ npm install -g @aws-amplify/cli
 
 ```bash
 amplify init
+amplify status
 
 amplify auth add
 amplify analytics add

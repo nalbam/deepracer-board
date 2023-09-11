@@ -16,24 +16,18 @@ class App extends Component {
   }
 
   state = {
-    // dateClose_class: 'text_normal',
-    // dateClose: '',
-    // dateOpen_class: 'text_normal',
-    // dateOpen: '',
-    // dateTZ: '',
     defaultLogo: false,
+    logo_class: 'text_normal width_80',
+    logo: '',
     league_class: 'text_normal width_80',
     league_read: false,
     league: '',
-    logo_class: 'text_normal width_80',
-    logo: '',
     title_class: 'text_normal width_80',
     title: '',
   }
 
   logos = [
     { url: 'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo_deepracer.png' },
-    // { url: 'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo_circuit_challenge.png' },
   ]
 
   componentDidMount() {
@@ -53,12 +47,9 @@ class App extends Component {
 
     if (res && res.league) {
       this.setState({
+        logo: res.logo,
         league: res.league,
         title: res.title,
-        logo: res.logo,
-        // dateClose: res.dateClose ? res.dateClose : '',
-        // dateOpen: res.dateOpen ? res.dateOpen : '',
-        // dateTZ: res.dateTZ ? res.dateTZ : '',
         league_read: true,
       });
 
@@ -71,12 +62,9 @@ class App extends Component {
 
     try {
       let body = {
+        logo: this.state.logo,
         league: this.state.league,
         title: this.state.title,
-        logo: this.state.logo,
-        // dateClose: this.state.dateClose,
-        // dateOpen: this.state.dateOpen,
-        // dateTZ: this.state.dateTZ,
       };
 
       console.log(`postLeague: ${JSON.stringify(body, null, 2)}`);
@@ -92,12 +80,9 @@ class App extends Component {
 
       if (!this.props.league) {
         this.setState({
+          logo: '',
           league: '',
           title: '',
-          logo: '',
-          // dateClose: '',
-          // dateOpen: '',
-          // dateTZ: '',
         });
 
         this.props.history.push(`/manage/league/${this.state.league}`);
@@ -177,8 +162,6 @@ class App extends Component {
     let b = this.validateLeague(this.state.league);
     b = this.validateTitle(this.state.title) && b;
     b = this.validateLogo(this.state.logo) && b;
-    // b = this.validateDateClose(this.state.dateClose) && b;
-    // b = this.validateDateOpen(this.state.dateOpen) && b;
     return b;
   }
 
@@ -186,20 +169,14 @@ class App extends Component {
     let b = false;
 
     switch (k) {
+      case 'logo':
+        b = this.validateLogo(v);
+        break;
       case 'league':
         b = this.validateLeague(v);
         break;
       case 'title':
         b = this.validateTitle(v);
-        break;
-      case 'logo':
-        b = this.validateLogo(v);
-        break;
-      case 'dateClose':
-        b = this.validateDateClose(v);
-        break;
-      case 'dateOpen':
-        b = this.validateDateOpen(v);
         break;
       default:
     }
@@ -211,14 +188,14 @@ class App extends Component {
     let v = e.target.value;
 
     switch (e.target.name) {
+      case 'logo':
+        document.getElementById('logo').src = v;
+        break;
       case 'league':
         v = v.replace(/[^a-z0-9-_]/g, '');
         break;
       case 'title':
         document.getElementById('title').innerText = v;
-        break;
-      case 'logo':
-        document.getElementById('logo').src = v;
         break;
       default:
     }
@@ -264,7 +241,14 @@ class App extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className='lb-submit'>
             <div className='lb-row'>
-              <div>League</div>
+              <div>Logo</div>
+              <div>
+                <input type='text' name='logo' value={this.state.logo} onChange={this.handleChange} className={this.state.logo_class} placeholder='Logo uri, including http:// or https://' autoComplete='off' maxLength='256' />
+                {logoList}
+              </div>
+            </div>
+            <div className='lb-row'>
+              <div>Code</div>
               <div>
                 <input type='text' name='league' value={this.state.league} onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} placeholder='Only lowercase letters and numbers and -_' autoComplete='off' maxLength='20' />
               </div>
@@ -273,13 +257,6 @@ class App extends Component {
               <div>Title</div>
               <div>
                 <input type='text' name='title' value={this.state.title} onChange={this.handleChange} className={this.state.title_class} placeholder='' autoComplete='off' maxLength='64' />
-              </div>
-            </div>
-            <div className='lb-row'>
-              <div>Logo</div>
-              <div>
-                <input type='text' name='logo' value={this.state.logo} onChange={this.handleChange} className={this.state.logo_class} placeholder='Logo uri, including http:// or https://' autoComplete='off' maxLength='256' />
-                {logoList}
               </div>
             </div>
             <div className='lb-row'>
