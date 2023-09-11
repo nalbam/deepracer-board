@@ -9,9 +9,8 @@ frontend:
   phases:
     build:
       commands:
-        - |
-          npm install --force
-          npm run build
+        - npm install
+        - npm run build
   artifacts:
     baseDirectory: build
     files:
