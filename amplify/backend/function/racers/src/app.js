@@ -302,41 +302,64 @@ app.post(path, function (req, res) {
           }
         }
 
-        if (!req.body.forceUpdate) {
-          let a1 = data.Item.laptime.split(':');
-          let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
+        if (req.body.forceDelete) {
+          // delete
+          let deleteItemParams = {
+            TableName: tableName,
+            Key: params,
+          };
 
-          let a2 = req.body.laptime.split(':');
-          let newlaptime = ((+a2[0]) * 60) + (+a2[1]);
+          console.log(`post-delete: ${JSON.stringify(deleteItemParams)}`);
+          dynamodb.delete(deleteItemParams, (err, data) => {
+            if (err) {
+              console.log('post-delete: ' + err.message);
+              res.statusCode = 500;
+              res.json({ error: err, url: req.url, body: req.body });
+            } else {
+              res.json({ success: 'post-delete call succeed!', url: req.url, data: data })
+            }
+          });
 
-          if (oldlaptime < newlaptime) {
-            req.body.laptime = data.Item.laptime;
+        } else {
+          if (!req.body.forceUpdate) {
+            let a1 = data.Item.laptime.split(':');
+            let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
+
+            let a2 = req.body.laptime.split(':');
+            let newlaptime = ((+a2[0]) * 60) + (+a2[1]);
+
+            if (oldlaptime < newlaptime) {
+              req.body.laptime = data.Item.laptime;
+            }
           }
+
+          // update
+          let upateItemParams = {
+            TableName: tableName,
+            Key: params,
+            UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
+            ExpressionAttributeValues: {
+              ':racerName': req.body.racerName,
+              ':laptime': req.body.laptime,
+              ':modified': datetime,
+            },
+          };
+
+          console.log(`post-update: ${JSON.stringify(upateItemParams)}`);
+          dynamodb.update(upateItemParams, (err, data) => {
+            if (err) {
+              console.log('post-update: ' + err.message);
+              res.statusCode = 500;
+              res.json({ error: err, url: req.url, body: req.body });
+            } else {
+              res.json({ success: 'post-update call succeed!', url: req.url, data: data })
+            }
+          });
         }
 
-        let upateItemParams = {
-          TableName: tableName,
-          Key: params,
-          UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
-          ExpressionAttributeValues: {
-            ':racerName': req.body.racerName,
-            ':laptime': req.body.laptime,
-            ':modified': datetime,
-          },
-        };
-
-        console.log(`post-update: ${JSON.stringify(upateItemParams)}`);
-        dynamodb.update(upateItemParams, (err, data) => {
-          if (err) {
-            console.log('post-update: ' + err.message);
-            res.statusCode = 500;
-            res.json({ error: err, url: req.url, body: req.body });
-          } else {
-            res.json({ success: 'post-update call succeed!', url: req.url, data: data })
-          }
-        });
       } else {
         // res.json(data);  => put
+
         let putItemParams = {
           TableName: tableName,
           Item: {

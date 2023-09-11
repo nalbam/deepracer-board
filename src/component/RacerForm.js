@@ -15,6 +15,7 @@ class App extends Component {
     email_class: 'text_normal width_80',
     email: '',
     forceUpdate: false,
+    forceDelete: false,
     laptime_class: 'text_normal',
     laptime: '',
     racerName_class: 'text_normal width_80',
@@ -31,6 +32,7 @@ class App extends Component {
         racerName: this.state.racerName,
         laptime: this.state.laptime,
         forceUpdate: this.state.forceUpdate,
+        forceDelete: this.state.forceDelete,
       };
 
       console.log('postRacer: ' + JSON.stringify(body, null, 2));
@@ -49,6 +51,7 @@ class App extends Component {
         racerName: '',
         laptime: '',
         forceUpdate: false,
+        forceDelete: false,
       });
     } catch (err) {
       console.log('postRacer: ' + JSON.stringify(err, null, 2));
@@ -123,6 +126,9 @@ class App extends Component {
       case 'forceUpdate':
         b = true;
         break;
+      case 'forceDelete':
+        b = true;
+        break;
       default:
     }
 
@@ -174,7 +180,13 @@ class App extends Component {
               <div>Time</div>
               <div>
                 <input type='text' name='laptime' value={this.state.laptime} onChange={this.handleChange} className={this.state.laptime_class} placeholder='00:00.000' autoComplete='off' maxLength='9' />
-                <label><input type='checkbox' name='forceUpdate' value='Y' checked={this.state.forceUpdate} onChange={this.handleCheckBox} className='checkbox' /> Force update</label>
+              </div>
+            </div>
+            <div className='lb-row'>
+              <div></div>
+              <div>
+                <div><label><input type='checkbox' name='forceUpdate' value='Y' checked={this.state.forceUpdate} onChange={this.handleCheckBox} className='checkbox' /> Force update</label></div>
+                <div><label><input type='checkbox' name='forceDelete' value='Y' checked={this.state.forceDelete} onChange={this.handleCheckBox} className='checkbox' /> Force delete</label></div>
               </div>
             </div>
             <div className='lb-row'>

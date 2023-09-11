@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import * as serviceWorker from './serviceWorker';
 
@@ -14,33 +14,39 @@ import ManageRacer from './pages/ManageRacer'
 import Timer from './pages/Timer'
 import UploadForm from './pages/UploadForm'
 
-import Amplify, { Analytics } from 'aws-amplify'
-import awsconfig from './aws-exports'
-Amplify.configure(awsconfig)
+import { Amplify } from 'aws-amplify';
 
-Analytics.record('Page_Load');
-Analytics.autoTrack('pageView', {
-    enable: true,
-    type: 'SPA'
-})
+import '@aws-amplify/ui-react/styles.css';
+
+import './App.css';
+import './pop.css';
+
+import awsExports from './aws-exports';
+Amplify.configure(awsExports);
+
+// Analytics.record('Page_Load');
+// Analytics.autoTrack('pageView', {
+//     enable: true,
+//     type: 'SPA'
+// })
 
 const routing = (
-    <AppProvider>
-        <Router>
-            <Switch>
-                <Route exact path='/' component={App} />
-                <Route path='/manage/racers/:league' component={ManageRacer} />
-                <Route path='/manage/league/:league' component={ManageLeague} />
-                <Route path='/manage/league/' component={ManageLeague} />
-                <Route path='/manage/' component={Manage} />
-                <Route path='/racers/:league' component={Leaderboard} />
-                <Route path='/league/:league' component={Leaderboard} />
-                <Route path='/timer' component={Timer} />
-                <Route path='/upload' component={UploadForm} />
-                <Route component={App} />
-            </Switch>
-        </Router>
-    </AppProvider>
+  <AppProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path='/' element={<App />} />
+        <Route path='/manage/racers/:league' element={<ManageRacer />} />
+        <Route path='/manage/league/:league' element={<ManageLeague />} />
+        <Route path='/manage/league/' element={<ManageLeague />} />
+        <Route path='/manage/' element={<Manage />} />
+        <Route path='/racers/:league' element={<Leaderboard />} />
+        <Route path='/league/:league' element={<Leaderboard />} />
+        <Route path='/timer' element={<Timer />} />
+        <Route path='/upload' element={<UploadForm />} />
+        <Route element={App} />
+      </Routes>
+    </BrowserRouter>
+  </AppProvider>
 )
 
 ReactDOM.render(routing, document.getElementById('root'));

@@ -166,8 +166,6 @@ class App extends Component {
         <Popup ref={this.popupCmp} popInfo={this.state.popInfo} />
 
         <Scroll ref={this.scrollCmp} items={this.state.items.length} />
-
-        <footer className='lb-footer'></footer>
       </Fragment>
     );
   }

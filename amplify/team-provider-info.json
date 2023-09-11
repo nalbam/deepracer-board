@@ -19,17 +19,27 @@
       "function": {
         "racers": {
           "deploymentBucketName": "amplify-deepracer-board-dev-113355-deployment",
-          "s3Key": "amplify-builds/racers-6d633574486c64494d6c-build.zip"
+          "s3Key": "amplify-builds/racers-6d6f777041744641434d-build.zip"
         },
         "leagues": {
           "deploymentBucketName": "amplify-deepracer-board-dev-113355-deployment",
-          "s3Key": "amplify-builds/leagues-4f395735577a6d4e2b30-build.zip"
+          "s3Key": "amplify-builds/leagues-62535834447658306444-build.zip"
         }
       },
       "storage": {
         "racers": {},
         "leagues": {},
         "logos": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
+      },
+      "analytics": {
+        "deepracerboard": {}
+      },
+      "api": {
+        "racers": {},
+        "leagues": {}
       }
     }
   }

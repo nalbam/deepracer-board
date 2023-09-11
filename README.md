@@ -12,6 +12,8 @@ npm install -g @aws-amplify/cli
 amplify init
 amplify status
 
+# amplify pull --appId deepracer-board --envName dev
+
 amplify auth add
 amplify analytics add
 amplify api add

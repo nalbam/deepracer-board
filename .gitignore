@@ -27,7 +27,7 @@ node_modules/
 package-lock.json
 yarn.lock
 
-#amplify
+# amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/mock-data
@@ -42,3 +42,4 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
+amplifyxc.config

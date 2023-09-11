@@ -19,11 +19,11 @@ class App extends Component {
     defaultLogo: false,
     logo_class: 'text_normal width_80',
     logo: '',
+    title_class: 'text_normal width_80',
+    title: '',
     league_class: 'text_normal width_80',
     league_read: false,
     league: '',
-    title_class: 'text_normal width_80',
-    title: '',
   }
 
   logos = [
@@ -172,11 +172,11 @@ class App extends Component {
       case 'logo':
         b = this.validateLogo(v);
         break;
-      case 'league':
-        b = this.validateLeague(v);
-        break;
       case 'title':
         b = this.validateTitle(v);
+        break;
+      case 'league':
+        b = this.validateLeague(v);
         break;
       default:
     }
@@ -191,11 +191,11 @@ class App extends Component {
       case 'logo':
         document.getElementById('logo').src = v;
         break;
-      case 'league':
-        v = v.replace(/[^a-z0-9-_]/g, '');
-        break;
       case 'title':
         document.getElementById('title').innerText = v;
+        break;
+      case 'league':
+        v = v.replace(/[^a-z0-9-_]/g, '');
         break;
       default:
     }
@@ -248,15 +248,15 @@ class App extends Component {
               </div>
             </div>
             <div className='lb-row'>
-              <div>Code</div>
-              <div>
-                <input type='text' name='league' value={this.state.league} onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} placeholder='Only lowercase letters and numbers and -_' autoComplete='off' maxLength='20' />
-              </div>
-            </div>
-            <div className='lb-row'>
               <div>Title</div>
               <div>
                 <input type='text' name='title' value={this.state.title} onChange={this.handleChange} className={this.state.title_class} placeholder='' autoComplete='off' maxLength='64' />
+              </div>
+            </div>
+            <div className='lb-row'>
+              <div>Code</div>
+              <div>
+                <input type='text' name='league' value={this.state.league} onChange={this.handleChange} className={this.state.league_class} readOnly={this.state.league_read} placeholder='Only lowercase letters and numbers and -_' autoComplete='off' maxLength='20' />
               </div>
             </div>
             <div className='lb-row'>

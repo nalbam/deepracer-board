@@ -216,9 +216,8 @@ footer {
   font-size: 24px;
   text-align: center;
   vertical-align: middle;
-  padding-top: 10px;
+  padding: 10px;
   width: 250px;
-  height: 40px;
 }
 
 .btn-submit {
@@ -232,8 +231,8 @@ footer {
   font-size: 24px;
   text-align: center;
   vertical-align: middle;
+  padding: 10px;
   width: 250px;
-  height: 40px;
 }
 
 .pollen {
