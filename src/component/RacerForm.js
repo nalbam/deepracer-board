@@ -104,10 +104,10 @@ class App extends Component {
   }
 
   validateAll() {
-    let b = this.validateRacerEmail(this.state.email);
-    b = this.validateRacerName(this.state.racerName) && b;
-    b = this.validateRacerTime(this.state.laptime) && b;
-    return b;
+    let a = this.validateRacerEmail(this.state.email);
+    let b = this.validateRacerName(this.state.racerName);
+    let c = this.validateRacerTime(this.state.laptime);
+    return a && b && c;
   }
 
   validate(k, v) {
@@ -152,7 +152,7 @@ class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.validateAll()) {
+    if (!this.validateAll() || this.state.forceDelete) {
       return;
     }
 

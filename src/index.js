@@ -12,7 +12,6 @@ import Manage from './pages/Manage'
 import ManageLeague from './pages/ManageLeague'
 import ManageRacer from './pages/ManageRacer'
 import Timer from './pages/Timer'
-import UploadForm from './pages/UploadForm'
 
 import { Amplify } from 'aws-amplify';
 
@@ -42,7 +41,6 @@ const routing = (
         <Route path='/racers/:league' element={<Leaderboard />} />
         <Route path='/league/:league' element={<Leaderboard />} />
         <Route path='/timer' element={<Timer />} />
-        <Route path='/upload' element={<UploadForm />} />
         <Route element={App} />
       </Routes>
     </BrowserRouter>
