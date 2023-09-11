@@ -43,8 +43,11 @@ class App extends Component {
 
       console.log('postRacer: ' + JSON.stringify(res, null, 2));
 
-      // this.popup('Saved!');
-      this.popupCmp.current.start(3000, 'Saved!');
+      if (this.state.forceDelete) {
+        this.popupCmp.current.start(3000, 'Deleted!');
+      } else {
+        this.popupCmp.current.start(3000, 'Saved!');
+      }
 
       this.setState({
         email: '',
