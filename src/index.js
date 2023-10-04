@@ -11,7 +11,6 @@ import Leaderboard from './pages/Leaderboard'
 import Manage from './pages/Manage'
 import ManageLeague from './pages/ManageLeague'
 import ManageRacer from './pages/ManageRacer'
-import Timer from './pages/Timer'
 
 import { Amplify } from 'aws-amplify';
 
@@ -40,7 +39,6 @@ const routing = (
         <Route path='/manage/' element={<Manage />} />
         <Route path='/racers/:league' element={<Leaderboard />} />
         <Route path='/league/:league' element={<Leaderboard />} />
-        <Route path='/timer' element={<Timer />} />
         <Route element={App} />
       </Routes>
     </BrowserRouter>
