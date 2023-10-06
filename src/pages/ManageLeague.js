@@ -32,9 +32,9 @@ class App extends Component {
           <LeagueForm league={league} />
         </div>
 
-        <header className='App-header'>
+        <footer className='App-footer'>
           <QRCode league={league} />
-        </header>
+        </footer>
       </Fragment>
     );
   }

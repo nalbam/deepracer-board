@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   getLeague = async () => {
-    if (!this.props.league) {
+    if (!this.props.league || this.props.league === 'undefined') {
       return;
     }
 
