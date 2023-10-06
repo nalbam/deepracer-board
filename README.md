@@ -1,5 +1,7 @@
 # deepracer-board
 
+* https://deepracerboard.com/
+
 ## Install and configure the Amplify CLI.
 
 ```bash
@@ -28,3 +30,9 @@ amplify publish
 ```
 </^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|json|mp3)$)([^.]+$)/>	    /index.html    200
 ```
+
+## timer
+
+* https://deepracerboard.com/timer
+
+* SEE: https://github.com/nalbam/deepracer-timer
