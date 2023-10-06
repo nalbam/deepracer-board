@@ -8,6 +8,8 @@ import signUpConfig from '../config/signUpConfig'
 import LeagueHeader from '../component/LeagueHeader';
 import LeagueForm from '../component/LeagueForm';
 
+import QRCode from '../component/QRCode';
+
 function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
 }
@@ -29,6 +31,10 @@ class App extends Component {
         <div className='App-body'>
           <LeagueForm league={league} />
         </div>
+
+        <header className='App-header'>
+          <QRCode league={league} />
+        </header>
       </Fragment>
     );
   }
