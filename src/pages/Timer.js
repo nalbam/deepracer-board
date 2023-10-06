@@ -7,9 +7,9 @@ import '../timer.css';
 
 class App extends Component {
   state = {
-    bestlap: '',
-    display: '00:00.000',
     limiter: '00:00.000',
+    display: '00:00.000',
+    bestlap: '',
     results: '',
     limiterClass: classNames(
       'tm-limiter', {
@@ -18,8 +18,7 @@ class App extends Component {
     }),
   }
 
-  def_times = [0, 0, 0];
-  def_limit = this.props.limit ? this.props.limit.slice() : [3, 0, 0];
+  limit_min = this.props.limit ? this.props.limit : 3;
 
   limit = [];
   times = [];
@@ -34,7 +33,8 @@ class App extends Component {
     'btn_passed': 'passed',
     'btn_reset': 'reset',
     'btn_clear': 'clear',
-    'btn_squeeze': 'squeeze',
+    'btn_drop': 'drop',
+    'btn_reject': 'reject',
   };
 
   keyMap = {
@@ -43,7 +43,8 @@ class App extends Component {
     '69': 'passed', // e
     '82': 'reset', // r
     '84': 'clear', // t
-    '89': 'squeeze', // y
+    '68': 'drop', // d
+    '70': 'reject', // y
   };
 
   componentDidMount() {
@@ -83,8 +84,11 @@ class App extends Component {
       case 'clear':
         this.clear();
         break;
-      case 'squeeze':
-        this.squeeze();
+      case 'drop':
+        this.drop();
+        break;
+      case 'reject':
+        this.reject();
         break;
       default:
     }
@@ -116,7 +120,7 @@ class App extends Component {
   }
 
   reset() {
-    this.times = this.def_times.map((x) => x);
+    this.times = [0, 0, 0];
     this.print();
     this.pause();
   }
@@ -126,7 +130,7 @@ class App extends Component {
       return;
     }
     this.records = [];
-    this.limit = this.def_limit.map((x) => x);
+    this.limit = [this.limit_min, 0, 0];
     this.reset();
 
     this.setState({
@@ -156,7 +160,6 @@ class App extends Component {
     this.time = timestamp;
     this.print();
     requestAnimationFrame(this.step.bind(this));
-    // requestAnimationFrame(() => this.bind(c));
   }
 
   calculate(timestamp) {
@@ -234,22 +237,39 @@ class App extends Component {
   record() {
     console.log(`record ${this.format(this.times)}`);
 
+    // Save the lap time
     this.records.push(this.times);
 
-    this.results();
+    this.findone();
   }
 
-  squeeze() {
+  drop() {
+    if (this.records.length == 0) {
+      return;
+    }
+
+    let latest = this.records[this.records.length - 1];
+
+    console.log(`drop ${this.format(latest)}`);
+
+    // Cancel the last lap time
+    this.records.splice(this.records.length - 1, 1);
+
+    this.findone();
+  }
+
+  reject() {
     if (this.records.length === 0) {
       return;
     }
 
     let latest = this.records[this.records.length - 1];
 
-    console.log(`squeeze ${this.format(latest)}`);
+    console.log(`reject ${this.format(latest)}`);
 
     this.pause();
 
+    // Merge last lap time into the timer
     this.times[2] += latest[2];
     this.times[1] += latest[1];
     this.times[0] += latest[0];
@@ -268,18 +288,23 @@ class App extends Component {
       this.times[2] = 0;
     }
 
+    // Cancel the last lap time
     this.records.splice(this.records.length - 1, 1);
 
-    this.results();
+    this.findone();
 
     this.start();
   }
 
-  results() {
+  findone() {
+    if (this.records.length == 0) {
+      return;
+    }
+
     let sorted = this.records.slice();
     sorted.sort(this.compare);
 
-    const list = this.records.map(
+    let list = this.records.map(
       (item, index) => (<li key={index}>{this.format(item)}</li>)
     );
 
@@ -326,6 +351,8 @@ class App extends Component {
           <button id='btn_passed' className='tm-button tm-btn_passed' onClick={this.handleClick}>Passed</button>
           <button id='btn_reset' className='tm-button tm-btn_reset' onClick={this.handleClick}>Reset</button>
           <button id='btn_clear' className='tm-button tm-btn_clear' onClick={this.handleClick}>Clear</button>
+          <button id='btn_drop' className='tm-button tm-btn_drop' onClick={this.handleClick}>Drop</button>
+          <button id='btn_reject' className='tm-button tm-btn_reject' onClick={this.handleClick}>Reject</button>
         </nav>
         <div className={this.state.limiterClass}>{this.state.limiter}</div>
         <div className='tm-display'>{this.state.display}</div>

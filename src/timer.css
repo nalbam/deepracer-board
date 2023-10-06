@@ -42,7 +42,15 @@
 }
 
 .tm-btn_clear {
-  color: #ddd;
+  color: #ccc;
+}
+
+.tm-btn_drop {
+  color: #93e;
+}
+
+.tm-btn_reject {
+  color: #e3e;
 }
 
 .tm-limiter {
