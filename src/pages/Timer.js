@@ -1,9 +1,14 @@
 import React, { Component, Fragment } from 'react';
+import { useParams } from 'react-router-dom'
 
 import classNames from 'classnames';
 import $ from 'jquery';
 
 import '../timer.css';
+
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
 
 class App extends Component {
   state = {
@@ -18,7 +23,7 @@ class App extends Component {
     }),
   }
 
-  limit_min = this.props.limit ? this.props.limit : 3;
+  limit_min = 4;
 
   limit = [];
   times = [];
@@ -49,6 +54,10 @@ class App extends Component {
 
   componentDidMount() {
     $(document.body).on('keydown', this.handleKeyDown);
+    let { min } = this.props.params;
+    if (min !== undefined) {
+      this.limit_min = min;
+    }
     this.clear();
   }
 
@@ -363,4 +372,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withParams(App);

@@ -40,6 +40,7 @@ const routing = (
         <Route path='/manage/' element={<Manage />} />
         <Route path='/racers/:league' element={<Leaderboard />} />
         <Route path='/league/:league' element={<Leaderboard />} />
+        <Route path='/timer/:min' element={<Timer />} />
         <Route path='/timer' element={<Timer />} />
         <Route element={App} />
       </Routes>
