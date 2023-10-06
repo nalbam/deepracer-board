@@ -69,7 +69,7 @@ class App extends Component {
     let rank = 0;
     let type = 0;
 
-    if (items.length > this.state.items.length) {
+    if (items.length > this.state.items.length && this.state.items.length > 0) {
       rank = items.length;
       type = 2;
     }
