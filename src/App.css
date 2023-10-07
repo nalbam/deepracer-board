@@ -22,6 +22,10 @@ footer {
   height: 50px;
 }
 
+.spacer {
+  margin: 5px;
+}
+
 .auth {
   color: #555;
 }
