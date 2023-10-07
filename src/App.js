@@ -8,7 +8,7 @@ class App extends Component {
       <Fragment>
         <header className='App-header'>
           <div className='logo'>
-            <img alt='deepracer' src='/images/dr-logo-community-races.png' />
+            <img alt='deepracer' src='/images/logo-community-races.png' />
           </div>
         </header>
 

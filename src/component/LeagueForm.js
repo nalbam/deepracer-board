@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   logos = [
-    { url: 'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo_deepracer.png' },
+    { url: 'https://dracer.io/images/logo-community-races.png' },
   ]
 
   componentDidMount() {
