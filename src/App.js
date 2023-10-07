@@ -16,6 +16,7 @@ class App extends Component {
 
         <div className='center'>
           <a href='/manage' className='btn-link'>Manage</a>
+          <a href='/timer' className='btn-link'>Timer</a>
         </div>
 
         <footer className='App-footer'></footer>
