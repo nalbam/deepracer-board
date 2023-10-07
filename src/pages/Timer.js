@@ -56,7 +56,7 @@ class App extends Component {
     $(document.body).on('keydown', this.handleKeyDown);
     let { min } = this.props.params;
     if (min !== undefined) {
-      this.limit_min = min;
+      this.limit_min = parseInt(min);
     }
     this.clear();
   }
@@ -119,12 +119,13 @@ class App extends Component {
   }
 
   passed() {
-    if (!this.time) {
+    if (!this.running) {
       return;
     }
     if (this.times[0] > 0 || this.times[1] > 3) {
       this.record();
-      this.restart();
+      this.reset();
+      this.start();
     }
   }
 
@@ -154,11 +155,6 @@ class App extends Component {
       this.passed();
       this.pressed = new Date().getTime();
     }
-  }
-
-  restart() {
-    this.reset();
-    this.start();
   }
 
   step(timestamp) {
