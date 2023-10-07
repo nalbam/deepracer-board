@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 class App extends Component {
 
   state = {
-    qr: `https://qr.nalbam.com/qr.png?body=https://deepracerboard.com/`,
+    qr: `https://qr.nalbam.com/qr.png?body=https://dracer.io/`,
   }
 
   componentDidMount() {
@@ -16,7 +16,7 @@ class App extends Component {
     }
 
     this.setState({
-      qr: `https://qr.nalbam.com/qr.png?body=https://deepracerboard.com/league/${this.props.league}`,
+      qr: `https://qr.nalbam.com/qr.png?body=https://dracer.io/league/${this.props.league}`,
     });
   };
 
