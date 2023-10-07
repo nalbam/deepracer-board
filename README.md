@@ -1,5 +1,6 @@
 # deepracer-board
 
+* https://dracer.io/
 * https://deepracerboard.com/
 
 ## Install and configure the Amplify CLI.
@@ -33,6 +34,6 @@ amplify publish
 
 ## timer
 
-* https://deepracerboard.com/timer
+* https://dracer.io/timer
 
 * SEE: https://github.com/nalbam/deepracer-timer
