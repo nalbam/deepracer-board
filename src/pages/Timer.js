@@ -135,7 +135,7 @@ class App extends Component {
   }
 
   clear() {
-    if (this.time) {
+    if (this.running) {
       return;
     }
     this.records = [];
@@ -174,24 +174,6 @@ class App extends Component {
   calculate(timestamp) {
     var diff = timestamp - this.time;
 
-    // limit
-    this.limit[2] -= diff;
-    if (this.limit[2] < 0) {
-      this.limit[2] += 1000;
-      this.limit[1] -= 1;
-    }
-    if (this.limit[1] < 0) {
-      this.limit[1] += 60;
-      this.limit[0] -= 1;
-    }
-    if (this.limit[0] < 0) {
-      this.limit[2] = 0
-      this.limit[1] = 0
-      this.limit[0] = 0
-      this.pause();
-      return;
-    }
-
     // times
     this.times[2] += diff;
     if (this.times[2] >= 1000) {
@@ -203,10 +185,31 @@ class App extends Component {
       this.times[0] += 1;
     }
     if (this.times[0] >= 60) {
-      this.times[0] -= 60
+      this.times[0] -= 60;
     }
     if (this.times[2] < 0) {
       this.times[2] = 0;
+    }
+    if (this.times[0] == this.limit_min) {
+      this.times[1] = 0;
+      this.times[2] = 0;
+    }
+
+    // limit
+    this.limit[2] -= diff;
+    if (this.limit[2] < 0) {
+      this.limit[2] += 1000;
+      this.limit[1] -= 1;
+    }
+    if (this.limit[1] < 0) {
+      this.limit[1] += 60;
+      this.limit[0] -= 1;
+    }
+    if (this.limit[0] < 0) {
+      this.limit[2] = 0;
+      this.limit[1] = 0;
+      this.limit[0] = 0;
+      this.pause();
     }
   }
 
@@ -291,7 +294,7 @@ class App extends Component {
       this.times[0] += 1;
     }
     if (this.times[0] >= 60) {
-      this.times[0] -= 60
+      this.times[0] -= 60;
     }
     if (this.times[2] < 0) {
       this.times[2] = 0;
