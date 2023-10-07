@@ -12,7 +12,7 @@ class App extends Component {
   }
 
   state = {
-    logo: '/icon-trophy.png',
+    logo: '/images/icon-trophy.png',
     title: '',
     dateClose: '',
     dateOpen: '',

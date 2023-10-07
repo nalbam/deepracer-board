@@ -7,7 +7,7 @@ class App extends Component {
     let trophy = '';
 
     if (racerRank < 4) {
-      trophy = <img src='/icon-trophy.png' alt='trophy' className='icon-trophy' />
+      trophy = <img src='/images/icon-trophy.png' alt='trophy' className='icon-trophy' />
     }
 
     return (
