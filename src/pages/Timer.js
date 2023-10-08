@@ -12,7 +12,7 @@ function withParams(Component) {
 
 class App extends Component {
   state = {
-    limiter: '00:00.000',
+    limiter: '00:00',
     display: '00:00.000',
     bestlap: '',
     lastlap: '',
