@@ -1,6 +1,6 @@
 @font-face {
   font-family: sf-mono;
-  src: url("https://s3.us-west-2.amazonaws.com/cdn.dracer.io/fonts/sf-mono-regular.woff");
+  src: url("/fonts/sf-mono-regular.woff");
 }
 
 .tm-controls {
