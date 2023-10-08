@@ -1,3 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: sf-mono;
+  src: url("/fonts/sf-mono-regular.woff");
+}
+
+html {
+  background: #111;
+  color: #eee;
+  font-family: sf-mono, Noto Mono;
+}
+
 .tm-controls {
   position: fixed;
   text-align: center;
@@ -6,9 +22,7 @@
 }
 
 .tm-button {
-  background: #111;
-  border: 0;
-  font-size: 3vw;
+  font-size: 2vw;
   margin: 0 0.5em;
   text-decoration: none;
 }
@@ -61,6 +75,10 @@
   width: 85%;
 }
 
+.tm-limiter_normal {
+  color: #ddd;
+}
+
 .tm-limiter_yellow {
   color: #ea5;
 }
@@ -70,18 +88,26 @@
 }
 
 .tm-display {
-  font-size: 16vw;
+  font-size: 15vw;
   position: fixed;
   text-align: center;
-  top: 32%;
+  top: 30%;
   width: 85%;
 }
 
 .tm-bestlap {
-  font-size: 6vw;
+  font-size: 5vw;
   position: fixed;
   text-align: center;
   top: 75%;
+  width: 85%;
+}
+
+.tm-lastlap {
+  font-size: 5vw;
+  position: fixed;
+  text-align: center;
+  top: 85%;
   width: 85%;
 }
 
@@ -93,4 +119,8 @@
   text-align: center;
   top: 2em;
   width: 15%;
+}
+
+.tm-best_time {
+  color: #4af;
 }

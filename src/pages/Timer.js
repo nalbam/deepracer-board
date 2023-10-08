@@ -15,6 +15,7 @@ class App extends Component {
     limiter: '00:00.000',
     display: '00:00.000',
     bestlap: '',
+    lastlap: '',
     results: '',
     limiterClass: classNames(
       'tm-limiter', {
@@ -145,6 +146,7 @@ class App extends Component {
 
     this.setState({
       bestlap: '',
+      lastlap: '',
       results: '',
     });
   }
@@ -203,7 +205,7 @@ class App extends Component {
 
   print() {
     this.setState({
-      limiter: this.format(this.limit),
+      limiter: this.format(this.limit, 'short'),
       display: this.format(this.times),
     });
 
@@ -309,12 +311,16 @@ class App extends Component {
     );
 
     this.setState({
-      bestlap: this.format(sorted[0]),
+      bestlap: `Best: ${this.format(sorted[0])}`,
+      lastlap: `Last: ${this.format(this.records[this.records.length - 1])}`,
       results: list,
     });
   }
 
-  format(times) {
+  format(times, type = 'short') {
+    if (type === 'short') {
+      return `${this.lpad(times[0], 2)}:${this.lpad(times[1], 2)}`;
+    }
     return `${this.lpad(times[0], 2)}:${this.lpad(times[1], 2)}.${this.lpad(Math.floor(times[2]), 3)}`;
   }
 
@@ -357,6 +363,7 @@ class App extends Component {
         <div className={this.state.limiterClass}>{this.state.limiter}</div>
         <div className='tm-display'>{this.state.display}</div>
         <div className='tm-bestlap'>{this.state.bestlap}</div>
+        <div className='tm-lastlap'>{this.state.lastlap}</div>
         <ul className='tm-results'>{this.state.results}</ul>
       </Fragment>
     );
