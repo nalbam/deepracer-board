@@ -1,17 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 @font-face {
   font-family: sf-mono;
-  src: url("https://s3.us-west-2.amazonaws.com/cdn.dracer.io/fonts/sf-mono-regular.woff");
-}
-
-html {
-  background: #111;
-  color: #eee;
-  font-family: sf-mono, Noto Mono;
+  src: url("https://nalbam.com/static/fonts/sf-mono-regular.woff");
 }
 
 .tm-controls {
@@ -22,6 +11,7 @@ html {
 }
 
 .tm-button {
+  font-family: sf-mono, Noto Mono;
   font-size: 2vw;
   margin: 0 0.5em;
   text-decoration: none;
@@ -68,6 +58,7 @@ html {
 }
 
 .tm-limiter {
+  font-family: sf-mono, Noto Mono;
   font-size: 6vw;
   position: fixed;
   text-align: center;
@@ -88,6 +79,7 @@ html {
 }
 
 .tm-display {
+  font-family: sf-mono, Noto Mono;
   font-size: 15vw;
   position: fixed;
   text-align: center;
@@ -96,6 +88,7 @@ html {
 }
 
 .tm-bestlap {
+  font-family: sf-mono, Noto Mono;
   font-size: 5vw;
   position: fixed;
   text-align: center;
@@ -104,6 +97,7 @@ html {
 }
 
 .tm-lastlap {
+  font-family: sf-mono, Noto Mono;
   font-size: 5vw;
   position: fixed;
   text-align: center;
@@ -112,6 +106,7 @@ html {
 }
 
 .tm-results {
+  font-family: sf-mono, Noto Mono;
   font-size: 2vw;
   left: 85%;
   list-style: none;
