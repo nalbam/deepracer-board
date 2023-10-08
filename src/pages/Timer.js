@@ -317,7 +317,7 @@ class App extends Component {
     });
   }
 
-  format(times, type = 'short') {
+  format(times, type = 'long') {
     if (type === 'short') {
       return `${this.lpad(times[0], 2)}:${this.lpad(times[1], 2)}`;
     }
