@@ -320,9 +320,9 @@ class App extends Component {
     });
 
     if (prebest !== nowbest) {
-      this.blink('.bestlap');
+      this.blink('.tm-bestlap');
     }
-    this.blink('.lastlap');
+    this.blink('.tm-lastlap');
   }
 
   blink(name) {
