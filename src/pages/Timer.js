@@ -310,11 +310,26 @@ class App extends Component {
       (item, index) => (<li key={index}>{this.format(item)}</li>)
     );
 
+    let prebest = this.state.bestlap;
+    let nowbest = `Best: ${this.format(sorted[0])}`;
+
     this.setState({
-      bestlap: `Best: ${this.format(sorted[0])}`,
+      bestlap: nowbest,
       lastlap: `Last: ${this.format(this.records[this.records.length - 1])}`,
       results: list,
     });
+
+    if (prebest !== nowbest) {
+      this.blink('.bestlap');
+    }
+    this.blink('.lastlap');
+  }
+
+  blink(name) {
+    document.querySelector(name).classList.add('blink');
+    setTimeout(function () {
+      document.querySelector(name).classList.remove('blink');
+    }, 1000);
   }
 
   format(times, type = 'long') {

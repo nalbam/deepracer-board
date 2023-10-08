@@ -1,3 +1,9 @@
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .tm-controls {
   position: fixed;
   text-align: center;
@@ -115,4 +121,8 @@
 
 .tm-best_time {
   color: #4af;
+}
+
+.blink {
+  animation: blinker 0.75s linear;
 }
