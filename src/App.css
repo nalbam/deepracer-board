@@ -4,7 +4,7 @@
 }
 
 html {
-  background: #111;
+  background: #000;
   color: #eee;
   font-family: Menlo, Noto Mono;
 }
@@ -27,7 +27,7 @@ footer {
 }
 
 .auth {
-  color: #555;
+  color: #777;
 }
 
 .logo {
