@@ -11,6 +11,7 @@
 }
 
 .tm-button {
+  background: #111;
   font-family: sf-mono, Noto Mono;
   font-size: 2vw;
   margin: 0 0.5em;
