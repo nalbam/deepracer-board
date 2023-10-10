@@ -29,12 +29,12 @@ class App extends Component {
   componentDidMount() {
     this.getRacers();
     this.intervalId = setInterval(this.getRacers.bind(this), 10000);
-    document.addEventListener("keydown", this.handleKey);
+    document.addEventListener('keydown', this.handleKey);
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
-    document.removeEventListener("keydown", this.handleKey);
+    document.removeEventListener('keydown', this.handleKey);
   }
 
   getRacers = async () => {
@@ -124,7 +124,7 @@ class App extends Component {
     this.popupCmp.current.start(5000);
 
     if (type === 0) {
-      var fanfare = new Audio("/fanfare.mp3");
+      let fanfare = new Audio('/sounds/fanfare.mp3');
       fanfare.loop = false;
       fanfare.play();
     }

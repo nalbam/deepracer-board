@@ -21,11 +21,11 @@ class App extends Component {
 
   componentDidMount() {
     this.getLeague();
-    document.addEventListener("keydown", this.handleKey);
+    document.addEventListener('keydown', this.handleKey);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKey);
+    document.removeEventListener('keydown', this.handleKey);
   }
 
   getLeague = async () => {

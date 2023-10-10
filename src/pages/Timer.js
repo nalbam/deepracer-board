@@ -53,6 +53,8 @@ class App extends Component {
     '70': 'reject', // y
   };
 
+  success = new Audio('/sounds/success.mp3');
+
   componentDidMount() {
     $(document.body).on('keydown', this.handleKeyDown);
     let { min } = this.props.params;
@@ -241,6 +243,9 @@ class App extends Component {
 
     // Save the lap time
     this.records.push(this.times);
+
+    this.success.loop = false;
+    this.success.play();
 
     this.findone();
   }
