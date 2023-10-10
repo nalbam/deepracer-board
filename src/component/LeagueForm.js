@@ -27,6 +27,7 @@ class App extends Component {
   }
 
   logos = [
+    { url: 'https://dracer.io/images/logo-league.png' },
     { url: 'https://dracer.io/images/logo-community-races.png' },
     { url: 'https://dracer.io/images/logo-underground.png' },
   ]
