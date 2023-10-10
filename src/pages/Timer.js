@@ -53,8 +53,8 @@ class App extends Component {
     '70': 'reject', // y
   };
 
-  ding1 = new Audio('/sounds/ding1.wav');
-  ding2 = new Audio('/sounds/ding2.wav');
+  ding1 = new Audio('/sounds/ding1.mp3');
+  ding2 = new Audio('/sounds/ding2.mp3');
 
   componentDidMount() {
     $(document.body).on('keydown', this.handleKeyDown);
