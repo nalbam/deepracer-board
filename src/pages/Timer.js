@@ -53,7 +53,8 @@ class App extends Component {
     '70': 'reject', // y
   };
 
-  success = new Audio('/sounds/success.mp3');
+  ding1 = new Audio('/sounds/ding1.mp3');
+  ding2 = new Audio('/sounds/ding2.mp3');
 
   componentDidMount() {
     $(document.body).on('keydown', this.handleKeyDown);
@@ -244,9 +245,6 @@ class App extends Component {
     // Save the lap time
     this.records.push(this.times);
 
-    this.success.loop = false;
-    this.success.play();
-
     this.findone();
   }
 
@@ -326,6 +324,12 @@ class App extends Component {
 
     if (prebest !== nowbest) {
       this.blink('.tm-bestlap');
+
+      this.ding1.loop = false;
+      this.ding1.play();
+    } else {
+      this.ding2.loop = false;
+      this.ding2.play();
     }
     this.blink('.tm-lastlap');
   }
