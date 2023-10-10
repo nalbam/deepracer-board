@@ -183,7 +183,7 @@ class App extends Component {
     if (this.times[2] < 0) {
       this.times[2] = 0;
     }
-    if (this.times[0] == this.limit_min) {
+    if (this.times[0] === this.limit_min) {
       this.times[1] = 0;
       this.times[2] = 0;
     }
@@ -249,7 +249,7 @@ class App extends Component {
   }
 
   drop() {
-    if (this.records.length == 0) {
+    if (this.records.length === 0) {
       return;
     }
 
@@ -302,7 +302,7 @@ class App extends Component {
   }
 
   findone() {
-    if (this.records.length == 0) {
+    if (this.records.length === 0) {
       return;
     }
 
