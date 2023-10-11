@@ -3,12 +3,6 @@ import React, { Component, Fragment } from 'react';
 import { API } from 'aws-amplify'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.logoCmp = React.createRef();
-  }
-
   state = {
     logo: '/images/icon-trophy.png',
     title: '',

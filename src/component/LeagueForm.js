@@ -2,11 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
-// import Select from 'react-select'
-
 import Popup from './Popup';
-
-// import timezones from '../config/timezones'
 
 class App extends Component {
   constructor(props) {
