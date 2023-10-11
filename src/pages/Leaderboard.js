@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { useParams } from 'react-router-dom'
 
-import LeagueHeader from '../component/LeagueHeader';
+import LeagueLogo from '../component/LeagueLogo';
 import RacerList from '../component/RacerList';
 
 function withParams(Component) {
@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <Fragment>
         <header className='App-header'>
-          <LeagueHeader league={league} />
+          <LeagueLogo league={league} />
         </header>
 
         <div className='App-body'>
