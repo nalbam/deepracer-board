@@ -17,6 +17,10 @@ class App extends Component {
     timeZone: '',
   }
 
+  componentDidMount() {
+    this.getLeague();
+  }
+
   getLeague = async () => {
     if (!this.props.league || this.props.league === 'undefined') {
       return;

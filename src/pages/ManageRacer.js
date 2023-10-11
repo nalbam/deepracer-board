@@ -29,6 +29,8 @@ class App extends Component {
         <div className='App-body'>
           <RacerForm league={league} />
         </div>
+
+        <footer className='App-footer'></footer>
       </Fragment>
     );
   }
