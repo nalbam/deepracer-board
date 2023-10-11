@@ -29,7 +29,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getRacers();
-    this.intervalId = setInterval(this.getRacers.bind(this), 10000);
+    this.intervalId = setInterval(this.getRacers.bind(this), 5000);
     document.addEventListener('keydown', this.handleKey);
     document.addEventListener('mousedown', this.handleMouse);
   }
