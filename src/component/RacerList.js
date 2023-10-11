@@ -24,17 +24,20 @@ class App extends Component {
       message: '',
       footer: '',
     },
+    pop: false,
   }
 
   componentDidMount() {
     this.getRacers();
     this.intervalId = setInterval(this.getRacers.bind(this), 10000);
     document.addEventListener('keydown', this.handleKey);
+    document.addEventListener('mousedown', this.handleMouse);
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
     document.removeEventListener('keydown', this.handleKey);
+    document.removeEventListener('mousedown', this.handleMouse);
   }
 
   getRacers = async () => {
@@ -49,7 +52,25 @@ class App extends Component {
   handleKey = (e) => {
     console.log(`handleKey ${e.keyCode}`);
 
-    if (e.keyCode === 13) {
+    if (!this.state.pop && e.keyCode === 13) {
+      this.setState({
+        pop: true,
+      });
+      setTimeout(
+        function () {
+          this.tada(1, 0);
+        }.bind(this), 4000
+      );
+    }
+  }
+
+  handleMouse = (e) => {
+    console.log(`handleMouse ${e.button}`);
+
+    if (!this.state.pop && e.button === 0) {
+      this.setState({
+        pop: true,
+      });
       setTimeout(
         function () {
           this.tada(1, 0);
@@ -130,6 +151,14 @@ class App extends Component {
     }
 
     // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
+
+    setTimeout(
+      function () {
+        this.setState({
+          pop: false,
+        });
+      }.bind(this), 5000
+    );
   }
 
   compare(a, b) {
