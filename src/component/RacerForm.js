@@ -12,14 +12,14 @@ class App extends Component {
   }
 
   state = {
-    email_class: 'text_normal width_80',
     email: '',
+    email_class: 'text_normal width_80',
+    racerName: '',
+    racerName_class: 'text_normal width_80',
+    laptime: '',
+    laptime_class: 'text_normal',
     forceUpdate: false,
     forceDelete: false,
-    laptime_class: 'text_normal',
-    laptime: '',
-    racerName_class: 'text_normal width_80',
-    racerName: '',
   }
 
   postRacer = async () => {
@@ -64,12 +64,12 @@ class App extends Component {
     }
   };
 
-  validateEmail(val) {
+  testEmail(val) {
     var re = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\].,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(val);
   }
 
-  validateTime(val) {
+  testTime(val) {
     var re = /^([0-9]{2}:[0-9]{2}\.[0-9]{3})$/;
     return re.test(val);
   }
@@ -83,9 +83,9 @@ class App extends Component {
   }
 
   validateRacerEmail(v) {
-    let b = (v !== '' && this.validateEmail(v));
+    let b = (v !== '' && this.testEmail(v));
     this.setState({
-      email_class: this.getClassValue(v, 'width_80'),
+      email_class: this.getClassValue(b, 'width_80'),
     });
     return b;
   }
@@ -99,7 +99,7 @@ class App extends Component {
   }
 
   validateRacerTime(v) {
-    let b = (v !== '' && this.validateTime(v));
+    let b = (v !== '' && this.testTime(v));
     this.setState({
       laptime_class: this.getClassValue(b),
     });

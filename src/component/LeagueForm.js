@@ -1,8 +1,13 @@
 import React, { Component, Fragment } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 import { API } from 'aws-amplify'
 
 import Popup from './Popup';
+
+function withNavigate(Component) {
+  return props => <Component {...props} navigate={useNavigate()} />;
+}
 
 class App extends Component {
   constructor(props) {
@@ -13,13 +18,13 @@ class App extends Component {
 
   state = {
     defaultLogo: false,
-    logo_class: 'text_normal width_80',
     logo: '',
-    title_class: 'text_normal width_80',
+    logo_class: 'text_normal width_80',
     title: '',
+    title_class: 'text_normal width_80',
+    league: '',
     league_class: 'text_normal width_80',
     league_read: false,
-    league: '',
   }
 
   logos = [
@@ -46,8 +51,8 @@ class App extends Component {
     if (res && res.league) {
       this.setState({
         logo: res.logo,
-        league: res.league,
         title: res.title,
+        league: res.league,
         league_read: true,
       });
 
@@ -61,8 +66,8 @@ class App extends Component {
     try {
       let body = {
         logo: this.state.logo,
-        league: this.state.league,
         title: this.state.title,
+        league: this.state.league,
       };
 
       console.log(`postLeague: ${JSON.stringify(body, null, 2)}`);
@@ -77,13 +82,13 @@ class App extends Component {
       this.popupCmp.current.start(3000, 'Saved!');
 
       if (!this.props.league) {
-        this.setState({
-          logo: '',
-          league: '',
-          title: '',
-        });
+        // this.setState({
+        //   logo: '',
+        //   title: '',
+        //   league: '',
+        // });
 
-        this.props.history.push(`/manage/league/${this.state.league}`);
+        this.props.navigate(`/manage/league/${this.state.league}`);
       }
     } catch (err) {
       console.log(`postLeague: ${JSON.stringify(err, null, 2)}`);
@@ -119,7 +124,7 @@ class App extends Component {
   validateLeague(v) {
     let b = (v !== '' && this.validateString(v));
     this.setState({
-      league_class: this.getClassValue(v, 'width_80'),
+      league_class: this.getClassValue(b, 'width_80'),
     });
     return b;
   }
@@ -157,15 +162,15 @@ class App extends Component {
   }
 
   validateAll() {
-    let b = this.validateLeague(this.state.league);
-    b = this.validateTitle(this.state.title) && b;
-    b = this.validateLogo(this.state.logo) && b;
+    let b = true;
+    b = b && this.validateLogo(this.state.logo);
+    b = b && this.validateTitle(this.state.title);
+    b = b && this.validateLeague(this.state.league);
     return b;
   }
 
   validate(k, v) {
     let b = false;
-
     switch (k) {
       case 'logo':
         b = this.validateLogo(v);
@@ -178,7 +183,6 @@ class App extends Component {
         break;
       default:
     }
-
     return b;
   }
 
@@ -270,4 +274,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withNavigate(App);
