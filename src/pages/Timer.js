@@ -124,12 +124,9 @@ class App extends Component {
 
   passed() {
     if (!this.running) {
-      return;
-    }
-    if (this.times[0] > 0 || this.times[1] > 2) {
-      this.record();
-      this.reset();
       this.start();
+    } else if (this.times[0] > 0 || this.times[1] > 2) {
+      this.record();
     }
   }
 
@@ -244,6 +241,8 @@ class App extends Component {
 
     // Save the lap time
     this.records.push(this.times);
+
+    this.times = [0, 0, 0];
 
     this.findone();
   }
