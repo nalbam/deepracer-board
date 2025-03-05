@@ -6,7 +6,7 @@ DeepRacer Board is a web application for managing AWS DeepRacer leagues, racers,
 
 The application is built using a modern web architecture with:
 
-- **Frontend**: React-based single-page application
+- **Frontend**: React-based single-page application (SPA)
 - **Backend**: AWS Amplify with serverless functions
 - **Database**: Amazon DynamoDB
 - **Authentication**: Amazon Cognito
@@ -51,15 +51,20 @@ The frontend is built with React and organized into the following structure:
 
 ### Components
 
-- **LeagueAll**: Displays all available leagues
+- **LeagueAll**: Displays all available leagues (uses `/items/all` API endpoint)
+- **LeagueList**: Lists user's leagues (uses `/items` API endpoint)
 - **LeagueItem**: Renders a single league with its logo, title, and code
-- **LeagueList**: Lists leagues with their details
-- **LeagueLogo**: Displays a league's logo
-- **RacerList**: Lists racers with their lap times
-- **RacerItem**: Renders a single racer with their rank, name, and lap time
+- **LeagueForm**: Provides form for creating and editing leagues
+- **LeagueHeader**: Simple header displaying league logo and title
+- **LeagueLogo**: Displays league logo with animation effects
+- **RacerList**: Lists racers with their lap times (auto-refreshes every 5 seconds)
+- **RacerItem**: Renders a single racer with their rank, name, and lap time (top 3 display trophy icon)
+- **RacerForm**: Provides form for creating, editing, and deleting racers
 - **Popup**: Displays notifications for new records or new challengers
-- **Pollen**: Visual effect component for celebrations
+- **Pollen**: Visual effect component for celebrations (colorful particle animations)
 - **Scroll**: Handles scrolling to specific racers in the list
+- **Logo**: Displays logo and title as a popup
+- **QRCode**: Displays QR code encoding league page URL
 
 ### State Management
 
@@ -74,13 +79,24 @@ The backend is built using AWS Amplify with the following components:
 
 Two REST APIs are configured:
 - **leagues**: Manages league data
+  - GET `/items`: Retrieves user's leagues list
+  - GET `/items/all`: Retrieves all leagues list
+  - GET `/items/object/:league`: Retrieves specific league information
+  - PUT `/items`: Creates or updates a league
+  - POST `/items`: Creates or updates a league
+  - DELETE `/items/object/:league`: Deletes a league
 - **racers**: Manages racer data
+  - GET `/items/:league`: Retrieves racers list for a specific league
+  - GET `/items/object/:league/:email`: Retrieves specific racer information
+  - PUT `/items`: Creates or updates a racer
+  - POST `/items`: Creates, updates, or deletes a racer (using forceDelete parameter)
+  - DELETE `/items/object/:league/:email`: Deletes a racer
 
 ### Lambda Functions
 
 Two Lambda functions handle the business logic:
 - **leagues**: CRUD operations for leagues
-- **racers**: CRUD operations for racers and lap times
+- **racers**: CRUD operations for racers and lap times (includes best time preservation logic)
 
 ### DynamoDB Tables
 
@@ -112,34 +128,58 @@ Two main tables store the application data:
 - Create and update leagues
 - Set league details (title, logo, dates)
 - View all leagues
+- Unique identification through league code
+- League logo URL setting and preview
 
 ### Racer Management
 
 - Add racers to leagues
 - Update racer lap times
-- Automatically track best lap times
+- Automatically track best lap times (preserves existing best time when updating with slower time)
+- Racer deletion functionality
+- Unique identification through email
 
 ### Leaderboard
 
 - Display racers sorted by lap time
-- Real-time updates
+- Real-time updates every 5 seconds
 - Visual effects for new records or new challengers
+- Trophy icon for top 3 racers
+- Auto-scroll functionality to show all participants
 
 ### Timer
 
-- Precise lap time tracking
+- Precise lap time tracking (millisecond precision)
 - Record, save, and manage lap times
-- Visual indicators for time limits
+- Visual indicators for time limits (yellow and red warnings)
 - Keyboard shortcuts for timer controls
+- Best lap time and last lap time display
+- Lap time cancellation and rejection functionality
+- Sound effects for new records
 
 ## Data Flow
 
 1. Users interact with the React frontend
 2. API calls are made to the API Gateway endpoints
 3. Lambda functions process the requests
+   - Leagues function: Create, retrieve, update, delete leagues
+   - Racers function: Create, retrieve, update, delete racers and manage lap times
 4. Data is stored in or retrieved from DynamoDB
+   - Leagues table: Stores league information
+   - Racers table: Stores racer information and lap times
 5. Results are returned to the frontend
 6. Frontend updates the UI accordingly
+   - Visual effects for new records or new challengers
+   - Racers sorted by lap time
+
+## Visual Effects and User Experience
+
+- **Pollen Component**: Colorful particle animation effects for celebrations
+- **Popup Component**: Notifications for new records or new challengers
+- **Logo Component**: Popup effect highlighting league logo and title
+- **Sound Effects**: Audio feedback for new records
+- **Auto-scroll**: Automatic scrolling to specific racers to draw attention
+- **QR Code**: QR code for easy access to league pages
 
 ## Deployment
 
