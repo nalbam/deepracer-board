@@ -1,0 +1,181 @@
+# DeepRacer Board
+
+AWS DeepRacer League Management and Leaderboard System built with Next.js 15, NextAuth, and DynamoDB.
+
+## Features
+
+- 🏎️ **League Management**: Create and manage DeepRacer racing leagues
+- 🏁 **Real-time Leaderboard**: Live rankings with automatic updates
+- ⏱️ **Timer Integration**: Precise lap time tracking
+- 🔐 **Authentication**: Secure login with AWS Cognito
+- 📱 **Responsive Design**: Works on desktop and mobile devices
+- 🌐 **Production Ready**: Deployed at [dracer.io](https://dracer.io)
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **Authentication**: NextAuth.js with AWS Cognito
+- **Database**: AWS DynamoDB
+- **Deployment**: AWS Amplify
+- **Package Manager**: pnpm
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm
+- AWS Account with Cognito User Pool and DynamoDB tables
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/nalbam/deepracer-board.git
+cd deepracer-board
+```
+
+2. Install dependencies:
+```bash
+pnpm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+
+4. Update `.env.local` with your AWS credentials and Cognito settings.
+
+5. Run the development server:
+```bash
+pnpm dev
+```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Environment Variables
+
+```env
+# Next.js
+NEXTAUTH_URL=https://your-domain.com
+NEXTAUTH_SECRET=your-secret-key
+
+# AWS Cognito
+AUTH_COGNITO_CLIENT_ID=your-client-id
+AUTH_COGNITO_CLIENT_SECRET=your-client-secret
+AUTH_COGNITO_ISSUER=https://cognito-idp.region.amazonaws.com/user-pool-id
+
+# AWS Credentials
+AUTH_AWS_REGION=ap-northeast-2
+AUTH_AWS_ACCESS_KEY_ID=your-access-key
+AUTH_AWS_SECRET_ACCESS_KEY=your-secret-key
+
+# DynamoDB Tables
+NEXT_DYNAMODB_LEAGUES_TABLE=deepracer-board-leagues
+NEXT_DYNAMODB_RACERS_TABLE=deepracer-board-racers
+```
+
+## Project Structure
+
+```
+deepracer-board/
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   │   ├── leagues/       # League management
+│   │   └── racers/        # Racer management
+│   ├── league/            # Leaderboard pages
+│   ├── login/             # Authentication
+│   └── manage/            # Admin pages
+├── components/             # React components
+│   ├── ui/                # Base UI components
+│   ├── league/            # League components
+│   └── racer/             # Racer components
+├── lib/                   # Utilities and services
+│   ├── auth.ts           # NextAuth configuration
+│   ├── dynamodb.ts       # DynamoDB client
+│   ├── types.ts          # TypeScript types
+│   └── utils.ts          # Utility functions
+└── docs/                  # Documentation
+```
+
+## API Endpoints
+
+### Leagues
+- `GET /api/leagues` - Get user's leagues
+- `GET /api/leagues?all=true` - Get all public leagues
+- `POST /api/leagues` - Create/update league
+- `GET /api/leagues/[id]` - Get specific league
+- `DELETE /api/leagues/[id]` - Delete league
+
+### Racers
+- `GET /api/racers/[league]` - Get league leaderboard
+- `POST /api/racers` - Create/update/delete racer
+
+## Database Schema
+
+### Leagues Table
+```
+league (PK)    # League code
+title          # League title
+logo           # Logo URL
+dateOpen       # Start date
+dateClose      # End date
+userId         # Creator ID
+registered     # Created timestamp
+modified       # Modified timestamp
+```
+
+### Racers Table
+```
+league (PK)    # League code
+email (SK)     # Racer email
+racerName      # Display name
+laptime        # Best lap time (milliseconds)
+registered     # Created timestamp
+modified       # Modified timestamp
+```
+
+## Deployment
+
+The application is deployed using AWS Amplify:
+
+```yaml
+# amplify.yml
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install -g pnpm
+        - pnpm install
+    build:
+      commands:
+        - env | grep -e AUTH >> .env
+        - env | grep -e NEXT >> .env
+        - pnpm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Links
+
+- **Production**: [dracer.io](https://dracer.io)
+- **Documentation**: [docs/](./docs/)
+- **Architecture**: [docs/project-analysis.md](./docs/project-analysis.md)
+- **Migration Plan**: [docs/nextjs-migration-plan.md](./docs/nextjs-migration-plan.md)
