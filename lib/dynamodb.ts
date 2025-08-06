@@ -26,6 +26,7 @@ export const docClient = DynamoDBDocumentClient.from(client, {
 // DynamoDB 테이블 이름
 export const LEAGUES_TABLE = process.env.NEXT_DYNAMODB_LEAGUES_TABLE || 'deepracer-board-leagues';
 export const RACERS_TABLE = process.env.NEXT_DYNAMODB_RACERS_TABLE || 'deepracer-board-racers';
+export const USERS_TABLE = process.env.NEXT_DYNAMODB_USERS_TABLE || 'deepracer-board-users';
 
 // 공통 결과 타입 정의
 export type Result<T> = {

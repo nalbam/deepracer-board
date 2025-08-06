@@ -70,7 +70,10 @@ export interface LeaderboardEntry extends Racer {
 export interface User {
   id: string;
   email: string;
-  name?: string;
+  name: string;
   image?: string;
   provider: string;
+  lastLogin: number;
+  createdAt: number;
+  updatedAt: number;
 }

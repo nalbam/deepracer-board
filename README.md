@@ -15,7 +15,7 @@ AWS DeepRacer League Management and Leaderboard System built with Next.js 15, Ne
 
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **Styling**: Tailwind CSS, shadcn/ui components
-- **Authentication**: NextAuth.js with AWS Cognito
+- **Authentication**: NextAuth.js with Google OAuth
 - **Database**: AWS DynamoDB
 - **Deployment**: AWS Amplify
 - **Package Manager**: pnpm
@@ -26,7 +26,8 @@ AWS DeepRacer League Management and Leaderboard System built with Next.js 15, Ne
 
 - Node.js 20+
 - pnpm
-- AWS Account with Cognito User Pool and DynamoDB tables
+- AWS Account with DynamoDB tables
+- Google OAuth credentials (for authentication)
 
 ### Installation
 
@@ -46,7 +47,7 @@ pnpm install
 cp .env.example .env.local
 ```
 
-4. Update `.env.local` with your AWS credentials and Cognito settings.
+4. Update `.env.local` with your AWS credentials and Google OAuth settings.
 
 5. Run the development server:
 ```bash
@@ -58,23 +59,29 @@ pnpm dev
 ## Environment Variables
 
 ```env
-# Next.js
-NEXTAUTH_URL=https://your-domain.com
-NEXTAUTH_SECRET=your-secret-key
+# Auth Settings
+AUTH_ENABLED="true"
+AUTH_DEBUG="false"
+AUTH_SECRET=your-secret-key  # Generate with: openssl rand -hex 32
+AUTH_TRUST_HOST=1
 
-# AWS Cognito
-AUTH_COGNITO_CLIENT_ID=your-client-id
-AUTH_COGNITO_CLIENT_SECRET=your-client-secret
-AUTH_COGNITO_ISSUER=https://cognito-idp.region.amazonaws.com/user-pool-id
+# NextAuth
+NEXTAUTH_URL="http://localhost:3000"
 
 # AWS Credentials
-AUTH_AWS_REGION=ap-northeast-2
-AUTH_AWS_ACCESS_KEY_ID=your-access-key
-AUTH_AWS_SECRET_ACCESS_KEY=your-secret-key
+AUTH_AWS_REGION="ap-northeast-2"
+AUTH_AWS_ACCESS_KEY_ID=your-access-key-id
+AUTH_AWS_SECRET_ACCESS_KEY=your-secret-access-key
+
+# Google Auth
+AUTH_GOOGLE_ENABLED="true"
+AUTH_GOOGLE_ID=your-google-client-id
+AUTH_GOOGLE_SECRET=your-google-client-secret
 
 # DynamoDB Tables
-NEXT_DYNAMODB_LEAGUES_TABLE=deepracer-board-leagues
-NEXT_DYNAMODB_RACERS_TABLE=deepracer-board-racers
+NEXT_DYNAMODB_LEAGUES_TABLE="deepracer-board-leagues"
+NEXT_DYNAMODB_RACERS_TABLE="deepracer-board-racers"
+NEXT_DYNAMODB_USERS_TABLE="deepracer-board-users"
 ```
 
 ## Project Structure
@@ -135,6 +142,18 @@ racerName      # Display name
 laptime        # Best lap time (milliseconds)
 registered     # Created timestamp
 modified       # Modified timestamp
+```
+
+### Users Table
+```
+id (PK)        # User email (lowercase)
+email          # User email
+name           # Display name
+image          # Profile image URL
+provider       # OAuth provider (google)
+lastLogin      # Last login timestamp
+createdAt      # Created timestamp
+updatedAt      # Updated timestamp
 ```
 
 ## Deployment
