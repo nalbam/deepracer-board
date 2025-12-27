@@ -77,17 +77,19 @@ export function LeagueList({ showAll = false }: LeagueListProps) {
             <Image
               src={league.logo || '/images/logo-league.png'}
               alt="logo"
-              width={40}
-              height={40}
+              width={60}
+              height={60}
               className="icon-logo"
               unoptimized
             />
           </div>
           <div>
-            <Link href={`/league/${league.league}`}>
-              {league.title}
-            </Link>
-            <div style={{ fontSize: '16px', color: '#aaa', marginTop: '4px' }}>
+            <div className="league-title">
+              <Link href={`/league/${league.league}`}>
+                {league.title}
+              </Link>
+            </div>
+            <div className="league-code">
               {league.league}
             </div>
           </div>

@@ -94,24 +94,25 @@ body {
 
 /* League logo */
 .icon-logo {
-  height: 40px;
-  position: relative;
-  top: 20%;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: contain;
 }
 
 /* League list 2-column layout */
 .league-header-2col > div:nth-child(1) {
-  flex: 1 1 10%;
+  flex: 0 0 120px;
   text-align: center;
 }
 
 .league-header-2col > div:nth-child(2) {
-  flex: 1 1 90%;
+  flex: 1;
   text-align: left;
 }
 
 .league-row-2col > div:nth-child(1) {
-  flex: 1 1 10%;
+  flex: 0 0 120px;
   text-align: center;
   display: flex;
   align-items: center;
@@ -119,8 +120,24 @@ body {
 }
 
 .league-row-2col > div:nth-child(2) {
-  flex: 1 1 90%;
+  flex: 1;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* League title and code spacing */
+.league-row-2col .league-title {
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.league-row-2col .league-code {
+  font-size: 16px;
+  color: #aaa;
+  margin-top: 4px;
+  line-height: 1.2;
 }
 
 /* Links */
