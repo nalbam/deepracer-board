@@ -136,13 +136,30 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
     return () => clearInterval(interval);
   }, [league, previousRacers]);
 
-  // 엔터 키 이벤트 핸들러
+  // 키보드 이벤트 핸들러
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && racers.length > 0) {
+      if (racers.length === 0) return;
+
+      // Enter 키: 1등 Congratulations!
+      if (e.key === 'Enter') {
         const firstRacer = racers.find((r) => r.rank === 1);
         if (firstRacer) {
           tada(1, 0, firstRacer.racerName, formatLaptime(firstRacer.laptime));
+        }
+      }
+      // 숫자 1 키: 1등 New Record!
+      else if (e.key === '1') {
+        const firstRacer = racers.find((r) => r.rank === 1);
+        if (firstRacer) {
+          tada(1, 1, firstRacer.racerName, formatLaptime(firstRacer.laptime));
+        }
+      }
+      // 숫자 2 키: 2등 New Challenger!
+      else if (e.key === '2') {
+        const secondRacer = racers.find((r) => r.rank === 2);
+        if (secondRacer) {
+          tada(2, 2, secondRacer.racerName, formatLaptime(secondRacer.laptime));
         }
       }
     };
