@@ -37,8 +37,6 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
   const logoPopupRef = useRef<LogoPopupRef>(null);
 
   const tada = (rank: number, type: number, racerName: string, laptime: string, showLogo: boolean = false) => {
-    if (racers.length === 0) return;
-
     let header;
     if (type === 1) {
       header = 'New Record!';
@@ -54,8 +52,6 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
       message: racerName,
       footer: laptime,
     });
-
-    console.log(`tada ${rank} ${racerName} ${laptime}`);
 
     // If showLogo is true, show logo first, then racer info
     if (showLogo && logoPopupRef.current) {
@@ -146,33 +142,33 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
           const newRacers = data.data || [];
           const previousRacers = previousRacersRef.current;
 
-          // 변경 감지
-          if (previousRacers.length > 0 && newRacers.length > 0) {
-            let rank = 0;
-            let type = 0;
+          // 변경 감지 (이메일 기반)
+          if (previousRacers.length > 0) {
+            // 이전 레이서들을 Map으로 변환 (email -> racer)
+            const previousMap = new Map(
+              previousRacers.map(r => [r.email, r])
+            );
 
-            // 새로운 레이서 추가 감지
-            if (newRacers.length > previousRacers.length) {
-              rank = newRacers.length;
-              type = 2; // New Challenger
-            } else {
-              // 기록 갱신 감지
-              for (let i = 0; i < previousRacers.length; i++) {
-                if (
-                  previousRacers[i].racerName !== newRacers[i].racerName ||
-                  previousRacers[i].laptime !== newRacers[i].laptime
-                ) {
-                  rank = i + 1;
-                  type = 1; // New Record
-                  break;
-                }
+            // 새 레이서와 기록 갱신 감지
+            for (const newRacer of newRacers) {
+              // rank가 0이면 기록 없는 레이서이므로 무시
+              if (newRacer.rank === 0) continue;
+
+              const prevRacer = previousMap.get(newRacer.email);
+
+              if (!prevRacer) {
+                // 새로운 레이서 추가
+                tada(newRacer.rank, 2, newRacer.racerName, formatLaptime(newRacer.laptime));
+                break;
+              } else if (prevRacer.rank === 0 && newRacer.rank > 0) {
+                // 기록 없던 레이서가 첫 랩타임 기록
+                tada(newRacer.rank, 2, newRacer.racerName, formatLaptime(newRacer.laptime));
+                break;
+              } else if (prevRacer.rank > 0 && prevRacer.laptime > newRacer.laptime) {
+                // 기록 갱신 (더 빠른 시간)
+                tada(newRacer.rank, 1, newRacer.racerName, formatLaptime(newRacer.laptime));
+                break;
               }
-            }
-
-            // 이벤트 실행
-            if (rank > 0 && rank <= newRacers.length) {
-              const racer = newRacers[rank - 1];
-              tada(rank, type, racer.racerName, formatLaptime(racer.laptime));
             }
           }
 
