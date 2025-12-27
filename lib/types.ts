@@ -17,7 +17,6 @@ export interface Racer {
   email: string;            // Sort Key - 레이서 이메일
   racerName: string;        // 레이서 표시 이름
   laptime: number;          // 최고 랩타임 (밀리초)
-  userId?: string;          // 등록자 ID
   registered: number;       // 등록 타임스탬프
   modified: number;         // 수정 타임스탬프
 }
