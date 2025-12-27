@@ -27,9 +27,6 @@ export async function AppHeader() {
 
         {/* Navigation and User Actions */}
         <div className="app-header-actions">
-          <Link href="/" className="btn-link btn-secondary">
-            Home
-          </Link>
           {session?.user ? (
             <>
               <Link href="/manage" className="btn-link btn-secondary">
