@@ -7,12 +7,16 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json() as RacerInput;
 
+    console.log('=== RACER API POST ===')
+    console.log('Received body:', body)
+
     if (!body.league || !body.email) {
       return apiError('League and email are required');
     }
 
     // 삭제 요청인 경우
     if (body.forceDelete) {
+      console.log('DELETE request for:', body.email)
       const deleteCommand = new DeleteCommand({
         TableName: RACERS_TABLE,
         Key: {
@@ -44,33 +48,69 @@ export async function POST(request: NextRequest) {
     const existingResult = await docClient.send(getCommand);
     const existingRacer = existingResult.Item as Racer | undefined;
 
+    console.log('Existing racer:', existingRacer)
+
+    // 기존 랩타임을 숫자로 변환 (레거시 데이터 호환)
+    const parseExistingLaptime = (laptime: any): number => {
+      if (!laptime) return 0;
+      if (typeof laptime === 'number') return laptime;
+      if (typeof laptime === 'string') {
+        // MM:SS.mmm 형식 문자열을 밀리초로 변환
+        const match = laptime.match(/^(\d{2}):(\d{2})\.(\d{3})$/);
+        if (match) {
+          const [, minutes, seconds, milliseconds] = match;
+          const result = parseInt(minutes) * 60000 + parseInt(seconds) * 1000 + parseInt(milliseconds);
+          console.log(`  Converting legacy string "${laptime}" to ${result}ms`);
+          return result;
+        }
+      }
+      return 0;
+    };
+
     // 새 레이서 데이터 준비
     let finalLaptime = body.laptime || 0;
     let registered = now;
 
     if (existingRacer) {
+      console.log('UPDATE mode - existing racer found')
       // 기존 레이서가 있는 경우
       registered = existingRacer.registered; // 최초 등록 시간 유지
 
+      // 기존 랩타임을 숫자로 변환
+      const existingLaptimeMs = parseExistingLaptime(existingRacer.laptime);
+
       // 랩타임 업데이트 로직
       if (body.laptime) {
+        console.log('Laptime update logic:')
+        console.log('  - New laptime:', body.laptime, 'ms')
+        console.log('  - Existing laptime (raw):', existingRacer.laptime)
+        console.log('  - Existing laptime (parsed):', existingLaptimeMs, 'ms')
+        console.log('  - Force update:', body.forceUpdate)
+
         // forceUpdate가 true이면 무조건 업데이트
         if (body.forceUpdate) {
+          console.log('  → FORCE UPDATE: Using new laptime')
           finalLaptime = body.laptime;
         } else {
           // 최고 기록 보존: 기존 기록이 없거나, 새 기록이 더 빠른 경우만 업데이트
-          if (!existingRacer.laptime || body.laptime < existingRacer.laptime) {
+          if (!existingLaptimeMs || body.laptime < existingLaptimeMs) {
+            console.log('  → NEW RECORD: New time is faster')
             finalLaptime = body.laptime;
           } else {
-            // 기존 기록이 더 빠르면 기존 기록 유지
-            finalLaptime = existingRacer.laptime;
+            console.log('  → KEEP EXISTING: Old time is faster')
+            finalLaptime = existingLaptimeMs;
           }
         }
       } else {
+        console.log('No new laptime provided, keeping existing:', existingLaptimeMs)
         // 랩타임이 제공되지 않은 경우 기존 기록 유지
-        finalLaptime = existingRacer.laptime || 0;
+        finalLaptime = existingLaptimeMs;
       }
+    } else {
+      console.log('CREATE mode - new racer')
     }
+
+    console.log('Final laptime:', finalLaptime)
 
     const racer: Racer = {
       league: body.league,

@@ -111,19 +111,29 @@ export function RacerForm({ league, selectedRacer, onSuccess }: RacerFormProps) 
       // 랩타임을 밀리초로 변환
       const laptimeMs = data.laptime ? laptimeToMilliseconds(data.laptime) : undefined
 
+      console.log('=== RACER FORM SUBMIT ===')
+      console.log('Form data:', data)
+      console.log('Laptime string:', data.laptime)
+      console.log('Laptime milliseconds:', laptimeMs)
+      console.log('Force update:', data.forceUpdate)
+
+      const payload = {
+        league,
+        email: data.email,
+        racerName: data.racerName,
+        laptime: laptimeMs,
+        forceUpdate: data.forceUpdate,
+        forceDelete: data.forceDelete,
+      }
+
+      console.log('API payload:', payload)
+
       const response = await fetch('/api/racers', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          league,
-          email: data.email,
-          racerName: data.racerName,
-          laptime: laptimeMs,
-          forceUpdate: data.forceUpdate,
-          forceDelete: data.forceDelete,
-        }),
+        body: JSON.stringify(payload),
       })
 
       if (!response.ok) {
