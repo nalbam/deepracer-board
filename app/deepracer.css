@@ -318,31 +318,40 @@ a:hover {
   font-size: 5vw;
   margin-top: 8%;
   padding: 1%;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .pop-layer .pop-container .pop-message {
   font-size: 13vw;
   font-weight: bold;
   padding: 1%;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
 }
 
 .pop-layer .pop-container .pop-footer {
   font-size: 7vw;
   padding: 1%;
   font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 /* Popup Rank Colors */
 .pop-rank1 {
   color: #FFD700;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .pop-rank2 {
-  color: #DDD;
+  color: #FFF;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(221, 221, 221, 0.5);
 }
 
 .pop-rank3 {
-  color: #CD7F32;
+  color: #FF8C42;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(205, 127, 50, 0.5);
 }
 
 /* ===================================
