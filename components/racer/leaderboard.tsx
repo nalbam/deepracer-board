@@ -240,23 +240,65 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
               const prevRacer = previousMap.get(newRacer.email);
 
               if (!prevRacer) {
-                // 이벤트 6: 신규 참가자
-                detectedEvents.push({
-                  type: EventType.NEW_RACER,
-                  rank: newRacer.rank,
-                  racerName: newRacer.racerName,
-                  laptime: newRacer.laptime,
-                  priority: EVENT_PRIORITY[EventType.NEW_RACER],
-                });
+                // 신규 참가자 - 순위에 따라 세분화
+                if (newRacer.rank === 1) {
+                  // 신규 참가자가 바로 1등 → 새 챔피언!
+                  detectedEvents.push({
+                    type: EventType.NEW_CHAMPION,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.NEW_CHAMPION],
+                  });
+                } else if (newRacer.rank >= 2 && newRacer.rank <= 3) {
+                  // 신규 참가자가 바로 Top 3 진입
+                  detectedEvents.push({
+                    type: EventType.TOP3_ENTRY,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.TOP3_ENTRY],
+                  });
+                } else {
+                  // 이벤트 6: 일반 신규 참가자
+                  detectedEvents.push({
+                    type: EventType.NEW_RACER,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.NEW_RACER],
+                  });
+                }
               } else if (prevRacer.rank === 0 && newRacer.rank > 0) {
-                // 이벤트 5: 첫 완주 (기존 레이서)
-                detectedEvents.push({
-                  type: EventType.FIRST_LAP,
-                  rank: newRacer.rank,
-                  racerName: newRacer.racerName,
-                  laptime: newRacer.laptime,
-                  priority: EVENT_PRIORITY[EventType.FIRST_LAP],
-                });
+                // 첫 완주 - 순위에 따라 세분화
+                if (newRacer.rank === 1) {
+                  // 첫 완주로 1등 달성 → 새 챔피언!
+                  detectedEvents.push({
+                    type: EventType.NEW_CHAMPION,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.NEW_CHAMPION],
+                  });
+                } else if (newRacer.rank >= 2 && newRacer.rank <= 3) {
+                  // 첫 완주로 Top 3 진입
+                  detectedEvents.push({
+                    type: EventType.TOP3_ENTRY,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.TOP3_ENTRY],
+                  });
+                } else {
+                  // 이벤트 5: 일반 첫 완주
+                  detectedEvents.push({
+                    type: EventType.FIRST_LAP,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.FIRST_LAP],
+                  });
+                }
               } else if (prevRacer.rank > 0 && prevRacer.laptime > newRacer.laptime) {
                 // 기록 갱신 - 이제 세분화된 감지
 
