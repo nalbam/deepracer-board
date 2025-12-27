@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { PlusCircle } from "lucide-react"
-import { ManageHeader } from "@/components/manage/manage-header"
+import { AppHeader } from "@/components/common/app-header"
 import { MyLeagues } from "@/components/league/my-leagues"
 
 export default async function ManagePage() {
@@ -14,7 +14,7 @@ export default async function ManagePage() {
 
   return (
     <>
-      <ManageHeader />
+      <AppHeader />
 
       <div className="App-body">
         <div className="manage-container">

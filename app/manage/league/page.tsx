@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { LeagueForm } from "@/components/league/league-form"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { ManageHeader } from "@/components/manage/manage-header"
+import { AppHeader } from "@/components/common/app-header"
 
 export const metadata = {
   title: "새 리그 생성 - DeepRacer Board",
@@ -19,7 +19,7 @@ export default async function CreateLeaguePage() {
 
   return (
     <>
-      <ManageHeader />
+      <AppHeader />
 
       <div className="App-body">
         <div className="manage-container">

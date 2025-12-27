@@ -3,7 +3,7 @@ import { redirect, notFound } from "next/navigation"
 import { LeagueForm } from "@/components/league/league-form"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { ManageHeader } from "@/components/manage/manage-header"
+import { AppHeader } from "@/components/common/app-header"
 
 interface PageProps {
   params: Promise<{
@@ -61,7 +61,7 @@ export default async function EditLeaguePage({ params }: PageProps) {
   if (league.userId !== session.user.id) {
     return (
       <>
-        <ManageHeader />
+        <AppHeader />
 
         <div className="App-body">
           <div className="manage-container">
@@ -82,7 +82,7 @@ export default async function EditLeaguePage({ params }: PageProps) {
 
   return (
     <>
-      <ManageHeader />
+      <AppHeader />
 
       <div className="App-body">
         <div className="manage-container">

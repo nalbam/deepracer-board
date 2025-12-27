@@ -3,7 +3,7 @@ import { redirect, notFound } from "next/navigation"
 import { RacerManager } from "@/components/racer/racer-manager"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { ManageHeader } from "@/components/manage/manage-header"
+import { AppHeader } from "@/components/common/app-header"
 
 interface PageProps {
   params: Promise<{
@@ -77,7 +77,7 @@ export default async function ManageRacersPage({ params }: PageProps) {
 
   return (
     <>
-      <ManageHeader />
+      <AppHeader />
 
       <div className="App-body">
         <div className="manage-container">
