@@ -5,10 +5,6 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import type { League } from "@/lib/types"
 
@@ -40,9 +36,9 @@ interface LeagueFormProps {
 }
 
 const defaultLogos = [
-  '/images/logo-league.png',
-  '/images/logo-community-races.png',
-  '/images/logo-underground.png',
+  'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo-league.png',
+  'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo-community-races.png',
+  'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo-underground.png',
 ]
 
 export function LeagueForm({ league, mode = 'create' }: LeagueFormProps) {
@@ -126,56 +122,55 @@ export function LeagueForm({ league, mode = 'create' }: LeagueFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl">
+    <form onSubmit={handleSubmit(onSubmit)} className="league-form">
       {/* 로고 미리보기 */}
-      <div className="flex justify-center">
-        <div className="text-center">
+      <div className="form-preview">
+        <div className="logo-preview-container">
           <img
             src={logoPreview}
             alt="League Logo Preview"
-            className="w-32 h-32 object-contain mx-auto rounded-lg shadow-md"
+            className="logo-preview-image"
             onError={(e) => {
               e.currentTarget.src = defaultLogos[0]
             }}
           />
           {watch('title') && (
-            <p className="mt-2 text-lg font-semibold">{watch('title')}</p>
+            <p className="logo-preview-title">{watch('title')}</p>
           )}
         </div>
       </div>
 
       {/* Logo URL */}
-      <div className="space-y-2">
-        <Label htmlFor="logo">로고 URL</Label>
-        <Input
+      <div className="form-field">
+        <label htmlFor="logo" className="form-label">로고 URL</label>
+        <input
           id="logo"
+          type="text"
           {...register('logo')}
           onChange={(e) => {
             register('logo').onChange(e)
             handleLogoChange(e)
           }}
           placeholder="https://example.com/logo.png"
-          className={errors.logo ? 'border-red-500' : ''}
+          className={`form-input ${errors.logo ? 'form-input-error' : ''}`}
         />
         {errors.logo && (
-          <p className="text-sm text-red-500">{errors.logo.message}</p>
+          <p className="form-error">{errors.logo.message}</p>
         )}
 
         {/* 기본 로고 선택 */}
-        <div className="flex gap-2 mt-2">
+        <div className="logo-options">
           {defaultLogos.map((url, index) => (
             <button
               key={index}
               type="button"
               onClick={() => handleSelectLogo(url)}
-              className={`p-2 border rounded hover:border-primary transition-colors ${
-                currentLogo === url ? 'border-primary' : 'border-gray-300'
-              }`}
+              className={`logo-option ${currentLogo === url ? 'logo-option-active' : ''}`}
             >
               <img
                 src={url}
                 alt={`Default logo ${index + 1}`}
-                className="w-16 h-16 object-contain"
+                className="logo-option-image"
               />
             </button>
           ))}
@@ -183,59 +178,60 @@ export function LeagueForm({ league, mode = 'create' }: LeagueFormProps) {
       </div>
 
       {/* Title */}
-      <div className="space-y-2">
-        <Label htmlFor="title">리그 제목</Label>
-        <Input
+      <div className="form-field">
+        <label htmlFor="title" className="form-label">리그 제목</label>
+        <input
           id="title"
+          type="text"
           {...register('title')}
           placeholder="2024 Winter Championship"
           maxLength={64}
-          className={errors.title ? 'border-red-500' : ''}
+          className={`form-input ${errors.title ? 'form-input-error' : ''}`}
         />
         {errors.title && (
-          <p className="text-sm text-red-500">{errors.title.message}</p>
+          <p className="form-error">{errors.title.message}</p>
         )}
       </div>
 
       {/* League Code */}
-      <div className="space-y-2">
-        <Label htmlFor="league">리그 코드</Label>
-        <Input
+      <div className="form-field">
+        <label htmlFor="league" className="form-label">리그 코드</label>
+        <input
           id="league"
+          type="text"
           {...register('league')}
           onChange={handleLeagueCodeChange}
           placeholder="2024-winter-cup"
           maxLength={20}
           readOnly={mode === 'edit'}
           disabled={mode === 'edit'}
-          className={errors.league ? 'border-red-500' : ''}
+          className={`form-input ${errors.league ? 'form-input-error' : ''} ${mode === 'edit' ? 'form-input-disabled' : ''}`}
         />
         {errors.league && (
-          <p className="text-sm text-red-500">{errors.league.message}</p>
+          <p className="form-error">{errors.league.message}</p>
         )}
-        <p className="text-sm text-muted-foreground">
+        <p className="form-hint">
           소문자로 시작, 소문자/숫자/-/_ 만 사용 가능 (4-20자)
           {mode === 'edit' && ' - 리그 코드는 수정할 수 없습니다'}
         </p>
       </div>
 
       {/* Submit Button */}
-      <div className="flex gap-2">
-        <Button
+      <div className="form-actions">
+        <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto"
+          className="btn-link btn-primary btn-submit"
         >
           {isSubmitting ? '저장 중...' : mode === 'create' ? '리그 생성' : '수정 저장'}
-        </Button>
-        <Button
+        </button>
+        <button
           type="button"
-          variant="outline"
           onClick={() => router.back()}
-          className="w-full sm:w-auto"
+          className="btn-link btn-secondary"
         >
           취소
-        </Button>
+        </button>
       </div>
     </form>
   )

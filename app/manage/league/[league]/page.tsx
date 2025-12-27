@@ -3,7 +3,6 @@ import { redirect, notFound } from "next/navigation"
 import { LeagueForm } from "@/components/league/league-form"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { ManageHeader } from "@/components/manage/manage-header"
 
 interface PageProps {
@@ -62,15 +61,17 @@ export default async function EditLeaguePage({ params }: PageProps) {
       <>
         <ManageHeader />
 
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-2xl mx-auto text-center">
-            <h1 className="text-2xl font-bold mb-4">권한이 없습니다</h1>
-            <p className="text-muted-foreground mb-6">
-              이 리그를 수정할 권한이 없습니다. 리그 생성자만 수정할 수 있습니다.
-            </p>
-            <Button asChild>
-              <Link href="/">홈으로 돌아가기</Link>
-            </Button>
+        <div className="App-body">
+          <div className="manage-container">
+            <div className="manage-empty" style={{ marginTop: '40px' }}>
+              <h1 style={{ fontSize: '24px', color: '#fff', marginBottom: '12px' }}>권한이 없습니다</h1>
+              <p style={{ color: '#aaa', marginBottom: '24px' }}>
+                이 리그를 수정할 권한이 없습니다. 리그 생성자만 수정할 수 있습니다.
+              </p>
+              <Link href="/" className="btn-link btn-primary">
+                홈으로 돌아가기
+              </Link>
+            </div>
           </div>
         </div>
       </>
@@ -81,26 +82,26 @@ export default async function EditLeaguePage({ params }: PageProps) {
     <>
       <ManageHeader />
 
-      <div className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto">
-        {/* 헤더 */}
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href={`/league/${params.league}`}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              리더보드로 돌아가기
+      <div className="App-body">
+        <div className="manage-container">
+          {/* 헤더 */}
+          <div className="manage-page-header">
+            <Link href={`/league/${params.league}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
+              <ArrowLeft className="w-4 h-4" />
+              <span>리더보드로 돌아가기</span>
             </Link>
-          </Button>
-          <h1 className="text-3xl font-bold mb-2">리그 수정</h1>
-          <p className="text-muted-foreground">
-            {league.title} 리그 정보를 수정하세요
-          </p>
-        </div>
+            <h1 className="manage-page-title">리그 수정</h1>
+            <p className="manage-page-description">
+              {league.title} 리그 정보를 수정하세요
+            </p>
+          </div>
 
-        {/* 폼 */}
-        <LeagueForm league={league} mode="edit" />
+          {/* 폼 */}
+          <div className="manage-form-container">
+            <LeagueForm league={league} mode="edit" />
+          </div>
+        </div>
       </div>
-    </div>
     </>
   )
 }

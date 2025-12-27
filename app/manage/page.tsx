@@ -1,8 +1,6 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { PlusCircle } from "lucide-react"
 import { ManageHeader } from "@/components/manage/manage-header"
 import { MyLeagues } from "@/components/league/my-leagues"
@@ -18,61 +16,57 @@ export default async function ManagePage() {
     <>
       <ManageHeader />
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">관리 대시보드</h1>
-            <p className="text-muted-foreground">
+      <div className="App-body">
+        <div className="manage-container">
+          {/* 페이지 제목 */}
+          <div className="manage-page-header">
+            <h1 className="manage-page-title">관리 대시보드</h1>
+            <p className="manage-page-description">
               리그와 레이서를 관리하세요
             </p>
           </div>
 
-        {/* 새 리그 생성 */}
-        <Card className="p-6 hover:shadow-lg transition-shadow">
-          <div className="flex items-start gap-4">
-            <div className="p-3 rounded-lg bg-primary/10">
-              <PlusCircle className="w-6 h-6 text-primary" />
-            </div>
-            <div className="flex-1">
-              <h2 className="text-xl font-semibold mb-2">새 리그 생성</h2>
-              <p className="text-muted-foreground mb-4">
-                새로운 DeepRacer 리그를 생성하고 참가자를 모집하세요
-              </p>
-              <Button asChild>
-                <Link href="/manage/league">리그 생성하기</Link>
-              </Button>
+          {/* 새 리그 생성 */}
+          <div className="manage-card">
+            <div className="manage-card-content">
+              <div className="manage-card-icon">
+                <PlusCircle className="w-8 h-8" />
+              </div>
+              <div className="manage-card-body">
+                <h2 className="manage-card-title">새 리그 생성</h2>
+                <p className="manage-card-description">
+                  새로운 DeepRacer 리그를 생성하고 참가자를 모집하세요
+                </p>
+                <Link href="/manage/league" className="btn-link btn-primary">
+                  리그 생성하기
+                </Link>
+              </div>
             </div>
           </div>
-        </Card>
 
-        {/* 내 리그 목록 */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">내 리그 목록</h2>
-          <MyLeagues />
-        </div>
+          {/* 내 리그 목록 */}
+          <div className="manage-section">
+            <h2 className="manage-section-title">내 리그 목록</h2>
+            <MyLeagues />
+          </div>
 
-        {/* 안내 메시지 */}
-        <div className="mt-8 p-6 rounded-lg" style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
-        }}>
-          <h3 className="font-semibold mb-3" style={{ color: '#fff', fontSize: '16px' }}>
-            사용 방법
-          </h3>
-          <ul className="space-y-2" style={{ fontSize: '14px', color: '#ddd' }}>
-            <li>
-              1. <strong style={{ color: '#fff' }}>새 리그 생성</strong>: 리그 이름, 코드, 로고를 설정하여 새 대회를 만드세요
-            </li>
-            <li>
-              2. <strong style={{ color: '#fff' }}>레이서 관리</strong>: 내 리그 목록에서 "레이서 관리" 버튼을 클릭하여 참가자와 기록을 관리하세요
-            </li>
-            <li>
-              3. <strong style={{ color: '#fff' }}>리그 수정</strong>: 내 리그 목록에서 "리그 수정" 버튼을 클릭하여 리그 정보를 변경하세요
-            </li>
-          </ul>
+          {/* 안내 메시지 */}
+          <div className="manage-help">
+            <h3 className="manage-help-title">사용 방법</h3>
+            <ul className="manage-help-list">
+              <li>
+                <strong>새 리그 생성</strong>: 리그 이름, 코드, 로고를 설정하여 새 대회를 만드세요
+              </li>
+              <li>
+                <strong>레이서 관리</strong>: 내 리그 목록에서 "레이서 관리" 버튼을 클릭하여 참가자와 기록을 관리하세요
+              </li>
+              <li>
+                <strong>리그 수정</strong>: 내 리그 목록에서 "리그 수정" 버튼을 클릭하여 리그 정보를 변경하세요
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
     </>
   )
 }

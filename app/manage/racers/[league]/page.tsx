@@ -3,8 +3,6 @@ import { redirect, notFound } from "next/navigation"
 import { RacerForm } from "@/components/racer/racer-form"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { ManageHeader } from "@/components/manage/manage-header"
 
 interface PageProps {
@@ -79,100 +77,87 @@ export default async function ManageRacersPage({ params }: PageProps) {
     <>
       <ManageHeader />
 
-      <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        {/* 헤더 */}
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href={`/league/${params.league}`}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              리더보드로 돌아가기
+      <div className="App-body">
+        <div className="manage-container">
+          {/* 헤더 */}
+          <div className="manage-page-header">
+            <Link href={`/league/${params.league}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
+              <ArrowLeft className="w-4 h-4" />
+              <span>리더보드로 돌아가기</span>
             </Link>
-          </Button>
-          <h1 className="text-3xl font-bold mb-2">레이서 관리</h1>
-          <p className="text-muted-foreground">
-            {league.title} 리그의 레이서를 추가, 수정, 삭제할 수 있습니다
-          </p>
-        </div>
+            <h1 className="manage-page-title">레이서 관리</h1>
+            <p className="manage-page-description">
+              {league.title} 리그의 레이서를 추가, 수정, 삭제할 수 있습니다
+            </p>
+          </div>
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* 레이서 폼 */}
-          <Card className="p-6">
-            <h2 className="text-xl font-semibold mb-4">레이서 추가/수정</h2>
-            <RacerForm league={params.league} />
-          </Card>
+          <div className="racer-manage-grid">
+            {/* 레이서 폼 */}
+            <div className="racer-form-section">
+              <h2 className="racer-section-title">레이서 추가/수정</h2>
+              <RacerForm league={params.league} />
+            </div>
 
-          {/* 현재 레이서 목록 */}
-          <Card className="p-6">
-            <h2 className="text-xl font-semibold mb-4">
-              현재 레이서 ({racers.length}명)
-            </h2>
-            {racers.length === 0 ? (
-              <p className="text-muted-foreground text-center py-8">
-                등록된 레이서가 없습니다
-              </p>
-            ) : (
-              <div className="space-y-2 max-h-[600px] overflow-y-auto">
-                {racers
-                  .sort((a: any, b: any) => {
-                    if (!a.laptime) return 1
-                    if (!b.laptime) return -1
-                    return a.laptime - b.laptime
-                  })
-                  .map((racer: any, index: number) => (
-                    <div
-                      key={racer.email}
-                      className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-sm text-muted-foreground">
-                          #{index + 1}
-                        </span>
-                        <div>
-                          <div className="font-medium">{racer.racerName}</div>
-                          <div className="text-sm text-muted-foreground">
-                            {racer.email}
+            {/* 현재 레이서 목록 */}
+            <div className="racer-list-section">
+              <h2 className="racer-section-title">
+                현재 레이서 ({racers.length}명)
+              </h2>
+              {racers.length === 0 ? (
+                <div className="racer-empty">
+                  등록된 레이서가 없습니다
+                </div>
+              ) : (
+                <div className="racer-list">
+                  {racers
+                    .sort((a: any, b: any) => {
+                      if (!a.laptime) return 1
+                      if (!b.laptime) return -1
+                      return a.laptime - b.laptime
+                    })
+                    .map((racer: any, index: number) => (
+                      <div key={racer.email} className="racer-item">
+                        <div className="racer-item-info">
+                          <span className="racer-rank">#{index + 1}</span>
+                          <div className="racer-details">
+                            <div className="racer-name">{racer.racerName}</div>
+                            <div className="racer-email">{racer.email}</div>
                           </div>
                         </div>
+                        <div className="racer-laptime">
+                          {racer.laptime ? (
+                            <span className="laptime">{formatLaptime(racer.laptime)}</span>
+                          ) : (
+                            <span className="no-record">기록 없음</span>
+                          )}
+                        </div>
                       </div>
-                      <div className="text-right">
-                        {racer.laptime ? (
-                          <div className="font-mono text-lg">
-                            {formatLaptime(racer.laptime)}
-                          </div>
-                        ) : (
-                          <div className="text-sm text-muted-foreground">
-                            기록 없음
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            )}
-          </Card>
-        </div>
+                    ))}
+                </div>
+              )}
+            </div>
+          </div>
 
-        {/* 안내 메시지 */}
-        <div className="mt-8 p-6 bg-muted/50 rounded-lg">
-          <h3 className="font-semibold mb-2">사용 방법</h3>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>
-              <strong>레이서 추가</strong>: 이메일, 이름, 랩타임을 입력하고 저장하세요
-            </li>
-            <li>
-              <strong>레이서 수정</strong>: 동일한 이메일로 다시 입력하면 기록이 업데이트됩니다 (더 빠른 기록만 저장)
-            </li>
-            <li>
-              <strong>강제 업데이트</strong>: 체크하면 기존 기록보다 느려도 업데이트됩니다
-            </li>
-            <li>
-              <strong>레이서 삭제</strong>: 강제 삭제를 체크하고 이메일만 입력하면 레이서를 완전히 제거합니다
-            </li>
-          </ul>
+          {/* 안내 메시지 */}
+          <div className="manage-help">
+            <h3 className="manage-help-title">사용 방법</h3>
+            <ul className="manage-help-list">
+              <li>
+                <strong>레이서 추가</strong>: 이메일, 이름, 랩타임을 입력하고 저장하세요
+              </li>
+              <li>
+                <strong>레이서 수정</strong>: 동일한 이메일로 다시 입력하면 기록이 업데이트됩니다 (더 빠른 기록만 저장)
+              </li>
+              <li>
+                <strong>강제 업데이트</strong>: 체크하면 기존 기록보다 느려도 업데이트됩니다
+              </li>
+              <li>
+                <strong>레이서 삭제</strong>: 강제 삭제를 체크하고 이메일만 입력하면 레이서를 완전히 제거합니다
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
     </>
   )
 }

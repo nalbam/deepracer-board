@@ -3,7 +3,6 @@ import { redirect } from "next/navigation"
 import { LeagueForm } from "@/components/league/league-form"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { ManageHeader } from "@/components/manage/manage-header"
 
 export const metadata = {
@@ -22,26 +21,26 @@ export default async function CreateLeaguePage() {
     <>
       <ManageHeader />
 
-      <div className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto">
-        {/* 헤더 */}
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/manage">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              관리 대시보드로 돌아가기
+      <div className="App-body">
+        <div className="manage-container">
+          {/* 헤더 */}
+          <div className="manage-page-header">
+            <Link href="/manage" className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
+              <ArrowLeft className="w-4 h-4" />
+              <span>관리 대시보드로 돌아가기</span>
             </Link>
-          </Button>
-          <h1 className="text-3xl font-bold mb-2">새 리그 생성</h1>
-          <p className="text-muted-foreground">
-            새로운 DeepRacer 리그를 생성하세요
-          </p>
-        </div>
+            <h1 className="manage-page-title">새 리그 생성</h1>
+            <p className="manage-page-description">
+              새로운 DeepRacer 리그를 생성하세요
+            </p>
+          </div>
 
-        {/* 폼 */}
-        <LeagueForm mode="create" />
+          {/* 폼 */}
+          <div className="manage-form-container">
+            <LeagueForm mode="create" />
+          </div>
+        </div>
       </div>
-    </div>
     </>
   )
 }
