@@ -4,6 +4,7 @@ import { LeagueForm } from "@/components/league/league-form"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { ManageHeader } from "@/components/manage/manage-header"
 
 export const metadata = {
   title: "새 리그 생성 - DeepRacer Board",
@@ -18,7 +19,10 @@ export default async function CreateLeaguePage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+      <ManageHeader />
+
+      <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
         {/* 헤더 */}
         <div className="mb-8">
@@ -38,5 +42,6 @@ export default async function CreateLeaguePage() {
         <LeagueForm mode="create" />
       </div>
     </div>
+    </>
   )
 }

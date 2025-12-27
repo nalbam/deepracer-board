@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { ManageHeader } from "@/components/manage/manage-header"
 
 interface PageProps {
   params: {
@@ -75,7 +76,10 @@ export default async function ManageRacersPage({ params }: PageProps) {
   const racers = await getRacers(params.league)
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+      <ManageHeader />
+
+      <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         {/* 헤더 */}
         <div className="mb-8">
@@ -169,6 +173,7 @@ export default async function ManageRacersPage({ params }: PageProps) {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

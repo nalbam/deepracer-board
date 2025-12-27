@@ -4,6 +4,7 @@ import { LeagueForm } from "@/components/league/league-form"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { ManageHeader } from "@/components/manage/manage-header"
 
 interface PageProps {
   params: {
@@ -58,22 +59,29 @@ export default async function EditLeaguePage({ params }: PageProps) {
   // 리그 소유자 확인
   if (league.userId !== session.user.id) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-4">권한이 없습니다</h1>
-          <p className="text-muted-foreground mb-6">
-            이 리그를 수정할 권한이 없습니다. 리그 생성자만 수정할 수 있습니다.
-          </p>
-          <Button asChild>
-            <Link href="/">홈으로 돌아가기</Link>
-          </Button>
+      <>
+        <ManageHeader />
+
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <h1 className="text-2xl font-bold mb-4">권한이 없습니다</h1>
+            <p className="text-muted-foreground mb-6">
+              이 리그를 수정할 권한이 없습니다. 리그 생성자만 수정할 수 있습니다.
+            </p>
+            <Button asChild>
+              <Link href="/">홈으로 돌아가기</Link>
+            </Button>
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+      <ManageHeader />
+
+      <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
         {/* 헤더 */}
         <div className="mb-8">
@@ -93,5 +101,6 @@ export default async function EditLeaguePage({ params }: PageProps) {
         <LeagueForm league={league} mode="edit" />
       </div>
     </div>
+    </>
   )
 }
