@@ -6,9 +6,9 @@ import { ArrowLeft } from "lucide-react"
 import { ManageHeader } from "@/components/manage/manage-header"
 
 interface PageProps {
-  params: {
+  params: Promise<{
     league: string
-  }
+  }>
 }
 
 async function getLeague(leagueCode: string) {
@@ -28,7 +28,8 @@ async function getLeague(leagueCode: string) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const league = await getLeague(params.league)
+  const { league: leagueCode } = await params
+  const league = await getLeague(leagueCode)
 
   if (!league) {
     return {
@@ -49,7 +50,8 @@ export default async function EditLeaguePage({ params }: PageProps) {
     redirect("/login")
   }
 
-  const league = await getLeague(params.league)
+  const { league: leagueCode } = await params
+  const league = await getLeague(leagueCode)
 
   if (!league) {
     notFound()
@@ -86,7 +88,7 @@ export default async function EditLeaguePage({ params }: PageProps) {
         <div className="manage-container">
           {/* 헤더 */}
           <div className="manage-page-header">
-            <Link href={`/league/${params.league}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
+            <Link href={`/league/${leagueCode}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
               <ArrowLeft className="w-4 h-4" />
               <span>리더보드로 돌아가기</span>
             </Link>

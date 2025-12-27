@@ -6,9 +6,9 @@ import { ArrowLeft } from "lucide-react"
 import { ManageHeader } from "@/components/manage/manage-header"
 
 interface PageProps {
-  params: {
+  params: Promise<{
     league: string
-  }
+  }>
 }
 
 async function getLeague(leagueCode: string) {
@@ -44,7 +44,8 @@ async function getRacers(leagueCode: string) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const league = await getLeague(params.league)
+  const { league: leagueCode } = await params
+  const league = await getLeague(leagueCode)
 
   if (!league) {
     return {
@@ -65,13 +66,14 @@ export default async function ManageRacersPage({ params }: PageProps) {
     redirect("/login")
   }
 
-  const league = await getLeague(params.league)
+  const { league: leagueCode } = await params
+  const league = await getLeague(leagueCode)
 
   if (!league) {
     notFound()
   }
 
-  const racers = await getRacers(params.league)
+  const racers = await getRacers(leagueCode)
 
   return (
     <>
@@ -81,7 +83,7 @@ export default async function ManageRacersPage({ params }: PageProps) {
         <div className="manage-container">
           {/* 헤더 */}
           <div className="manage-page-header">
-            <Link href={`/league/${params.league}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
+            <Link href={`/league/${leagueCode}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
               <ArrowLeft className="w-4 h-4" />
               <span>리더보드로 돌아가기</span>
             </Link>
@@ -95,7 +97,7 @@ export default async function ManageRacersPage({ params }: PageProps) {
             {/* 레이서 폼 */}
             <div className="racer-form-section">
               <h2 className="racer-section-title">레이서 추가/수정</h2>
-              <RacerForm league={params.league} />
+              <RacerForm league={leagueCode} />
             </div>
 
             {/* 현재 레이서 목록 */}
