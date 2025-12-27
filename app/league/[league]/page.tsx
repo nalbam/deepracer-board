@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LeaderBoard } from '@/components/racer/leaderboard';
+import { QRCode } from '@/components/effects/qrcode';
 import { League } from '@/lib/types';
 
 type Props = {
@@ -78,22 +79,25 @@ export default async function LeaderboardPage({ params }: Props) {
         {/* League Header */}
         <Card className="mb-8">
           <CardHeader>
-            <div className="flex items-center gap-4">
-              {league.logo && (
-                <Image
-                  src={league.logo}
-                  alt={league.title}
-                  width={80}
-                  height={80}
-                  className="rounded-lg shadow-md"
-                />
-              )}
-              <div>
-                <CardTitle className="text-3xl">{league.title}</CardTitle>
-                <p className="text-muted-foreground mt-2">
-                  League Code: <span className="font-mono">{league.league}</span>
-                </p>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                {league.logo && (
+                  <Image
+                    src={league.logo}
+                    alt={league.title}
+                    width={80}
+                    height={80}
+                    className="rounded-lg shadow-md"
+                  />
+                )}
+                <div>
+                  <CardTitle className="text-3xl">{league.title}</CardTitle>
+                  <p className="text-muted-foreground mt-2">
+                    League Code: <span className="font-mono">{league.league}</span>
+                  </p>
+                </div>
               </div>
+              <QRCode league={params.league} />
             </div>
           </CardHeader>
         </Card>

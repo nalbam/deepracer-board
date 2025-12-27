@@ -30,6 +30,56 @@ npm                         →  pnpm
 
 **중요**: `docs/` 폴더의 레거시 문서는 v1 아키텍처(Amplify + Lambda)를 참조할 수 있습니다. 현재 코드를 최우선 참고하고, 마이그레이션 계획은 `docs/nextjs-migration-plan.md`를 확인하세요.
 
+## 마이그레이션 진행 상황
+
+**현재 진행률: ~95% 완료** ✨
+
+### ✅ 완료된 기능
+
+#### 인증 시스템
+- ✅ NextAuth.js v5 + Google OAuth 구현
+- ✅ 사용자 DynamoDB 동기화
+- ✅ 로그인/로그아웃 페이지
+- ✅ 세션 관리 및 권한 검증
+
+#### API Routes
+- ✅ `/api/leagues` - 리그 생성, 조회, 삭제
+- ✅ `/api/racers` - 레이서 생성, 수정, 삭제
+- ✅ `/api/racers/[league]` - 리더보드 조회
+- ✅ 랩타임 업데이트 로직 (최고 기록 보존)
+
+#### UI 컴포넌트
+- ✅ shadcn/ui 기본 컴포넌트 (Button, Input, Label, Checkbox, Card)
+- ✅ Toast 알림 시스템 (Radix UI Toast)
+- ✅ 다크 모드 지원 (next-themes)
+
+#### 페이지
+- ✅ 홈페이지 (`/`) - 리그 목록, 소유자 관리 버튼
+- ✅ 리그 상세 (`/league/[league]`) - 리더보드, QR 코드
+- ✅ 관리 대시보드 (`/manage`)
+- ✅ 리그 생성 (`/manage/league`)
+- ✅ 리그 수정 (`/manage/league/[league]`)
+- ✅ 레이서 관리 (`/manage/racers/[league]`)
+- ✅ 타이머 (`/timer`, `/timer/[min]`)
+
+#### 기능 컴포넌트
+- ✅ LeagueForm - react-hook-form + zod 검증
+- ✅ RacerForm - 랩타임 형식 검증, 강제 업데이트/삭제
+- ✅ Leaderboard - 5초 폴링 실시간 업데이트, 신기록 애니메이션
+- ✅ Timer - 밀리초 정밀 측정, 키보드 단축키, 사운드 효과
+
+#### 시각 효과 컴포넌트
+- ✅ Pollen - 캔버스 기반 축하 애니메이션 (신기록 달성 시)
+- ✅ Scroll - 자동 스크롤 (리더보드용, 10분 후 자동 활성화)
+- ✅ QRCode - 리그 공유용 QR 코드 표시
+
+### 🚧 남은 작업 (~5%)
+
+#### 선택적 개선 사항
+- ⏳ 성능 최적화 및 SEO 개선
+- ⏳ 에러 바운더리 추가
+- ⏳ 추가 테스트 및 품질 검증
+
 ## 개발 명령어
 
 ```bash

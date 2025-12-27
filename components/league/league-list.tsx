@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { League } from '@/lib/types';
 import { LeagueCard } from './league-card';
 
@@ -9,6 +10,7 @@ interface LeagueListProps {
 }
 
 export function LeagueList({ showAll = false }: LeagueListProps) {
+  const { data: session } = useSession();
   const [leagues, setLeagues] = useState<League[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,7 +57,11 @@ export function LeagueList({ showAll = false }: LeagueListProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {leagues.map((league) => (
-        <LeagueCard key={league.league} league={league} />
+        <LeagueCard
+          key={league.league}
+          league={league}
+          currentUserId={session?.user?.id}
+        />
       ))}
     </div>
   );
