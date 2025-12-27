@@ -4,18 +4,28 @@ AWS DeepRacer League Management and Leaderboard System built with Next.js 15, Ne
 
 ## Features
 
-- 🏎️ **League Management**: Create and manage DeepRacer racing leagues
-- 🏁 **Real-time Leaderboard**: Live rankings with automatic updates
-- ⏱️ **Timer Integration**: Precise lap time tracking
-- 🔐 **Authentication**: Secure login with AWS Cognito
+### Core Features
+- 🏎️ **League Management**: Create, edit, and delete DeepRacer racing leagues
+- 🏁 **Real-time Leaderboard**: Live rankings with 3-second auto-refresh
+- ⏱️ **Timer Integration**: Precise lap time tracking with MM:SS.mmm format
+- 🔐 **Authentication**: Secure Google OAuth login with NextAuth.js
 - 📱 **Responsive Design**: Works on desktop and mobile devices
 - 🌐 **Production Ready**: Deployed at [deepracerboard.com](https://deepracerboard.com)
 
+### Advanced Features
+- 🎉 **Event Detection System**: 6-type priority-based event system
+  - New Champion, Champion Record, Top 3 Entry, First Lap, New Racer, Record Update
+- 📜 **Auto-scroll**: Automatic scrolling through leaderboard every 10 minutes
+- ✏️ **Click-to-Edit Racers**: Select racers from list to edit lap times
+- 🗑️ **Safe League Deletion**: Confirmation modal with league code verification
+- 🎨 **Visual Effects**: Confetti, popups, logo displays, and QR codes
+- 🔄 **Legacy Data Support**: Automatic conversion of old string-based lap times
+
 ## Tech Stack
 
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **Styling**: Tailwind CSS, shadcn/ui components
-- **Authentication**: NextAuth.js with Google OAuth
+- **Frontend**: Next.js 15 (App Router), React 19, TypeScript
+- **Styling**: Custom CSS (deepracer.css)
+- **Authentication**: NextAuth.js v5 with Google OAuth
 - **Database**: AWS DynamoDB
 - **Deployment**: AWS Amplify
 - **Package Manager**: pnpm
@@ -59,54 +69,80 @@ pnpm dev
 ## Environment Variables
 
 ```env
-# Auth Settings
-AUTH_ENABLED="true" # 인증 시스템 전체 활성화 여부 (true/false)
-AUTH_DEBUG="false"  # 디버그 모드 설정
-
-AUTH_SECRET= # openssl rand -hex 32
-
-AUTH_TRUST_HOST=1
-
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
+# NextAuth Settings
+AUTH_SECRET=                              # openssl rand -hex 32
+NEXTAUTH_URL="http://localhost:3000"      # Deployment URL
 
 # AWS Credentials
 AUTH_AWS_REGION="ap-northeast-2"
-AUTH_AWS_ACCOUNT_ID=
 AUTH_AWS_ACCESS_KEY_ID=
 AUTH_AWS_SECRET_ACCESS_KEY=
 
-# Google Auth
-AUTH_GOOGLE_ENABLED="true"
+# Google OAuth
 AUTH_GOOGLE_ID=
 AUTH_GOOGLE_SECRET=
 
-# AWS DynamoDB
+# DynamoDB Tables
 NEXT_DYNAMODB_LEAGUES_TABLE="deepracer-board-leagues"
 NEXT_DYNAMODB_RACERS_TABLE="deepracer-board-racers"
+NEXT_DYNAMODB_USERS_TABLE="deepracer-board-users"
 ```
 
 ## Project Structure
 
 ```
 deepracer-board/
-├── app/                    # Next.js App Router
-│   ├── api/               # API routes
-│   │   ├── leagues/       # League management
-│   │   └── racers/        # Racer management
-│   ├── league/            # Leaderboard pages
-│   ├── login/             # Authentication
-│   └── manage/            # Admin pages
-├── components/             # React components
-│   ├── ui/                # Base UI components
-│   ├── league/            # League components
-│   └── racer/             # Racer components
-├── lib/                   # Utilities and services
-│   ├── auth.ts           # NextAuth configuration
-│   ├── dynamodb.ts       # DynamoDB client
-│   ├── types.ts          # TypeScript types
-│   └── utils.ts          # Utility functions
-└── docs/                  # Documentation
+├── app/
+│   ├── api/
+│   │   ├── leagues/
+│   │   │   ├── route.ts              # GET/POST leagues
+│   │   │   └── [league]/route.ts     # GET/DELETE specific league
+│   │   └── racers/
+│   │       ├── route.ts              # POST racer
+│   │       └── [league]/route.ts     # GET/DELETE racers
+│   ├── league/[league]/page.tsx      # Leaderboard page
+│   ├── login/page.tsx                # Login page
+│   ├── manage/
+│   │   ├── page.tsx                  # Dashboard
+│   │   ├── league/
+│   │   │   ├── page.tsx              # Create league
+│   │   │   └── [league]/page.tsx     # Edit league
+│   │   └── racers/[league]/page.tsx  # Manage racers
+│   ├── timer/
+│   │   ├── page.tsx                  # Timer (no limit)
+│   │   └── [min]/page.tsx            # Timer (with limit)
+│   ├── page.tsx                      # Home page
+│   └── deepracer.css                 # Main CSS
+├── components/
+│   ├── common/
+│   │   ├── app-header.tsx            # Unified navbar
+│   │   └── modal.tsx                 # Reusable modal
+│   ├── effects/
+│   │   ├── pollen.tsx                # Confetti effect
+│   │   ├── popup.tsx                 # Racer popup
+│   │   ├── scroll.tsx                # Auto scroll
+│   │   ├── logo-popup.tsx            # League logo
+│   │   └── qrcode.tsx                # QR code
+│   ├── league/
+│   │   ├── league-form.tsx           # Create/Edit form
+│   │   ├── league-list.tsx           # Public leagues
+│   │   ├── my-leagues.tsx            # User's leagues
+│   │   └── delete-league-modal.tsx   # Delete confirmation
+│   ├── racer/
+│   │   ├── racer-form.tsx            # Add/Edit racer
+│   │   ├── racer-manager.tsx         # Racer list manager
+│   │   └── leaderboard.tsx           # Leaderboard with events
+│   └── manage/
+│       └── logout-button.tsx         # Logout button
+├── lib/
+│   ├── auth.ts                       # NextAuth config
+│   ├── dynamodb.ts                   # DynamoDB client
+│   ├── types.ts                      # TypeScript types
+│   └── utils.ts                      # Utilities
+└── docs/
+    ├── data-models.md                # Data models
+    ├── project-analysis.md           # Architecture
+    └── nextjs-migration-plan.md      # Migration plan
 ```
 
 ## API Endpoints
@@ -115,12 +151,13 @@ deepracer-board/
 - `GET /api/leagues` - Get user's leagues
 - `GET /api/leagues?all=true` - Get all public leagues
 - `POST /api/leagues` - Create/update league
-- `GET /api/leagues/[id]` - Get specific league
-- `DELETE /api/leagues/[id]` - Delete league
+- `GET /api/leagues/[league]` - Get specific league
+- `DELETE /api/leagues/[league]` - Delete league (requires ownership)
 
 ### Racers
-- `GET /api/racers/[league]` - Get league leaderboard
-- `POST /api/racers` - Create/update/delete racer
+- `GET /api/racers/[league]` - Get league leaderboard with rankings
+- `POST /api/racers` - Create/update racer lap time
+- `DELETE /api/racers/[league]` - Delete all racers in league (requires ownership)
 
 ## Database Schema
 
@@ -181,6 +218,38 @@ frontend:
     files:
       - "**/*"
 ```
+
+## Recent Updates (2025-12-28)
+
+### New Features
+- ✅ **League Deletion**: Added confirmation modal requiring league code verification
+- ✅ **Unified Navigation**: Created AppHeader component used across all pages
+- ✅ **Racer Selection**: Click-to-edit functionality for managing racer lap times
+- ✅ **Event Detection**: 6-type priority-based event system for leaderboard celebrations
+- ✅ **Auto-scroll**: Automatic leaderboard scrolling every 10 minutes with custom easing
+- ✅ **Modal Component**: Reusable modal with ESC and backdrop click support
+- ✅ **Bulk Racer Deletion**: API endpoint to delete all racers before league deletion
+
+### Bug Fixes
+- ✅ **Auto-scroll Not Working**: Fixed useEffect dependency causing countdown reset
+  - Root cause: `items` prop triggering re-execution on data fetch (every 3 seconds)
+  - Solution: Used `useRef` and `useCallback` to stabilize dependencies
+- ✅ **Auto-trigger Detection**: Switched to email-based tracking instead of index-based
+- ✅ **Event Popup Display**: Removed blocking check that prevented popup from showing
+- ✅ **Legacy Laptime Data**: Added automatic conversion from string to number format
+- ✅ **First Lap Classification**: Added rank-based event type detection
+- ✅ **New Racer Classification**: Proper event type for new racers entering top positions
+
+### Improvements
+- ✅ **Button Standardization**: Unified all button styles (14px font, consistent padding)
+- ✅ **Scroll Animation**: Custom easeInOutCubic function with racer count proportional duration
+- ✅ **Event Priorities**:
+  - NEW_CHAMPION (priority 10)
+  - CHAMPION_RECORD (priority 8)
+  - TOP3_ENTRY (priority 6)
+  - FIRST_LAP (priority 4)
+  - NEW_RACER (priority 4)
+  - RECORD_UPDATE (priority 2)
 
 ## Contributing
 
