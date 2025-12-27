@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
 
 interface ScrollProps {
   items: number
@@ -8,7 +8,14 @@ interface ScrollProps {
   timeout?: number
 }
 
-export function Scroll({ items, interval = 200, timeout = 10 * 60 * 1000 }: ScrollProps) {
+export interface ScrollRef {
+  scroll: (dir: string | number) => void
+}
+
+export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
+  { items, interval = 200, timeout = 10 * 60 * 1000 },
+  ref
+) {
   const timeoutCountRef = useRef(0)
   const intervalIdRef = useRef<NodeJS.Timeout>()
 
@@ -92,5 +99,10 @@ export function Scroll({ items, interval = 200, timeout = 10 * 60 * 1000 }: Scro
     }
   }
 
+  // Expose scroll method to parent
+  useImperativeHandle(ref, () => ({
+    scroll,
+  }))
+
   return null
-}
+})

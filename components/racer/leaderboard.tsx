@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Pollen, PollenRef } from '@/components/effects/pollen';
-import { Scroll } from '@/components/effects/scroll';
+import { Popup, PopupRef } from '@/components/effects/popup';
+import { Scroll, ScrollRef } from '@/components/effects/scroll';
 import { LeaderboardEntry } from '@/lib/types';
 import { formatLaptime } from '@/lib/utils';
 
@@ -11,11 +12,72 @@ interface LeaderBoardProps {
   league: string;
 }
 
+interface PopInfo {
+  rank: number;
+  header: string;
+  message: string;
+  footer: string;
+}
+
 export function LeaderBoard({ league }: LeaderBoardProps) {
   const [racers, setRacers] = useState<LeaderboardEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [bestLaptime, setBestLaptime] = useState<number | null>(null);
+  const [previousRacers, setPreviousRacers] = useState<LeaderboardEntry[]>([]);
+  const [popInfo, setPopInfo] = useState<PopInfo>({
+    rank: 0,
+    header: '',
+    message: '',
+    footer: '',
+  });
   const pollenRef = useRef<PollenRef>(null);
+  const popupRef = useRef<PopupRef>(null);
+  const scrollRef = useRef<ScrollRef>(null);
+
+  const tada = (rank: number, type: number, racerName: string, laptime: string) => {
+    if (racers.length === 0) return;
+
+    let header;
+    if (type === 1) {
+      header = 'New Record!';
+    } else if (type === 2) {
+      header = 'New Challenger!';
+    } else {
+      header = 'Congratulations!';
+    }
+
+    setPopInfo({
+      rank,
+      header,
+      message: racerName,
+      footer: laptime,
+    });
+
+    console.log(`tada ${rank} ${racerName} ${laptime}`);
+
+    // Scroll to rank
+    if (scrollRef.current) {
+      scrollRef.current.scroll(rank);
+    }
+
+    // Start pollen effect
+    if (pollenRef.current) {
+      pollenRef.current.start(5000);
+    }
+
+    // Start popup
+    if (popupRef.current) {
+      popupRef.current.start(5000);
+    }
+
+    // Play fanfare sound for manual trigger (type 0)
+    if (type === 0) {
+      const fanfare = new Audio('/sounds/fanfare.mp3');
+      fanfare.loop = false;
+      fanfare.play().catch(() => {
+        // Ignore audio play errors
+      });
+    }
+  };
 
   useEffect(() => {
     async function fetchRacers() {
@@ -26,21 +88,37 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
         if (data.success) {
           const newRacers = data.data || [];
 
-          // 신기록 체크
-          if (newRacers.length > 0) {
-            const currentBest = newRacers.find((r: LeaderboardEntry) => r.rank === 1);
-            if (currentBest && currentBest.laptime > 0) {
-              if (bestLaptime === null || currentBest.laptime < bestLaptime) {
-                // 신기록 달성!
-                setBestLaptime(currentBest.laptime);
-                if (bestLaptime !== null && pollenRef.current) {
-                  // 최초 로드가 아닐 때만 애니메이션 실행
-                  pollenRef.current.start(3000); // 3초 동안 애니메이션
+          // 변경 감지
+          if (previousRacers.length > 0 && newRacers.length > 0) {
+            let rank = 0;
+            let type = 0;
+
+            // 새로운 레이서 추가 감지
+            if (newRacers.length > previousRacers.length) {
+              rank = newRacers.length;
+              type = 2; // New Challenger
+            } else {
+              // 기록 갱신 감지
+              for (let i = 0; i < previousRacers.length; i++) {
+                if (
+                  previousRacers[i].racerName !== newRacers[i].racerName ||
+                  previousRacers[i].laptime !== newRacers[i].laptime
+                ) {
+                  rank = i + 1;
+                  type = 1; // New Record
+                  break;
                 }
               }
             }
+
+            // 이벤트 실행
+            if (rank > 0 && rank <= newRacers.length) {
+              const racer = newRacers[rank - 1];
+              tada(rank, type, racer.racerName, formatLaptime(racer.laptime));
+            }
           }
 
+          setPreviousRacers(newRacers);
           setRacers(newRacers);
         }
       } catch (error) {
@@ -56,7 +134,22 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
     const interval = setInterval(fetchRacers, 5000);
 
     return () => clearInterval(interval);
-  }, [league, bestLaptime]);
+  }, [league, previousRacers]);
+
+  // 엔터 키 이벤트 핸들러
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && racers.length > 0) {
+        const firstRacer = racers.find((r) => r.rank === 1);
+        if (firstRacer) {
+          tada(1, 0, firstRacer.racerName, formatLaptime(firstRacer.laptime));
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [racers]);
 
   if (isLoading) {
     return (
@@ -92,7 +185,8 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
     <>
       {/* 시각 효과 컴포넌트 */}
       <Pollen ref={pollenRef} />
-      <Scroll items={racers.filter(r => r.rank > 0).length} />
+      <Popup ref={popupRef} popInfo={popInfo} />
+      <Scroll ref={scrollRef} items={racers.filter(r => r.rank > 0).length} />
 
       <div className="lb-items">
         <div className="lb-header lb-rank0">

@@ -183,6 +183,73 @@ a:hover {
   top: 0;
 }
 
+/* Popup layer */
+.pop-layer {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 300;
+  animation: fadeInOut 5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.pop-layer .pop-bg {
+  background: #000;
+  height: 100%;
+  left: 0;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.pop-layer .pop-container {
+  height: 100%;
+  left: 0;
+  position: relative;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+.pop-layer .pop-container .pop-header {
+  font-size: 5vw;
+  margin-top: 8%;
+  padding: 1%;
+}
+
+.pop-layer .pop-container .pop-message {
+  font-size: 13vw;
+  font-weight: bold;
+  padding: 1%;
+}
+
+.pop-layer .pop-container .pop-footer {
+  font-size: 7vw;
+  padding: 1%;
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+}
+
+.pop-rank1 {
+  color: #fd4;
+}
+
+.pop-rank2 {
+  color: #ccc;
+}
+
+.pop-rank3 {
+  color: #fc7;
+}
+
 /* Header styles */
 .App-header {
   background-color: #000;
