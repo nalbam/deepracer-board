@@ -62,7 +62,7 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
       // Show league logo first
       logoPopupRef.current.start(3000);
 
-      // After 3 seconds, show racer popup
+      // Start racer popup at 2.7s (when logo starts fading out) for smooth crossfade
       setTimeout(() => {
         // Scroll to rank
         if (scrollRef.current) {
@@ -74,7 +74,7 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
           pollenRef.current.start(5000);
         }
 
-        // Start popup
+        // Start popup (crossfades with logo fadeout)
         if (popupRef.current) {
           popupRef.current.start(5000);
         }
@@ -87,7 +87,7 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
             // Ignore audio play errors
           });
         }
-      }, 3000);
+      }, 2700);
     } else {
       // Normal behavior without logo
       // Scroll to rank
