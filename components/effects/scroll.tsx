@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import { useEffect, useRef, forwardRef, useImperativeHandle, useCallback } from 'react'
 
 interface ScrollProps {
   items: number
@@ -18,30 +18,14 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
 ) {
   const timeoutCountRef = useRef(0)
   const intervalIdRef = useRef<NodeJS.Timeout>()
+  const itemsRef = useRef(items)
 
+  // items 값을 ref에 저장 (useEffect 재실행 방지)
   useEffect(() => {
-    const defaultTimeout = timeout / interval
-    timeoutCountRef.current = defaultTimeout
+    itemsRef.current = items
+  }, [items])
 
-    const countdown = () => {
-      timeoutCountRef.current--
-
-      if (timeoutCountRef.current <= 0) {
-        scroll('down')
-        timeoutCountRef.current = defaultTimeout
-      }
-    }
-
-    intervalIdRef.current = setInterval(countdown, interval)
-
-    return () => {
-      if (intervalIdRef.current) {
-        clearInterval(intervalIdRef.current)
-      }
-    }
-  }, [items, interval, timeout])
-
-  const scroll = (dir: string | number) => {
+  const scroll = useCallback((dir: string | number) => {
     const min = 5
     const max = 100
     let scrollTop = 0
@@ -49,7 +33,7 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
     const bottomDelay = 8000 // 하단 도달 후 8초 대기
 
     if (dir === 'down') {
-      const targetRank = items
+      const targetRank = itemsRef.current // ref 사용!
       if (targetRank <= min) {
         return
       }
@@ -77,6 +61,33 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
       duration = 800
     }
 
+    // 커스텀 smooth scroll 함수
+    const smoothScrollTo = (targetY: number, duration: number) => {
+      const startY = window.scrollY
+      const distance = targetY - startY
+      const startTime = performance.now()
+
+      const easeInOutCubic = (t: number): number => {
+        return t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2
+      }
+
+      const animateScroll = (currentTime: number) => {
+        const elapsed = currentTime - startTime
+        const progress = Math.min(elapsed / duration, 1)
+        const easeProgress = easeInOutCubic(progress)
+
+        window.scrollTo(0, startY + distance * easeProgress)
+
+        if (progress < 1) {
+          requestAnimationFrame(animateScroll)
+        }
+      }
+
+      requestAnimationFrame(animateScroll)
+    }
+
     // 커스텀 스크롤 애니메이션 (천천히)
     if (scrollTop === 0) {
       // 상단으로 빠르게 복귀
@@ -90,39 +101,35 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
         smoothScrollTo(0, 1500)
       }, duration + bottomDelay)
     }
-  }
+  }, []) // 의존성 없음: itemsRef를 사용하므로 안정적
 
-  // 커스텀 smooth scroll 함수
-  const smoothScrollTo = (targetY: number, duration: number) => {
-    const startY = window.scrollY
-    const distance = targetY - startY
-    const startTime = performance.now()
+  // 카운트다운 간격 설정 (interval과 timeout이 변경될 때만 재설정)
+  useEffect(() => {
+    const defaultTimeout = timeout / interval
+    timeoutCountRef.current = defaultTimeout
 
-    const easeInOutCubic = (t: number): number => {
-      return t < 0.5
-        ? 4 * t * t * t
-        : 1 - Math.pow(-2 * t + 2, 3) / 2
-    }
+    const countdown = () => {
+      timeoutCountRef.current--
 
-    const animateScroll = (currentTime: number) => {
-      const elapsed = currentTime - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      const easeProgress = easeInOutCubic(progress)
-
-      window.scrollTo(0, startY + distance * easeProgress)
-
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll)
+      if (timeoutCountRef.current <= 0) {
+        scroll('down')
+        timeoutCountRef.current = defaultTimeout
       }
     }
 
-    requestAnimationFrame(animateScroll)
-  }
+    intervalIdRef.current = setInterval(countdown, interval)
+
+    return () => {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current)
+      }
+    }
+  }, [interval, timeout, scroll]) // scroll 추가!
 
   // Expose scroll method to parent
   useImperativeHandle(ref, () => ({
     scroll,
-  }))
+  }), [scroll])
 
   return null
 })
