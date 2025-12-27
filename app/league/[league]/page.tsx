@@ -79,14 +79,16 @@ export default async function LeaderboardPage({ params }: Props) {
         <div className="league-header">
           <div className="league-header-content">
             {league.logo && (
-              <Image
-                src={league.logo}
-                alt={league.title}
-                width={80}
-                height={80}
-                className="league-logo"
-                unoptimized
-              />
+              <div className="league-logo-wrapper">
+                <Image
+                  src={league.logo}
+                  alt={league.title}
+                  width={150}
+                  height={150}
+                  className="league-logo"
+                  unoptimized
+                />
+              </div>
             )}
             <div>
               <h1 className="league-title">{league.title}</h1>
@@ -95,7 +97,9 @@ export default async function LeaderboardPage({ params }: Props) {
               </p>
             </div>
           </div>
-          <QRCode league={leagueCode} />
+          <div className="league-qrcode">
+            <QRCode league={leagueCode} />
+          </div>
         </div>
       </header>
 

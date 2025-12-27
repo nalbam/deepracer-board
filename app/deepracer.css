@@ -13,6 +13,8 @@ body {
 .lb-items {
   display: block;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Leaderboard header */
@@ -131,6 +133,7 @@ body {
 .league-row-2col .league-title {
   font-size: 28px;
   line-height: 1.2;
+  text-align: left;
 }
 
 .league-row-2col .league-code {
@@ -138,6 +141,7 @@ body {
   color: #aaa;
   margin-top: 4px;
   line-height: 1.2;
+  text-align: left;
 }
 
 /* Links */
@@ -180,38 +184,52 @@ a:hover {
 
 /* League header styles */
 .league-header {
-  background: linear-gradient(90deg, #456 0, #326);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: relative;
   padding: 20px;
   margin-bottom: 20px;
 }
 
 .league-header-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
+}
+
+.league-logo-wrapper {
+  display: block;
+  height: 150px;
+  line-height: 0;
+  text-align: center;
 }
 
 .league-logo {
-  width: 80px;
-  height: 80px;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
 }
 
 .league-title {
   font-size: 36px;
   font-weight: bold;
   margin: 0;
+  text-align: center;
 }
 
 .league-code {
-  font-size: 18px;
+  font-size: 16px;
   color: #aaa;
-  margin-top: 8px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.league-qrcode {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 /* Button styles */
