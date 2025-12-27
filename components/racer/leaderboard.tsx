@@ -20,6 +20,48 @@ interface PopInfo {
   footer: string;
 }
 
+// 이벤트 타입 정의
+enum EventType {
+  MANUAL = 0,           // 수동 트리거 (Enter)
+  CHAMPION_RECORD = 1,  // 챔피언 기록 갱신
+  NEW_CHAMPION = 2,     // 새 챔피언 탄생
+  TOP3_ENTRY = 3,       // Top 3 진입
+  RECORD_UPDATE = 4,    // 일반 기록 갱신
+  FIRST_LAP = 5,        // 첫 완주
+  NEW_RACER = 6,        // 신규 참가자
+}
+
+// 이벤트별 헤더
+const EVENT_HEADERS: Record<EventType, string> = {
+  [EventType.MANUAL]: 'Congratulations!',
+  [EventType.CHAMPION_RECORD]: 'Unbeatable!',
+  [EventType.NEW_CHAMPION]: 'Champion!',
+  [EventType.TOP3_ENTRY]: 'Top 3!',
+  [EventType.RECORD_UPDATE]: 'New Record!',
+  [EventType.FIRST_LAP]: 'First Lap!',
+  [EventType.NEW_RACER]: 'New Challenger!',
+};
+
+// 이벤트별 우선순위
+const EVENT_PRIORITY: Record<EventType, number> = {
+  [EventType.MANUAL]: 0,          // 수동은 우선순위 없음
+  [EventType.NEW_CHAMPION]: 10,   // 최우선
+  [EventType.CHAMPION_RECORD]: 8,
+  [EventType.TOP3_ENTRY]: 6,
+  [EventType.FIRST_LAP]: 4,
+  [EventType.NEW_RACER]: 4,
+  [EventType.RECORD_UPDATE]: 2,
+};
+
+// 감지된 이벤트 정보
+interface DetectedEvent {
+  type: EventType;
+  rank: number;
+  racerName: string;
+  laptime: number;
+  priority: number;
+}
+
 export function LeaderBoard({ league }: LeaderBoardProps) {
   const [racers, setRacers] = useState<LeaderboardEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,15 +78,8 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
   const scrollRef = useRef<ScrollRef>(null);
   const logoPopupRef = useRef<LogoPopupRef>(null);
 
-  const tada = (rank: number, type: number, racerName: string, laptime: string, showLogo: boolean = false) => {
-    let header;
-    if (type === 1) {
-      header = 'New Record!';
-    } else if (type === 2) {
-      header = 'New Challenger!';
-    } else {
-      header = 'Congratulations!';
-    }
+  const tada = (rank: number, eventType: EventType, racerName: string, laptime: string) => {
+    const header = EVENT_HEADERS[eventType];
 
     setPopInfo({
       rank,
@@ -53,7 +88,53 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
       footer: laptime,
     });
 
-    // If showLogo is true, show logo first, then racer info
+    // 이벤트별 이펙트 설정
+    let duration = 5000;        // 기본 5초
+    let pollenIntensity = 5000; // 기본 강도
+    let showLogo = false;
+    let soundFile = '';
+
+    switch (eventType) {
+      case EventType.NEW_CHAMPION:
+        duration = 8000;
+        pollenIntensity = 8000;
+        showLogo = true;
+        soundFile = '/sounds/fanfare.mp3';
+        break;
+      case EventType.CHAMPION_RECORD:
+        duration = 6000;
+        pollenIntensity = 6000;
+        soundFile = '/sounds/ding1.mp3';
+        break;
+      case EventType.TOP3_ENTRY:
+        duration = 5000;
+        pollenIntensity = 5000;
+        soundFile = '/sounds/ding2.mp3';
+        break;
+      case EventType.RECORD_UPDATE:
+        duration = 4000;
+        pollenIntensity = 4000;
+        soundFile = '/sounds/ding1.mp3';
+        break;
+      case EventType.FIRST_LAP:
+        duration = 4000;
+        pollenIntensity = 4000;
+        soundFile = '/sounds/ding2.mp3';
+        break;
+      case EventType.NEW_RACER:
+        duration = 4000;
+        pollenIntensity = 4000;
+        soundFile = '/sounds/ding2.mp3';
+        break;
+      case EventType.MANUAL:
+        duration = 5000;
+        pollenIntensity = 5000;
+        showLogo = true;
+        soundFile = '/sounds/fanfare.mp3';
+        break;
+    }
+
+    // 리그 로고 표시 (새 챔피언 또는 수동 트리거)
     if (showLogo && logoPopupRef.current) {
       // Show league logo first
       logoPopupRef.current.start(3000);
@@ -67,19 +148,19 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
 
         // Start pollen effect
         if (pollenRef.current) {
-          pollenRef.current.start(5000);
+          pollenRef.current.start(pollenIntensity);
         }
 
         // Start popup (crossfades with logo fadeout)
         if (popupRef.current) {
-          popupRef.current.start(5000);
+          popupRef.current.start(duration);
         }
 
-        // Play fanfare sound
-        if (type === 0) {
-          const fanfare = new Audio('/sounds/fanfare.mp3');
-          fanfare.loop = false;
-          fanfare.play().catch(() => {
+        // Play sound
+        if (soundFile) {
+          const audio = new Audio(soundFile);
+          audio.loop = false;
+          audio.play().catch(() => {
             // Ignore audio play errors
           });
         }
@@ -93,19 +174,19 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
 
       // Start pollen effect
       if (pollenRef.current) {
-        pollenRef.current.start(5000);
+        pollenRef.current.start(pollenIntensity);
       }
 
       // Start popup
       if (popupRef.current) {
-        popupRef.current.start(5000);
+        popupRef.current.start(duration);
       }
 
-      // Play fanfare sound for manual trigger (type 0)
-      if (type === 0) {
-        const fanfare = new Audio('/sounds/fanfare.mp3');
-        fanfare.loop = false;
-        fanfare.play().catch(() => {
+      // Play sound
+      if (soundFile) {
+        const audio = new Audio(soundFile);
+        audio.loop = false;
+        audio.play().catch(() => {
           // Ignore audio play errors
         });
       }
@@ -142,14 +223,16 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
           const newRacers = data.data || [];
           const previousRacers = previousRacersRef.current;
 
-          // 변경 감지 (이메일 기반)
+          // 이벤트 감지 (이메일 기반)
           if (previousRacers.length > 0) {
+            const detectedEvents: DetectedEvent[] = [];
+
             // 이전 레이서들을 Map으로 변환 (email -> racer)
             const previousMap = new Map(
               previousRacers.map(r => [r.email, r])
             );
 
-            // 새 레이서와 기록 갱신 감지
+            // 각 레이서마다 이벤트 감지
             for (const newRacer of newRacers) {
               // rank가 0이면 기록 없는 레이서이므로 무시
               if (newRacer.rank === 0) continue;
@@ -157,18 +240,88 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
               const prevRacer = previousMap.get(newRacer.email);
 
               if (!prevRacer) {
-                // 새로운 레이서 추가
-                tada(newRacer.rank, 2, newRacer.racerName, formatLaptime(newRacer.laptime));
-                break;
+                // 이벤트 6: 신규 참가자
+                detectedEvents.push({
+                  type: EventType.NEW_RACER,
+                  rank: newRacer.rank,
+                  racerName: newRacer.racerName,
+                  laptime: newRacer.laptime,
+                  priority: EVENT_PRIORITY[EventType.NEW_RACER],
+                });
               } else if (prevRacer.rank === 0 && newRacer.rank > 0) {
-                // 기록 없던 레이서가 첫 랩타임 기록
-                tada(newRacer.rank, 2, newRacer.racerName, formatLaptime(newRacer.laptime));
-                break;
+                // 이벤트 5: 첫 완주 (기존 레이서)
+                detectedEvents.push({
+                  type: EventType.FIRST_LAP,
+                  rank: newRacer.rank,
+                  racerName: newRacer.racerName,
+                  laptime: newRacer.laptime,
+                  priority: EVENT_PRIORITY[EventType.FIRST_LAP],
+                });
               } else if (prevRacer.rank > 0 && prevRacer.laptime > newRacer.laptime) {
-                // 기록 갱신 (더 빠른 시간)
-                tada(newRacer.rank, 1, newRacer.racerName, formatLaptime(newRacer.laptime));
-                break;
+                // 기록 갱신 - 이제 세분화된 감지
+
+                // 이벤트 2: 새 챔피언 탄생 (2등 이하 → 1등)
+                if (prevRacer.rank > 1 && newRacer.rank === 1) {
+                  detectedEvents.push({
+                    type: EventType.NEW_CHAMPION,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.NEW_CHAMPION],
+                  });
+                }
+                // 이벤트 1: 챔피언 기록 갱신 (1등이 자신의 기록 개선)
+                else if (prevRacer.rank === 1 && newRacer.rank === 1) {
+                  detectedEvents.push({
+                    type: EventType.CHAMPION_RECORD,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.CHAMPION_RECORD],
+                  });
+                }
+                // 이벤트 3: Top 3 진입 (4등 이하 → 2-3등)
+                else if (prevRacer.rank > 3 && newRacer.rank >= 2 && newRacer.rank <= 3) {
+                  detectedEvents.push({
+                    type: EventType.TOP3_ENTRY,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.TOP3_ENTRY],
+                  });
+                }
+                // 이벤트 4: 일반 기록 갱신
+                else {
+                  detectedEvents.push({
+                    type: EventType.RECORD_UPDATE,
+                    rank: newRacer.rank,
+                    racerName: newRacer.racerName,
+                    laptime: newRacer.laptime,
+                    priority: EVENT_PRIORITY[EventType.RECORD_UPDATE],
+                  });
+                }
               }
+            }
+
+            // 우선순위 기반 필터링: 가장 높은 우선순위 이벤트만 선택
+            if (detectedEvents.length > 0) {
+              // 우선순위로 정렬 (높은 것부터)
+              detectedEvents.sort((a, b) => {
+                if (b.priority !== a.priority) {
+                  return b.priority - a.priority;
+                }
+                // 같은 우선순위면 더 높은 순위(rank가 낮은) 레이서 우선
+                return a.rank - b.rank;
+              });
+
+              // 가장 높은 우선순위 이벤트 실행
+              const topEvent = detectedEvents[0];
+              tada(
+                topEvent.rank,
+                topEvent.type,
+                topEvent.racerName,
+                formatLaptime(topEvent.laptime)
+              );
             }
           }
 
@@ -195,32 +348,32 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (racers.length === 0) return;
 
-      // Enter 키: 1등 Congratulations! (리그 로고 먼저 표시)
+      // Enter 키: 1등 Congratulations! (리그 로고 표시)
       if (e.key === 'Enter') {
         const firstRacer = racers.find((r) => r.rank === 1);
         if (firstRacer) {
-          tada(1, 0, firstRacer.racerName, formatLaptime(firstRacer.laptime), true);
+          tada(1, EventType.MANUAL, firstRacer.racerName, formatLaptime(firstRacer.laptime));
         }
       }
-      // 숫자 1 키: 1등 New Record!
+      // 숫자 1 키: 1등 Champion!
       else if (e.key === '1') {
         const firstRacer = racers.find((r) => r.rank === 1);
         if (firstRacer) {
-          tada(1, 1, firstRacer.racerName, formatLaptime(firstRacer.laptime));
+          tada(1, EventType.NEW_CHAMPION, firstRacer.racerName, formatLaptime(firstRacer.laptime));
         }
       }
-      // 숫자 2 키: 2등 New Challenger!
+      // 숫자 2 키: 2등 Top 3!
       else if (e.key === '2') {
         const secondRacer = racers.find((r) => r.rank === 2);
         if (secondRacer) {
-          tada(2, 2, secondRacer.racerName, formatLaptime(secondRacer.laptime));
+          tada(2, EventType.TOP3_ENTRY, secondRacer.racerName, formatLaptime(secondRacer.laptime));
         }
       }
-      // 숫자 3 키: 3등 New Challenger!
+      // 숫자 3 키: 3등 Top 3!
       else if (e.key === '3') {
         const thirdRacer = racers.find((r) => r.rank === 3);
         if (thirdRacer) {
-          tada(3, 2, thirdRacer.racerName, formatLaptime(thirdRacer.laptime));
+          tada(3, EventType.TOP3_ENTRY, thirdRacer.racerName, formatLaptime(thirdRacer.laptime));
         }
       }
     };
