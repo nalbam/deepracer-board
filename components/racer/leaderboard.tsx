@@ -163,6 +163,13 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
           tada(2, 2, secondRacer.racerName, formatLaptime(secondRacer.laptime));
         }
       }
+      // 숫자 3 키: 3등 New Challenger!
+      else if (e.key === '3') {
+        const thirdRacer = racers.find((r) => r.rank === 3);
+        if (thirdRacer) {
+          tada(3, 2, thirdRacer.racerName, formatLaptime(thirdRacer.laptime));
+        }
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
