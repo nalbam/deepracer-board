@@ -22,7 +22,7 @@ interface PopInfo {
 export function LeaderBoard({ league }: LeaderBoardProps) {
   const [racers, setRacers] = useState<LeaderboardEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [previousRacers, setPreviousRacers] = useState<LeaderboardEntry[]>([]);
+  const previousRacersRef = useRef<LeaderboardEntry[]>([]);
   const [popInfo, setPopInfo] = useState<PopInfo>({
     rank: 0,
     header: '',
@@ -87,6 +87,7 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
 
         if (data.success) {
           const newRacers = data.data || [];
+          const previousRacers = previousRacersRef.current;
 
           // 변경 감지
           if (previousRacers.length > 0 && newRacers.length > 0) {
@@ -118,7 +119,7 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
             }
           }
 
-          setPreviousRacers(newRacers);
+          previousRacersRef.current = newRacers;
           setRacers(newRacers);
         }
       } catch (error) {
@@ -130,11 +131,11 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
 
     fetchRacers();
 
-    // 5초마다 자동 새로고침
-    const interval = setInterval(fetchRacers, 5000);
+    // 3초마다 자동 새로고침
+    const interval = setInterval(fetchRacers, 3000);
 
     return () => clearInterval(interval);
-  }, [league, previousRacers]);
+  }, [league]);
 
   // 키보드 이벤트 핸들러
   useEffect(() => {

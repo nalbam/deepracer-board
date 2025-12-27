@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { cache } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { LeaderBoard } from '@/components/racer/leaderboard';
@@ -10,7 +11,8 @@ type Props = {
   params: Promise<{ league: string }>;
 };
 
-async function getLeague(leagueCode: string): Promise<League | null> {
+// cache()를 사용하여 동일한 leagueCode에 대한 중복 요청 방지
+const getLeague = cache(async (leagueCode: string): Promise<League | null> => {
   try {
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/leagues/${leagueCode}`);
@@ -20,7 +22,7 @@ async function getLeague(leagueCode: string): Promise<League | null> {
     console.error('Failed to fetch league:', error);
     return null;
   }
-}
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { league: leagueCode } = await params;
