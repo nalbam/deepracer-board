@@ -48,6 +48,7 @@ body {
   border-radius: 5px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   font-size: 28px;
   margin: 10px 0;
   padding: 10px 20px;
@@ -57,16 +58,26 @@ body {
 
 .lb-row > div:nth-child(1) {
   flex: 1 1 10%;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
 }
 
 .lb-row > div:nth-child(2) {
   flex: 1 1 70%;
   text-align: left;
+  display: flex;
+  align-items: center;
 }
 
 .lb-row > div:nth-child(3) {
   flex: 1 1 20%;
   text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* Rank-specific styling */
@@ -89,9 +100,9 @@ body {
 /* Trophy icon */
 .icon-trophy {
   height: 26px;
-  position: relative;
-  top: 40%;
-  transform: translateY(-50%);
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* League logo */
@@ -142,6 +153,14 @@ body {
   margin-top: 4px;
   line-height: 1.2;
   text-align: left;
+}
+
+/* Laptime display */
+.laptime {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
 
 /* Links */

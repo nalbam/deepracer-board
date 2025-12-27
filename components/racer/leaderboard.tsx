@@ -106,7 +106,7 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
             className={`lb-row ${racer.rank > 0 ? `lb-rank${racer.rank}` : ''}`}
           >
             <div>
-              {racer.rank > 0 && racer.rank < 4 && (
+              {racer.rank > 0 && racer.rank < 4 ? (
                 <Image
                   src="/images/icon-trophy.png"
                   alt="trophy"
@@ -114,11 +114,13 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
                   height={26}
                   className="icon-trophy"
                 />
-              )}{' '}
-              {racer.rank > 0 ? racer.rank : '--'}
+              ) : (
+                <span></span>
+              )}
+              <span>{racer.rank > 0 ? racer.rank : '--'}</span>
             </div>
             <div>{racer.racerName}</div>
-            <div>{formatLaptime(racer.laptime)}</div>
+            <div className="laptime">{formatLaptime(racer.laptime)}</div>
           </div>
         ))}
       </div>
