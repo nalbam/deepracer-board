@@ -1,15 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/hooks/use-toast"
+import { Racer } from "@/lib/types"
 
 // 이메일 검증
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -37,10 +34,11 @@ type FormData = z.infer<typeof formSchema>
 
 interface RacerFormProps {
   league: string
+  selectedRacer?: Racer | null
   onSuccess?: () => void
 }
 
-export function RacerForm({ league, onSuccess }: RacerFormProps) {
+export function RacerForm({ league, selectedRacer, onSuccess }: RacerFormProps) {
   const router = useRouter()
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -66,6 +64,15 @@ export function RacerForm({ league, onSuccess }: RacerFormProps) {
   const forceDelete = watch('forceDelete')
   const forceUpdate = watch('forceUpdate')
 
+  // 밀리초를 MM:SS.mmm 형식으로 변환
+  const millisecondsToLaptime = (milliseconds: number): string => {
+    const minutes = Math.floor(milliseconds / 60000)
+    const seconds = Math.floor((milliseconds % 60000) / 1000)
+    const ms = milliseconds % 1000
+
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`
+  }
+
   // 랩타임을 밀리초로 변환
   const laptimeToMilliseconds = (timeStr: string): number => {
     if (!timeStr || !laptimeRegex.test(timeStr)) return 0
@@ -79,6 +86,17 @@ export function RacerForm({ league, onSuccess }: RacerFormProps) {
       parseInt(milliseconds)
     )
   }
+
+  // 선택된 레이서가 변경되면 폼 필드 채우기
+  useEffect(() => {
+    if (selectedRacer) {
+      setValue('email', selectedRacer.email)
+      setValue('racerName', selectedRacer.racerName)
+      setValue('laptime', selectedRacer.laptime ? millisecondsToLaptime(selectedRacer.laptime) : '')
+      setValue('forceUpdate', false)
+      setValue('forceDelete', false)
+    }
+  }, [selectedRacer, setValue])
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
@@ -141,109 +159,109 @@ export function RacerForm({ league, onSuccess }: RacerFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-2xl">
+    <form onSubmit={handleSubmit(onSubmit)} className="racer-form">
       {/* Email */}
-      <div className="space-y-2">
-        <Label htmlFor="email">이메일</Label>
-        <Input
+      <div className="form-field">
+        <label htmlFor="email" className="form-label">이메일</label>
+        <input
           id="email"
           type="email"
           {...register('email')}
           placeholder="racer@example.com"
           maxLength={256}
-          className={errors.email ? 'border-red-500' : ''}
+          className={`form-input ${errors.email ? 'form-input-error' : ''}`}
         />
         {errors.email && (
-          <p className="text-sm text-red-500">{errors.email.message}</p>
+          <p className="form-error">{errors.email.message}</p>
         )}
       </div>
 
       {/* Racer Name */}
-      <div className="space-y-2">
-        <Label htmlFor="racerName">레이서 이름</Label>
-        <Input
+      <div className="form-field">
+        <label htmlFor="racerName" className="form-label">레이서 이름</label>
+        <input
           id="racerName"
+          type="text"
           {...register('racerName')}
           placeholder="SpeedRacer"
           maxLength={32}
           disabled={forceDelete}
-          className={errors.racerName ? 'border-red-500' : ''}
+          className={`form-input ${errors.racerName ? 'form-input-error' : ''} ${forceDelete ? 'form-input-disabled' : ''}`}
         />
         {errors.racerName && (
-          <p className="text-sm text-red-500">{errors.racerName.message}</p>
+          <p className="form-error">{errors.racerName.message}</p>
         )}
       </div>
 
       {/* Laptime */}
-      <div className="space-y-2">
-        <Label htmlFor="laptime">랩타임</Label>
-        <Input
+      <div className="form-field">
+        <label htmlFor="laptime" className="form-label">랩타임</label>
+        <input
           id="laptime"
+          type="text"
           {...register('laptime')}
           placeholder="01:23.456"
           maxLength={9}
           disabled={forceDelete}
-          className={errors.laptime ? 'border-red-500' : ''}
+          className={`form-input ${errors.laptime ? 'form-input-error' : ''} ${forceDelete ? 'form-input-disabled' : ''}`}
         />
         {errors.laptime && (
-          <p className="text-sm text-red-500">{errors.laptime.message}</p>
+          <p className="form-error">{errors.laptime.message}</p>
         )}
-        <p className="text-sm text-muted-foreground">
+        <p className="form-hint">
           형식: MM:SS.mmm (예: 01:23.456)
         </p>
       </div>
 
       {/* Options */}
-      <div className="space-y-2">
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="forceUpdate"
-            checked={forceUpdate}
-            onCheckedChange={(checked) =>
-              setValue('forceUpdate', checked as boolean)
-            }
-          />
-          <Label htmlFor="forceUpdate" className="cursor-pointer">
-            강제 업데이트 (기존 최고 기록보다 느려도 업데이트)
-          </Label>
+      <div className="form-field">
+        <div className="form-checkbox-group">
+          <label className="form-checkbox-label">
+            <input
+              id="forceUpdate"
+              type="checkbox"
+              checked={forceUpdate}
+              onChange={(e) => setValue('forceUpdate', e.target.checked)}
+              className="form-checkbox"
+            />
+            <span>강제 업데이트 (기존 최고 기록보다 느려도 업데이트)</span>
+          </label>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="forceDelete"
-            checked={forceDelete}
-            onCheckedChange={(checked) =>
-              setValue('forceDelete', checked as boolean)
-            }
-          />
-          <Label htmlFor="forceDelete" className="cursor-pointer text-red-600">
-            강제 삭제 (레이서 완전히 제거)
-          </Label>
+        <div className="form-checkbox-group">
+          <label className="form-checkbox-label form-checkbox-label-danger">
+            <input
+              id="forceDelete"
+              type="checkbox"
+              checked={forceDelete}
+              onChange={(e) => setValue('forceDelete', e.target.checked)}
+              className="form-checkbox"
+            />
+            <span>강제 삭제 (레이서 완전히 제거)</span>
+          </label>
         </div>
       </div>
 
-      {/* Submit Button */}
-      <div className="flex gap-2">
-        <Button
+      {/* Submit Buttons */}
+      <div className="form-actions">
+        <button
           type="submit"
           disabled={isSubmitting}
-          variant={forceDelete ? "destructive" : "default"}
-          className="w-full sm:w-auto"
+          className={`btn-link btn-submit ${forceDelete ? 'btn-danger' : 'btn-primary'}`}
         >
           {isSubmitting
             ? '처리 중...'
             : forceDelete
             ? '레이서 삭제'
             : '레이서 저장'}
-        </Button>
-        <Button
+        </button>
+        <button
           type="button"
-          variant="outline"
           onClick={() => reset()}
-          className="w-full sm:w-auto"
+          className="btn-link btn-secondary"
         >
           초기화
-        </Button>
+        </button>
       </div>
     </form>
   )

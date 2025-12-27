@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth"
 import { redirect, notFound } from "next/navigation"
-import { RacerForm } from "@/components/racer/racer-form"
+import { RacerManager } from "@/components/racer/racer-manager"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { ManageHeader } from "@/components/manage/manage-header"
@@ -83,9 +83,9 @@ export default async function ManageRacersPage({ params }: PageProps) {
         <div className="manage-container">
           {/* 헤더 */}
           <div className="manage-page-header">
-            <Link href={`/league/${leagueCode}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
+            <Link href="/manage" className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
               <ArrowLeft className="w-4 h-4" />
-              <span>리더보드로 돌아가기</span>
+              <span>관리 대시보드로 돌아가기</span>
             </Link>
             <h1 className="manage-page-title">레이서 관리</h1>
             <p className="manage-page-description">
@@ -93,52 +93,11 @@ export default async function ManageRacersPage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="racer-manage-grid">
-            {/* 레이서 폼 */}
-            <div className="racer-form-section">
-              <h2 className="racer-section-title">레이서 추가/수정</h2>
-              <RacerForm league={leagueCode} />
-            </div>
-
-            {/* 현재 레이서 목록 */}
-            <div className="racer-list-section">
-              <h2 className="racer-section-title">
-                현재 레이서 ({racers.length}명)
-              </h2>
-              {racers.length === 0 ? (
-                <div className="racer-empty">
-                  등록된 레이서가 없습니다
-                </div>
-              ) : (
-                <div className="racer-list">
-                  {racers
-                    .sort((a: any, b: any) => {
-                      if (!a.laptime) return 1
-                      if (!b.laptime) return -1
-                      return a.laptime - b.laptime
-                    })
-                    .map((racer: any, index: number) => (
-                      <div key={racer.email} className="racer-item">
-                        <div className="racer-item-info">
-                          <span className="racer-rank">#{index + 1}</span>
-                          <div className="racer-details">
-                            <div className="racer-name">{racer.racerName}</div>
-                            <div className="racer-email">{racer.email}</div>
-                          </div>
-                        </div>
-                        <div className="racer-laptime">
-                          {racer.laptime ? (
-                            <span className="laptime">{formatLaptime(racer.laptime)}</span>
-                          ) : (
-                            <span className="no-record">기록 없음</span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              )}
-            </div>
-          </div>
+          <RacerManager
+            league={leagueCode}
+            leagueTitle={league.title}
+            initialRacers={racers}
+          />
 
           {/* 안내 메시지 */}
           <div className="manage-help">
@@ -148,7 +107,7 @@ export default async function ManageRacersPage({ params }: PageProps) {
                 <strong>레이서 추가</strong>: 이메일, 이름, 랩타임을 입력하고 저장하세요
               </li>
               <li>
-                <strong>레이서 수정</strong>: 동일한 이메일로 다시 입력하면 기록이 업데이트됩니다 (더 빠른 기록만 저장)
+                <strong>레이서 수정</strong>: 레이서 목록에서 레이서를 클릭하면 해당 레이서의 정보를 수정할 수 있습니다
               </li>
               <li>
                 <strong>강제 업데이트</strong>: 체크하면 기존 기록보다 느려도 업데이트됩니다
@@ -162,12 +121,4 @@ export default async function ManageRacersPage({ params }: PageProps) {
       </div>
     </>
   )
-}
-
-function formatLaptime(milliseconds: number): string {
-  const minutes = Math.floor(milliseconds / 60000)
-  const seconds = Math.floor((milliseconds % 60000) / 1000)
-  const ms = milliseconds % 1000
-
-  return `${minutes}:${seconds.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`
 }

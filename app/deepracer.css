@@ -809,7 +809,6 @@ a:hover {
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  padding: 8px 14px;
 }
 
 .btn-secondary:hover {
@@ -1076,11 +1075,23 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .racer-item:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
+}
+
+.racer-item-selected {
+  background: rgba(68, 170, 255, 0.15);
+  border-color: #4af;
+  box-shadow: 0 0 0 2px rgba(68, 170, 255, 0.2);
+}
+
+.racer-item-selected:hover {
+  background: rgba(68, 170, 255, 0.2);
+  border-color: #4af;
 }
 
 .racer-item-info {
@@ -1135,6 +1146,63 @@ a:hover {
 .racer-laptime .no-record {
   font-size: 12px;
   color: #666;
+}
+
+/* Racer Form */
+.racer-form {
+  background: linear-gradient(90deg, rgba(68, 85, 102, 0.3) 0, rgba(51, 68, 102, 0.3));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Checkbox Styles */
+.form-checkbox-group {
+  margin-bottom: 12px;
+}
+
+.form-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  user-select: none;
+}
+
+.form-checkbox-label:hover {
+  color: #4af;
+}
+
+.form-checkbox-label-danger {
+  color: #f88;
+}
+
+.form-checkbox-label-danger:hover {
+  color: #faa;
+}
+
+.form-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #4af;
+  flex-shrink: 0;
+}
+
+/* Button Danger */
+.btn-danger {
+  background: linear-gradient(90deg, #c44 0, #a33);
+  color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: linear-gradient(90deg, #d55 0, #b44);
+  box-shadow: 0 2px 12px rgba(204, 68, 68, 0.3);
 }
 
 /* Responsive */

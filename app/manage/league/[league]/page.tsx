@@ -88,9 +88,9 @@ export default async function EditLeaguePage({ params }: PageProps) {
         <div className="manage-container">
           {/* 헤더 */}
           <div className="manage-page-header">
-            <Link href={`/league/${leagueCode}`} className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
+            <Link href="/manage" className="btn-link btn-secondary" style={{ marginBottom: '16px', display: 'inline-flex' }}>
               <ArrowLeft className="w-4 h-4" />
-              <span>리더보드로 돌아가기</span>
+              <span>관리 대시보드로 돌아가기</span>
             </Link>
             <h1 className="manage-page-title">리그 수정</h1>
             <p className="manage-page-description">
