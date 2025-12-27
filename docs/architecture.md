@@ -17,7 +17,7 @@
 - **Next.js 15**: React 프레임워크 (App Router)
 - **React 19**: 사용자 인터페이스 라이브러리
 - **TypeScript**: 정적 타입 체크
-- **Custom CSS**: app/deepracer.css를 통한 스타일링
+- **Styling**: Custom CSS + shadcn/ui components
 
 ### Backend
 - **Next.js API Routes**: 서버리스 API 엔드포인트
@@ -35,6 +35,7 @@
 deepracer-board/
 ├── app/
 │   ├── api/
+│   │   ├── auth/[...nextauth]/       # NextAuth API route
 │   │   ├── leagues/
 │   │   │   ├── route.ts              # GET/POST leagues
 │   │   │   └── [league]/route.ts     # GET/DELETE specific league
@@ -52,12 +53,21 @@ deepracer-board/
 │   ├── timer/
 │   │   ├── page.tsx                  # 타이머 (제한 없음)
 │   │   └── [min]/page.tsx            # 타이머 (시간 제한)
+│   ├── layout.tsx                    # 루트 레이아웃
 │   ├── page.tsx                      # 홈 페이지
 │   └── deepracer.css                 # 메인 CSS
 ├── components/
 │   ├── common/
 │   │   ├── app-header.tsx            # 통합 네비게이션
 │   │   └── modal.tsx                 # 재사용 모달
+│   ├── ui/                           # shadcn/ui 컴포넌트
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── checkbox.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   ├── toast.tsx
+│   │   └── toaster.tsx
 │   ├── effects/
 │   │   ├── pollen.tsx                # 축하 효과
 │   │   ├── popup.tsx                 # 레이서 팝업
@@ -65,6 +75,7 @@ deepracer-board/
 │   │   ├── logo-popup.tsx            # 리그 로고
 │   │   └── qrcode.tsx                # QR 코드
 │   ├── league/
+│   │   ├── league-card.tsx           # 리그 카드
 │   │   ├── league-form.tsx           # 생성/수정 폼
 │   │   ├── league-list.tsx           # 공개 리그
 │   │   ├── my-leagues.tsx            # 내 리그
@@ -73,17 +84,25 @@ deepracer-board/
 │   │   ├── racer-form.tsx            # 레이서 폼
 │   │   ├── racer-manager.tsx         # 레이서 관리
 │   │   └── leaderboard.tsx           # 리더보드
-│   └── manage/
-│       └── logout-button.tsx         # 로그아웃
+│   ├── timer/
+│   │   └── timer.tsx                 # 타이머 컴포넌트
+│   ├── manage/
+│   │   ├── logout-button.tsx         # 로그아웃
+│   │   └── manage-header.tsx         # 관리 페이지 헤더
+│   ├── theme-provider.tsx            # 테마 프로바이더
+│   └── providers.tsx                 # 앱 프로바이더
 ├── lib/
+│   ├── actions/
+│   │   └── auth.ts                   # 인증 액션
+│   ├── types/
+│   │   └── next-auth.d.ts            # NextAuth 타입 정의
 │   ├── auth.ts                       # NextAuth 설정
 │   ├── dynamodb.ts                   # DynamoDB 클라이언트
 │   ├── types.ts                      # TypeScript 타입
 │   └── utils.ts                      # 유틸리티
 └── docs/
-    ├── data-models.md                # 데이터 모델
-    ├── project-analysis.md           # 아키텍처
-    └── nextjs-migration-plan.md      # 마이그레이션 계획
+    ├── architecture.md               # 아키텍처
+    └── data-models.md                # 데이터 모델
 ```
 
 ## 4. 라우팅 구조
@@ -111,6 +130,8 @@ deepracer-board/
 - **app/timer/[min]/page.tsx**: 타이머
 
 ### Client 컴포넌트
+
+#### Common 컴포넌트
 - **components/common/app-header.tsx**: 통합 네비게이션 바
   - 로고 (홈 링크)
   - Manage, Timer 링크
@@ -122,10 +143,23 @@ deepracer-board/
   - 외부 클릭 닫기
   - 제목, 본문, 푸터 슬롯
 
+#### UI 컴포넌트 (shadcn/ui)
+- **components/ui/button.tsx**: 버튼 컴포넌트
+- **components/ui/card.tsx**: 카드 컴포넌트
+- **components/ui/checkbox.tsx**: 체크박스
+- **components/ui/input.tsx**: 입력 필드
+- **components/ui/label.tsx**: 레이블
+- **components/ui/toast.tsx**: 토스트 알림
+- **components/ui/toaster.tsx**: 토스트 컨테이너
+
+#### League 컴포넌트
+- **components/league/league-card.tsx**: 리그 카드 표시
+
 - **components/league/delete-league-modal.tsx**: 리그 삭제 확인
   - 리그 코드 확인 필수
   - 레이서 일괄 삭제 후 리그 삭제
 
+#### Racer 컴포넌트
 - **components/racer/racer-manager.tsx**: 레이서 목록 관리
   - 클릭하여 레이서 선택
   - 선택된 레이서 정보 폼에 자동 입력
@@ -136,6 +170,16 @@ deepracer-board/
   - 6가지 이벤트 타입 감지
   - 우선순위 기반 이벤트 선택
   - 시각 효과 통합 (Pollen, Popup, LogoPopup, Scroll)
+
+#### Timer 컴포넌트
+- **components/timer/timer.tsx**: 타이머 로직 및 UI
+
+#### Manage 컴포넌트
+- **components/manage/manage-header.tsx**: 관리 페이지 헤더
+
+#### Provider 컴포넌트
+- **components/theme-provider.tsx**: 테마 컨텍스트 제공
+- **components/providers.tsx**: 앱 전역 프로바이더
 
 ### 이펙트 컴포넌트
 - **components/effects/pollen.tsx**: 축하 파티클 애니메이션
@@ -450,5 +494,4 @@ NEXT_DYNAMODB_USERS_TABLE=
 ## 18. 참고 문서
 
 - [데이터 모델](./data-models.md)
-- [Next.js 마이그레이션 계획](./nextjs-migration-plan.md)
 - [README.md](../README.md)

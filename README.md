@@ -24,7 +24,7 @@ AWS DeepRacer League Management and Leaderboard System built with Next.js 15, Ne
 ## Tech Stack
 
 - **Frontend**: Next.js 15 (App Router), React 19, TypeScript
-- **Styling**: Custom CSS (deepracer.css)
+- **Styling**: Custom CSS + shadcn/ui components
 - **Authentication**: NextAuth.js v5 with Google OAuth
 - **Database**: AWS DynamoDB
 - **Deployment**: AWS Amplify
@@ -94,6 +94,7 @@ NEXT_DYNAMODB_USERS_TABLE="deepracer-board-users"
 deepracer-board/
 ├── app/
 │   ├── api/
+│   │   ├── auth/[...nextauth]/       # NextAuth API route
 │   │   ├── leagues/
 │   │   │   ├── route.ts              # GET/POST leagues
 │   │   │   └── [league]/route.ts     # GET/DELETE specific league
@@ -111,12 +112,21 @@ deepracer-board/
 │   ├── timer/
 │   │   ├── page.tsx                  # Timer (no limit)
 │   │   └── [min]/page.tsx            # Timer (with limit)
+│   ├── layout.tsx                    # Root layout
 │   ├── page.tsx                      # Home page
 │   └── deepracer.css                 # Main CSS
 ├── components/
 │   ├── common/
 │   │   ├── app-header.tsx            # Unified navbar
 │   │   └── modal.tsx                 # Reusable modal
+│   ├── ui/                           # shadcn/ui components
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── checkbox.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   ├── toast.tsx
+│   │   └── toaster.tsx
 │   ├── effects/
 │   │   ├── pollen.tsx                # Confetti effect
 │   │   ├── popup.tsx                 # Racer popup
@@ -124,6 +134,7 @@ deepracer-board/
 │   │   ├── logo-popup.tsx            # League logo
 │   │   └── qrcode.tsx                # QR code
 │   ├── league/
+│   │   ├── league-card.tsx           # League card
 │   │   ├── league-form.tsx           # Create/Edit form
 │   │   ├── league-list.tsx           # Public leagues
 │   │   ├── my-leagues.tsx            # User's leagues
@@ -132,17 +143,25 @@ deepracer-board/
 │   │   ├── racer-form.tsx            # Add/Edit racer
 │   │   ├── racer-manager.tsx         # Racer list manager
 │   │   └── leaderboard.tsx           # Leaderboard with events
-│   └── manage/
-│       └── logout-button.tsx         # Logout button
+│   ├── timer/
+│   │   └── timer.tsx                 # Timer component
+│   ├── manage/
+│   │   ├── logout-button.tsx         # Logout button
+│   │   └── manage-header.tsx         # Manage page header
+│   ├── theme-provider.tsx            # Theme provider
+│   └── providers.tsx                 # App providers
 ├── lib/
+│   ├── actions/
+│   │   └── auth.ts                   # Auth actions
+│   ├── types/
+│   │   └── next-auth.d.ts            # NextAuth types
 │   ├── auth.ts                       # NextAuth config
 │   ├── dynamodb.ts                   # DynamoDB client
 │   ├── types.ts                      # TypeScript types
 │   └── utils.ts                      # Utilities
 └── docs/
-    ├── data-models.md                # Data models
-    ├── project-analysis.md           # Architecture
-    └── nextjs-migration-plan.md      # Migration plan
+    ├── architecture.md               # Architecture
+    └── data-models.md                # Data models
 ```
 
 ## API Endpoints
@@ -267,5 +286,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Production**: [deepracerboard.com](https://deepracerboard.com)
 - **Documentation**: [docs/](./docs/)
-- **Architecture**: [docs/project-analysis.md](./docs/project-analysis.md)
-- **Migration Plan**: [docs/nextjs-migration-plan.md](./docs/nextjs-migration-plan.md)
+- **Architecture**: [docs/architecture.md](./docs/architecture.md)
+- **Data Models**: [docs/data-models.md](./docs/data-models.md)
