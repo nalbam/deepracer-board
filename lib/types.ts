@@ -56,6 +56,7 @@ export interface RacerInput {
   email: string;
   racerName: string;
   laptime?: number;
+  forceUpdate?: boolean;  // 강제 업데이트 플래그
   forceDelete?: boolean;  // 삭제 플래그
 }
 

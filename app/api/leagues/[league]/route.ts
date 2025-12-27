@@ -6,24 +6,26 @@ import { League } from '@/lib/types';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { league: string } }
+  { params }: { params: Promise<{ league: string }> }
 ) {
   try {
+    const { league } = await params;
+
     const command = new GetCommand({
       TableName: LEAGUES_TABLE,
       Key: {
-        league: params.league,
+        league,
       },
     });
 
     const result = await docClient.send(command);
-    
+
     if (!result.Item) {
       return apiError('League not found', 404);
     }
 
-    const league = result.Item as League;
-    return apiSuccess(league);
+    const leagueData = result.Item as League;
+    return apiSuccess(leagueData);
   } catch (error) {
     console.error('Failed to fetch league:', error);
     return apiError('Failed to fetch league');
@@ -32,7 +34,7 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { league: string } }
+  { params }: { params: Promise<{ league: string }> }
 ) {
   try {
     const session = await auth();
@@ -40,23 +42,25 @@ export async function DELETE(
       return apiError('Unauthorized', 401);
     }
 
+    const { league } = await params;
+
     // 리그 소유자 확인
     const getCommand = new GetCommand({
       TableName: LEAGUES_TABLE,
       Key: {
-        league: params.league,
+        league,
       },
     });
 
     const getResult = await docClient.send(getCommand);
-    
+
     if (!getResult.Item) {
       return apiError('League not found', 404);
     }
 
-    const league = getResult.Item as League;
-    
-    if (league.userId !== session.user.id) {
+    const leagueData = getResult.Item as League;
+
+    if (leagueData.userId !== session.user.id) {
       return apiError('Forbidden: You can only delete your own leagues', 403);
     }
 
@@ -64,7 +68,7 @@ export async function DELETE(
     const deleteCommand = new DeleteCommand({
       TableName: LEAGUES_TABLE,
       Key: {
-        league: params.league,
+        league,
       },
     });
 

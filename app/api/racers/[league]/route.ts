@@ -5,20 +5,22 @@ import { Racer, LeaderboardEntry } from '@/lib/types';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { league: string } }
+  { params }: { params: Promise<{ league: string }> }
 ) {
   try {
+    const { league } = await params;
+
     const command = new QueryCommand({
       TableName: RACERS_TABLE,
       KeyConditionExpression: 'league = :league',
       ExpressionAttributeValues: {
-        ':league': params.league,
+        ':league': league,
       },
     });
 
     const result = await docClient.send(command);
     const racers = result.Items as Racer[] || [];
-    
+
     // 랩타임 기준 정렬 및 순위 계산
     const sortedRacers = racers
       .filter((racer) => racer.laptime > 0) // 랩타임이 있는 레이서만
