@@ -192,6 +192,7 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
 
     recordsRef.current = []
     limitRef.current = [limitMinutes, 0, 0]
+    prevBestRef.current = null  // 최고 기록 초기화
     reset()
 
     setBestLap('')
@@ -261,19 +262,23 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
     const sorted = [...recordsRef.current].sort(compare)
     setResults([...recordsRef.current])
 
-    const prevBest = bestLap
-    const nowBest = `Best: ${format(sorted[0])}`
+    const prevBestTime = prevBestRef.current
+    const nowBestTime = sorted[0]
 
-    setBestLap(nowBest)
+    setBestLap(`Best: ${format(nowBestTime)}`)
     setLastLap(`Last: ${format(recordsRef.current[recordsRef.current.length - 1])}`)
 
-    // 사운드 재생
-    if (prevBest !== nowBest) {
+    // 사운드 재생 (실제 타임 배열 비교)
+    const isNewRecord = prevBestTime === null || compare(nowBestTime, prevBestTime) < 0
+
+    if (isNewRecord) {
       // ding1.mp3: 더 좋은 랩타임으로 갱신되었을 때 (New Record!)
       if (ding1Ref.current) {
         ding1Ref.current.loop = false
         ding1Ref.current.play()
       }
+      // 새로운 최고 기록 저장
+      prevBestRef.current = [...nowBestTime]
     } else {
       // ding2.mp3: 랩타임이 기록되었을 때 (일반 랩)
       if (ding2Ref.current) {
