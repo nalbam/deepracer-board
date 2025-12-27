@@ -461,7 +461,7 @@ S3_LOGOS_BUCKET=deepracer-board-logos
 S3_REGION=ap-northeast-2
 
 # Authentication
-NEXTAUTH_URL=https://dracer.io
+NEXTAUTH_URL=https://deepracerboard.com
 NEXTAUTH_SECRET=your_nextauth_secret
 COGNITO_CLIENT_ID=your_cognito_client_id
 COGNITO_CLIENT_SECRET=your_cognito_client_secret

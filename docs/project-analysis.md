@@ -9,7 +9,7 @@
 - 레이서별 랩타임 기록 및 추적
 - 실시간 리더보드 순위 표시
 - 타이머 기능을 통한 랩타임 측정
-- Production URL: https://dracer.io
+- Production URL: https://deepracerboard.com
 
 ## 2. 기술 스택
 
@@ -223,7 +223,7 @@ frontend:
 ```
 
 ### 환경 설정
-- Production: https://dracer.io
+- Production: https://deepracerboard.com
 - CloudFront CDN 배포
 - S3 정적 호스팅
 - HTTPS 지원

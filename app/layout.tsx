@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'DeepRacer Board',
     description: 'AWS DeepRacer League Management and Leaderboard System',
-    url: 'https://dracer.io',
+    url: 'https://deepracerboard.com',
     siteName: 'DeepRacer Board',
     type: 'website',
   },

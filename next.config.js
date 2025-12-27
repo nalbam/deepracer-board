@@ -5,11 +5,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '*.amazonaws.com',
+        hostname: '**', // 모든 HTTPS 호스트 허용
       },
       {
-        protocol: 'https',
-        hostname: 'dracer.io',
+        protocol: 'http',
+        hostname: '**', // 모든 HTTP 호스트 허용
       },
     ],
   },

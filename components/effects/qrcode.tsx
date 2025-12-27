@@ -9,7 +9,7 @@ interface QRCodeProps {
 
 export function QRCode({ league, className = '' }: QRCodeProps) {
   // QR 코드 URL 생성
-  const baseUrl = 'https://dracer.io'
+  const baseUrl = 'https://deepracerboard.com'
   const targetUrl = league ? `${baseUrl}/league/${league}` : baseUrl
   const qrUrl = `https://qr.nalbam.com/qr.png?body=${encodeURIComponent(targetUrl)}`
 

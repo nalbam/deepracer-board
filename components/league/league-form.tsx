@@ -40,9 +40,9 @@ interface LeagueFormProps {
 }
 
 const defaultLogos = [
-  'https://dracer.io/images/logo-league.png',
-  'https://dracer.io/images/logo-community-races.png',
-  'https://dracer.io/images/logo-underground.png',
+  '/images/logo-league.png',
+  '/images/logo-community-races.png',
+  '/images/logo-underground.png',
 ]
 
 export function LeagueForm({ league, mode = 'create' }: LeagueFormProps) {

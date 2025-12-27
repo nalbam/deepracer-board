@@ -6,7 +6,7 @@
 
 DeepRacer Board는 AWS DeepRacer 레이싱 리그 관리 및 리더보드 시스템입니다. Next.js 15로 구축되어 있으며, 리그 생성, 랩타임 추적, 실시간 리더보드 표시 기능을 제공합니다.
 
-**프로덕션 배포**: https://dracer.io
+**프로덕션 배포**: https://deepracerboard.com
 
 ## 마이그레이션 컨텍스트
 

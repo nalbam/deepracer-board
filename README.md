@@ -9,7 +9,7 @@ AWS DeepRacer League Management and Leaderboard System built with Next.js 15, Ne
 - ⏱️ **Timer Integration**: Precise lap time tracking
 - 🔐 **Authentication**: Secure login with AWS Cognito
 - 📱 **Responsive Design**: Works on desktop and mobile devices
-- 🌐 **Production Ready**: Deployed at [dracer.io](https://dracer.io)
+- 🌐 **Production Ready**: Deployed at [deepracerboard.com](https://deepracerboard.com)
 
 ## Tech Stack
 
@@ -196,7 +196,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Links
 
-- **Production**: [dracer.io](https://dracer.io)
+- **Production**: [deepracerboard.com](https://deepracerboard.com)
 - **Documentation**: [docs/](./docs/)
 - **Architecture**: [docs/project-analysis.md](./docs/project-analysis.md)
 - **Migration Plan**: [docs/nextjs-migration-plan.md](./docs/nextjs-migration-plan.md)
