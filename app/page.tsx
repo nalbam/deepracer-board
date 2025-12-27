@@ -1,64 +1,47 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { LeagueList } from '@/components/league/league-list';
 
 export default async function HomePage() {
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center">
-          <div className="flex items-center gap-2">
+    <>
+      {/* Page Header */}
+      <header className="page-header">
+        <div className="page-header-container">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Image
               src="/images/logo-community-races.png"
               alt="DeepRacer"
-              width={150}
-              height={40}
-              className="h-10 w-auto"
+              width={120}
+              height={32}
+              className="page-header-logo"
             />
-            <h1 className="text-xl font-bold">DeepRacer Board</h1>
+            <h1 style={{ fontSize: '20px', fontWeight: 'bold', color: '#eee' }}>
+              DeepRacer Board
+            </h1>
           </div>
-          <div className="ml-auto flex items-center gap-4">
-            <Link href="/manage">
-              <Button variant="outline">Manage</Button>
+          <div className="page-header-actions">
+            <Link href="/manage" className="btn-link">
+              Manage
             </Link>
-            <Link href="/timer">
-              <Button variant="outline">Timer</Button>
+            <Link href="/timer" className="btn-link">
+              Timer
             </Link>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Active Leagues</h2>
-          <p className="text-muted-foreground">
-            Join a league and compete with other racers
-          </p>
-        </div>
-
-        {/* League List */}
+      <div className="App-body">
         <LeagueList showAll />
-      </main>
+      </div>
 
       {/* Footer */}
-      <footer className="border-t py-6 md:py-0">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © 2024 DeepRacer Board. All rights reserved.
-          </p>
-          <div className="flex gap-4">
-            <Link
-              href="https://github.com/nalbam/deepracer-board"
-              className="text-sm text-muted-foreground hover:underline"
-            >
-              GitHub
-            </Link>
-          </div>
-        </div>
+      <footer className="App-footer">
+        <p style={{ color: '#aaa', fontSize: '14px' }}>
+          © 2024 DeepRacer Board. All rights reserved.
+        </p>
       </footer>
-    </div>
+    </>
   );
 }

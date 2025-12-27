@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       // 모든 리그 목록 조회
       params = {
         TableName: LEAGUES_TABLE,
-        ProjectionExpression: 'league, title, logo, dateOpen, dateClose',
+        ProjectionExpression: 'league, title, logo, dateOpen, dateClose, registered, modified',
       };
     } else {
       // 사용자의 리그 목록 조회 (인증 필요)
@@ -37,9 +37,9 @@ export async function GET(request: NextRequest) {
     const result = await docClient.send(command);
     
     const leagues = result.Items as League[] || [];
-    
-    // 수정 시간 기준 내림차순 정렬
-    leagues.sort((a, b) => (b.modified || 0) - (a.modified || 0));
+
+    // 등록 시간 기준 내림차순 정렬 (최신 등록 순)
+    leagues.sort((a, b) => (b.registered || 0) - (a.registered || 0));
 
     return apiSuccess(leagues);
   } catch (error) {

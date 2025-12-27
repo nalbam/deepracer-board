@@ -1,0 +1,251 @@
+/* DeepRacer Board v1 Design Styles */
+
+/* Global styles */
+body {
+  background-color: #000;
+  color: #eee;
+  font-family: Menlo, 'Noto Mono', monospace;
+  margin: 0;
+  padding: 0;
+}
+
+/* Leaderboard container */
+.lb-items {
+  display: block;
+  width: 100%;
+}
+
+/* Leaderboard header */
+.lb-header {
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.lb-header > div:nth-child(1) {
+  flex: 1 1 10%;
+}
+
+.lb-header > div:nth-child(2) {
+  flex: 1 1 70%;
+  text-align: left;
+}
+
+.lb-header > div:nth-child(3) {
+  flex: 1 1 20%;
+  text-align: right;
+}
+
+/* Leaderboard row */
+.lb-row {
+  background: linear-gradient(90deg, #456 0, #326);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  font-size: 28px;
+  margin: 10px 0;
+  padding: 10px 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.lb-row > div:nth-child(1) {
+  flex: 1 1 10%;
+}
+
+.lb-row > div:nth-child(2) {
+  flex: 1 1 70%;
+  text-align: left;
+}
+
+.lb-row > div:nth-child(3) {
+  flex: 1 1 20%;
+  text-align: right;
+}
+
+/* Rank-specific styling */
+.lb-rank0 {
+  background: transparent;
+}
+
+.lb-rank1 {
+  background: linear-gradient(90deg, #fd4 0, #a61);
+}
+
+.lb-rank2 {
+  background: linear-gradient(90deg, #ccc 0, #666);
+}
+
+.lb-rank3 {
+  background: linear-gradient(90deg, #fc7 0, #864);
+}
+
+/* Trophy icon */
+.icon-trophy {
+  height: 26px;
+  position: relative;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
+/* League logo */
+.icon-logo {
+  height: 40px;
+  position: relative;
+  top: 20%;
+}
+
+/* League list 2-column layout */
+.league-header-2col > div:nth-child(1) {
+  flex: 1 1 10%;
+  text-align: center;
+}
+
+.league-header-2col > div:nth-child(2) {
+  flex: 1 1 90%;
+  text-align: left;
+}
+
+.league-row-2col > div:nth-child(1) {
+  flex: 1 1 10%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.league-row-2col > div:nth-child(2) {
+  flex: 1 1 90%;
+  text-align: left;
+}
+
+/* Links */
+a {
+  color: #0ac;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0ce;
+  text-decoration: underline;
+}
+
+/* Pollen effect */
+.pollen {
+  display: block;
+  z-index: 999999;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+}
+
+/* Header styles */
+.App-header {
+  background-color: #000;
+  padding: 20px;
+  text-align: center;
+}
+
+.App-body {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.App-footer {
+  padding: 20px;
+  text-align: center;
+}
+
+/* League header styles */
+.league-header {
+  background: linear-gradient(90deg, #456 0, #326);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.league-header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.league-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.league-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.league-code {
+  font-size: 18px;
+  color: #aaa;
+  margin-top: 8px;
+}
+
+/* Button styles */
+.btn-link,
+.btn-submit {
+  background-color: #e71;
+  background-image: linear-gradient(180deg, #f71 0, #e50);
+  border: 1px solid #e50;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 24px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+  min-width: 150px;
+}
+
+.btn-link:hover,
+.btn-submit:hover {
+  background-image: linear-gradient(180deg, #f81 0, #e60);
+}
+
+/* Page header with logo */
+.page-header {
+  background-color: #000;
+  border-bottom: 1px solid #333;
+  padding: 15px 20px;
+}
+
+.page-header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-header-logo {
+  height: 32px;
+  width: auto;
+}
+
+.page-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.page-header-actions .btn-link {
+  font-size: 16px;
+  padding: 8px 16px;
+  min-width: auto;
+}

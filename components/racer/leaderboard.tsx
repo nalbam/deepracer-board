@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Image from 'next/image';
 import { Pollen, PollenRef } from '@/components/effects/pollen';
 import { Scroll } from '@/components/effects/scroll';
 import { LeaderboardEntry } from '@/lib/types';
-import { formatLaptime, getRankIcon } from '@/lib/utils';
+import { formatLaptime } from '@/lib/utils';
 
 interface LeaderBoardProps {
   league: string;
@@ -60,35 +60,31 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Loading...</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="bg-muted rounded h-16"></div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="lb-items">
+        <div className="lb-header lb-rank0">
+          <div>Rank</div>
+          <div>Name</div>
+          <div>Time</div>
+        </div>
+        <div style={{ textAlign: 'center', padding: '40px', color: '#aaa' }}>
+          Loading...
+        </div>
+      </div>
     );
   }
 
   if (racers.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Leaderboard</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-center py-8">
-            No racers registered yet.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="lb-items">
+        <div className="lb-header lb-rank0">
+          <div>Rank</div>
+          <div>Name</div>
+          <div>Time</div>
+        </div>
+        <div style={{ textAlign: 'center', padding: '40px', color: '#aaa' }}>
+          No racers registered yet.
+        </div>
+      </div>
     );
   }
 
@@ -98,51 +94,34 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
       <Pollen ref={pollenRef} />
       <Scroll items={racers.filter(r => r.rank > 0).length} />
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            🏁 Leaderboard
-            <span className="text-sm font-normal text-muted-foreground">
-              ({racers.filter(r => r.rank > 0).length} racers)
-            </span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            {racers.map((racer) => (
-              <div
-                key={racer.email}
-                className={`racer-item border rounded-lg p-4 transition-colors ${racer.rank > 0 ? `lb-rank${racer.rank}` : ''}`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 min-w-12">
-                      {racer.rank > 0 ? (
-                        <>
-                          <span className="text-xl">
-                            {getRankIcon(racer.rank) || `#${racer.rank}`}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-muted-foreground">--</span>
-                      )}
-                    </div>
-                    <div>
-                      <p className="font-semibold">{racer.racerName}</p>
-                      <p className="text-sm text-muted-foreground">{racer.email}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="laptime-display font-bold">
-                      {formatLaptime(racer.laptime)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+      <div className="lb-items">
+        <div className="lb-header lb-rank0">
+          <div>Rank</div>
+          <div>Name</div>
+          <div>Time</div>
+        </div>
+        {racers.map((racer) => (
+          <div
+            key={racer.email}
+            className={`lb-row ${racer.rank > 0 ? `lb-rank${racer.rank}` : ''}`}
+          >
+            <div>
+              {racer.rank > 0 && racer.rank < 4 && (
+                <Image
+                  src="/images/icon-trophy.png"
+                  alt="trophy"
+                  width={26}
+                  height={26}
+                  className="icon-trophy"
+                />
+              )}{' '}
+              {racer.rank > 0 ? racer.rank : '--'}
+            </div>
+            <div>{racer.racerName}</div>
+            <div>{formatLaptime(racer.laptime)}</div>
           </div>
-        </CardContent>
-      </Card>
+        ))}
+      </div>
     </>
   );
 }
