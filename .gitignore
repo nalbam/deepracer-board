@@ -36,3 +36,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# backup files
+*.bak
+*.backup
+
+# prompt
+.prompt-*.md
+.prompt.md
+prompt-*.md
+prompt.md

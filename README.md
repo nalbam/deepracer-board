@@ -60,9 +60,11 @@ pnpm dev
 
 ```env
 # Auth Settings
-AUTH_ENABLED="true"
-AUTH_DEBUG="false"
-AUTH_SECRET=your-secret-key  # Generate with: openssl rand -hex 32
+AUTH_ENABLED="true" # 인증 시스템 전체 활성화 여부 (true/false)
+AUTH_DEBUG="false"  # 디버그 모드 설정
+
+AUTH_SECRET= # openssl rand -hex 32
+
 AUTH_TRUST_HOST=1
 
 # NextAuth
@@ -70,15 +72,15 @@ NEXTAUTH_URL="http://localhost:3000"
 
 # AWS Credentials
 AUTH_AWS_REGION="ap-northeast-2"
-AUTH_AWS_ACCESS_KEY_ID=your-access-key-id
-AUTH_AWS_SECRET_ACCESS_KEY=your-secret-access-key
+AUTH_AWS_ACCESS_KEY_ID=
+AUTH_AWS_SECRET_ACCESS_KEY=
 
 # Google Auth
 AUTH_GOOGLE_ENABLED="true"
-AUTH_GOOGLE_ID=your-google-client-id
-AUTH_GOOGLE_SECRET=your-google-client-secret
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
 
-# DynamoDB Tables
+# AWS DynamoDB
 NEXT_DYNAMODB_LEAGUES_TABLE="deepracer-board-leagues"
 NEXT_DYNAMODB_RACERS_TABLE="deepracer-board-racers"
 NEXT_DYNAMODB_USERS_TABLE="deepracer-board-users"
