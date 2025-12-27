@@ -48,7 +48,7 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
     const max = 100
     let scrollTop = 0
     let duration = 1000
-    const delay = 5000
+    const delay = 5500
 
     if (dir === 'down') {
       const targetRank = items
