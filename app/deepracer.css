@@ -404,25 +404,48 @@ a:hover {
    6. Button Styles
    =================================== */
 
+/* Base button styles - shared by all button variants */
+.btn,
+.btn-link,
+.btn-submit,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  padding: 10px 16px;
+  border: 1px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Orange gradient - primary action buttons */
 .btn-link,
 .btn-submit {
   background-color: #e71;
   background-image: linear-gradient(180deg, #f71 0, #e50);
-  border: 1px solid #e50;
-  border-radius: 3px;
+  border-color: #e50;
   color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 24px;
-  text-align: center;
-  vertical-align: middle;
-  padding: 10px;
-  min-width: 150px;
+  min-width: 140px;
 }
 
 .btn-link:hover,
 .btn-submit:hover {
   background-image: linear-gradient(180deg, #f81 0, #e60);
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ===================================
@@ -451,12 +474,6 @@ a:hover {
 .page-header-actions {
   display: flex;
   gap: 10px;
-}
-
-.page-header-actions .btn-link {
-  font-size: 16px;
-  padding: 8px 16px;
-  min-width: auto;
 }
 
 /* ===================================
@@ -591,14 +608,11 @@ a:hover {
   line-height: 1.3;
 }
 
+/* Logout button - red transparent */
 .btn-logout {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.3);
   color: #ef4444;
-  transition: all 0.2s;
 }
 
 .btn-logout:hover {
@@ -855,6 +869,7 @@ a:hover {
 }
 
 /* Button Variants */
+/* Blue transparent - important action buttons */
 .btn-primary {
   background: rgba(68, 170, 255, 0.2);
   border-color: rgba(68, 170, 255, 0.5);
@@ -867,14 +882,11 @@ a:hover {
   box-shadow: 0 0 15px rgba(68, 170, 255, 0.4);
 }
 
+/* White transparent - secondary action buttons */
 .btn-secondary {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.2);
   color: #ddd;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
 }
 
 .btn-secondary:hover {
@@ -1036,14 +1048,6 @@ a:hover {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.btn-submit {
-  min-width: 140px;
-}
-
-.btn-submit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -1261,14 +1265,22 @@ a:hover {
 }
 
 /* Button Danger */
+/* Red gradient - destructive action buttons */
 .btn-danger {
   background: linear-gradient(90deg, #c44 0, #a33);
+  border-color: #a33;
   color: #fff;
 }
 
 .btn-danger:hover:not(:disabled) {
   background: linear-gradient(90deg, #d55 0, #b44);
+  border-color: #b44;
   box-shadow: 0 2px 12px rgba(204, 68, 68, 0.3);
+}
+
+.btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Responsive */
