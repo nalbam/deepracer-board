@@ -270,21 +270,20 @@ a:hover {
 
 /* League header styles */
 .league-header {
-  position: relative;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
 }
 
 .league-header-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .league-logo-wrapper {
   display: block;
-  height: 150px;
+  height: 100px;
   line-height: 0;
   text-align: center;
 }
@@ -312,10 +311,12 @@ a:hover {
   text-align: center;
 }
 
-.league-qrcode {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+/* QR Code at bottom center */
+.qrcode-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 /* Button styles */

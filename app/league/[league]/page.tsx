@@ -51,29 +51,6 @@ export default async function LeaderboardPage({ params }: Props) {
 
   return (
     <>
-      {/* Page Header */}
-      <header className="page-header">
-        <div className="page-header-container">
-          <Link href="/">
-            <Image
-              src="/images/logo-community-races.png"
-              alt="DeepRacer"
-              width={120}
-              height={32}
-              className="page-header-logo"
-            />
-          </Link>
-          <div className="page-header-actions">
-            <Link href="/manage" className="btn-link">
-              Manage
-            </Link>
-            <Link href="/timer" className="btn-link">
-              Timer
-            </Link>
-          </div>
-        </div>
-      </header>
-
       {/* League Header */}
       <header className="App-header">
         <div className="league-header">
@@ -97,9 +74,6 @@ export default async function LeaderboardPage({ params }: Props) {
               </p>
             </div>
           </div>
-          <div className="league-qrcode">
-            <QRCode league={leagueCode} />
-          </div>
         </div>
       </header>
 
@@ -107,6 +81,13 @@ export default async function LeaderboardPage({ params }: Props) {
       <div className="App-body">
         <LeaderBoard league={leagueCode} />
       </div>
+
+      {/* QR Code at bottom center */}
+      <footer className="App-footer">
+        <div className="qrcode-bottom">
+          <QRCode league={leagueCode} />
+        </div>
+      </footer>
     </>
   );
 }
