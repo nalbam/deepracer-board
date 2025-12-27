@@ -42,13 +42,11 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
   }, [items, interval, timeout])
 
   const scroll = (dir: string | number) => {
-    console.log(`scroll: ${dir}`)
-
     const min = 5
     const max = 100
     let scrollTop = 0
     let duration = 1000
-    const delay = 5500
+    const bottomDelay = 8000 // 하단 도달 후 8초 대기
 
     if (dir === 'down') {
       const targetRank = items
@@ -61,7 +59,8 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
 
       if (element) {
         scrollTop = element.getBoundingClientRect().top + window.scrollY
-        duration = rank * 1000
+        // 레이서 수에 비례한 천천히 스크롤 (레이서당 800ms)
+        duration = rank * 800
       }
     } else {
       const rank = typeof dir === 'number' ? dir : parseInt(dir)
@@ -74,29 +73,50 @@ export const Scroll = forwardRef<ScrollRef, ScrollProps>(function Scroll(
           scrollTop = element.getBoundingClientRect().top + window.scrollY
         }
       }
-      duration = 1000
+      // 이벤트 발생 시 빠르게 스크롤
+      duration = 800
     }
 
-    // 스크롤 애니메이션 (smooth 사용)
+    // 커스텀 스크롤 애니메이션 (천천히)
     if (scrollTop === 0) {
-      window.scrollTo({
-        top: scrollTop,
-        behavior: 'smooth',
-      })
+      // 상단으로 빠르게 복귀
+      smoothScrollTo(scrollTop, 1000)
     } else {
-      // 스크롤 다운 후 delay만큼 대기 후 상단으로 복귀
-      window.scrollTo({
-        top: scrollTop,
-        behavior: 'smooth',
-      })
+      // 하단으로 천천히 스크롤
+      smoothScrollTo(scrollTop, duration)
 
+      // 스크롤 완료 후 하단에서 대기, 그 후 상단으로 빠르게 복귀
       setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        })
-      }, delay)
+        smoothScrollTo(0, 1500)
+      }, duration + bottomDelay)
     }
+  }
+
+  // 커스텀 smooth scroll 함수
+  const smoothScrollTo = (targetY: number, duration: number) => {
+    const startY = window.scrollY
+    const distance = targetY - startY
+    const startTime = performance.now()
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2
+    }
+
+    const animateScroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const easeProgress = easeInOutCubic(progress)
+
+      window.scrollTo(0, startY + distance * easeProgress)
+
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll)
+      }
+    }
+
+    requestAnimationFrame(animateScroll)
   }
 
   // Expose scroll method to parent
