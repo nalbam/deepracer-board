@@ -1,0 +1,460 @@
+/* ===================================
+   DeepRacer Board v2 Styles
+   Based on v1 Design (Black Theme)
+   =================================== */
+
+/* ===================================
+   1. Global Styles
+   =================================== */
+
+body {
+  background-color: #000;
+  color: #eee;
+  font-family: Menlo, 'Noto Mono', monospace;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #0ac;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0ce;
+  text-decoration: underline;
+}
+
+/* ===================================
+   2. Leaderboard Styles
+   =================================== */
+
+/* Leaderboard Container */
+.lb-items {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Leaderboard Header */
+.lb-header {
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.lb-header > div:nth-child(1) {
+  flex: 1 1 10%;
+}
+
+.lb-header > div:nth-child(2) {
+  flex: 1 1 70%;
+  text-align: left;
+}
+
+.lb-header > div:nth-child(3) {
+  flex: 1 1 20%;
+  text-align: right;
+}
+
+/* Leaderboard Row */
+.lb-row {
+  background: linear-gradient(90deg, #456 0, #326);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 28px;
+  margin: 10px 0;
+  padding: 10px 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.lb-row > div:nth-child(1) {
+  flex: 1 1 10%;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+}
+
+.lb-row > div:nth-child(2) {
+  flex: 1 1 70%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.lb-row > div:nth-child(3) {
+  flex: 1 1 20%;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Rank-specific Gradients */
+.lb-rank0 {
+  background: transparent;
+}
+
+.lb-rank1 {
+  background: linear-gradient(90deg, #B8860B 0, #FFD700);
+}
+
+.lb-rank2 {
+  background: linear-gradient(90deg, #888 0, #DDD);
+}
+
+.lb-rank3 {
+  background: linear-gradient(90deg, #8B4513 0, #CD7F32);
+}
+
+/* Trophy Icon */
+.icon-trophy {
+  height: 26px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Laptime Display */
+.laptime {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ===================================
+   3. League List Styles
+   =================================== */
+
+/* League List 2-Column Layout */
+.league-header-2col > div:nth-child(1) {
+  flex: 0 0 120px;
+  text-align: center;
+}
+
+.league-header-2col > div:nth-child(2) {
+  flex: 1;
+  text-align: left;
+}
+
+.league-row-2col > div:nth-child(1) {
+  flex: 0 0 120px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.league-row-2col > div:nth-child(2) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* League List Title and Code */
+.league-list-title {
+  font-size: 28px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.league-list-code {
+  font-size: 16px;
+  color: #aaa;
+  margin-top: 6px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* League Logo in List */
+.icon-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* ===================================
+   4. League Page Header Styles
+   =================================== */
+
+.App-header {
+  background-color: #000;
+  padding: 20px;
+  text-align: center;
+}
+
+.App-body {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.App-footer {
+  padding: 20px;
+  text-align: center;
+}
+
+/* League Page Header */
+.league-header {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.league-header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* League Page Logo */
+.league-logo-wrapper {
+  display: block;
+  height: 100px;
+  line-height: 0;
+  text-align: center;
+}
+
+.league-logo {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+}
+
+/* League Page Title */
+.league-page-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
+}
+
+/* League Page Code */
+.league-page-code {
+  font-size: 16px;
+  color: #aaa;
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* QR Code at Bottom Center */
+.qrcode-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ===================================
+   5. Special Effects
+   =================================== */
+
+/* Pollen Effect */
+.pollen {
+  display: block;
+  z-index: 999999;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+}
+
+/* Logo Popup */
+.logo-popup-layer {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 400;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+.logo-popup-layer .logo-popup-bg {
+  background: #000;
+  height: 100%;
+  left: 0;
+  opacity: 0.9;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.logo-popup-layer .logo-popup-container {
+  height: 100%;
+  left: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  width: 100%;
+}
+
+.logo-popup-layer .logo-popup-image {
+  max-width: 70vmin;
+  max-height: 70vmin;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.5));
+}
+
+/* Popup Layer */
+.pop-layer {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 300;
+  animation: fadeInOut 5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.pop-layer .pop-bg {
+  background: #000;
+  height: 100%;
+  left: 0;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.pop-layer .pop-container {
+  height: 100%;
+  left: 0;
+  position: relative;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
+}
+
+.pop-layer .pop-container .pop-header {
+  font-size: clamp(24px, 5vmin, 80px);
+  color: #fff;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+.pop-layer .pop-container .pop-message {
+  font-size: clamp(48px, 12vmin, 200px);
+  font-weight: bold;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+}
+
+.pop-layer .pop-container .pop-footer {
+  font-size: clamp(32px, 7vmin, 120px);
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Popup Rank Colors */
+.pop-rank1 {
+  color: #FFD700;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.pop-rank2 {
+  color: #FFF;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(221, 221, 221, 0.5);
+}
+
+.pop-rank3 {
+  color: #FF8C42;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(205, 127, 50, 0.5);
+}
+
+/* ===================================
+   6. Button Styles
+   =================================== */
+
+.btn-link,
+.btn-submit {
+  background-color: #e71;
+  background-image: linear-gradient(180deg, #f71 0, #e50);
+  border: 1px solid #e50;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 24px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+  min-width: 150px;
+}
+
+.btn-link:hover,
+.btn-submit:hover {
+  background-image: linear-gradient(180deg, #f81 0, #e60);
+}
+
+/* ===================================
+   7. Page Header (Home)
+   =================================== */
+
+.page-header {
+  background-color: #000;
+  border-bottom: 1px solid #333;
+  padding: 15px 20px;
+}
+
+.page-header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-header-logo {
+  height: 32px;
+  width: auto;
+}
+
+.page-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.page-header-actions .btn-link {
+  font-size: 16px;
+  padding: 8px 16px;
+  min-width: auto;
+}

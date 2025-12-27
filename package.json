@@ -1,36 +1,64 @@
 {
   "name": "deepracer-board",
-  "version": "v0.6.1",
+  "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@aws-amplify/auth": "^5.6.4",
-    "@aws-amplify/core": "^5.8.4",
-    "@aws-amplify/storage": "^5.9.4",
-    "@aws-amplify/ui-react": "^5.3.0",
-    "aws-amplify": "^5.3.10",
-    "bootstrap": "^4.4.1",
-    "classnames": "^2.3.2",
-    "jquery": "^3.4.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "react-router-dom": "^6.15.0",
-    "react-scripts": "^5.0.1",
-    "react-select": "^5.7.4",
-    "uuid": "^9.0.0"
-  },
+  "description": "DeepRacer Board - Racing league management and leaderboard system",
+  "repository": "https://github.com/nalbam/deepracer-board.git",
+  "homepage": "https://deepracerboard.com",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.788.0",
+    "@aws-sdk/client-s3": "^3.788.0",
+    "@aws-sdk/lib-dynamodb": "^3.789.0",
+    "@hookform/resolvers": "^5.2.2",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-icons": "^1.3.2",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-select": "^2.1.7",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-toast": "^1.1.5",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "date-fns": "^3.6.0",
+    "js-cookie": "^3.0.5",
+    "lucide-react": "^0.363.0",
+    "nanoid": "^5.1.5",
+    "next": "latest",
+    "next-auth": "beta",
+    "next-themes": "^0.4.4",
+    "qrcode": "^1.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.51.0",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^18.2.67",
+    "@types/react-dom": "^18.2.22",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "15.0.0",
+    "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.12",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }

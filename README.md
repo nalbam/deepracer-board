@@ -1,184 +1,202 @@
 # DeepRacer Board
 
-[![GitHub release](https://img.shields.io/github/release/nalbam/deepracer-board.svg)](https://github.com/nalbam/deepracer-board/releases)
-[![License](https://img.shields.io/github/license/nalbam/deepracer-board.svg)](https://github.com/nalbam/deepracer-board/blob/master/LICENSE)
-
-A web application for managing AWS DeepRacer leagues, racers, and lap times. It provides a leaderboard system for DeepRacer competitions and includes a timer functionality for tracking lap times.
-
-## Live Demo
-
-- Production site: [https://dracer.io/](https://dracer.io/)
-- Timer functionality: [https://dracer.io/timer](https://dracer.io/timer)
+AWS DeepRacer League Management and Leaderboard System built with Next.js 15, NextAuth, and DynamoDB.
 
 ## Features
 
-### League Management
-- Create and update leagues
-- Set league details (title, logo, dates)
-- View all leagues
-- Unique identification through league code
-- League logo URL setting and preview
+- 🏎️ **League Management**: Create and manage DeepRacer racing leagues
+- 🏁 **Real-time Leaderboard**: Live rankings with automatic updates
+- ⏱️ **Timer Integration**: Precise lap time tracking
+- 🔐 **Authentication**: Secure login with AWS Cognito
+- 📱 **Responsive Design**: Works on desktop and mobile devices
+- 🌐 **Production Ready**: Deployed at [deepracerboard.com](https://deepracerboard.com)
 
-### Racer Management
-- Add racers to leagues
-- Update racer lap times
-- Automatically track best lap times (preserves existing best time when updating with slower time)
-- Racer deletion functionality
-- Unique identification through email
+## Tech Stack
 
-### Leaderboard
-- Display racers sorted by lap time
-- Real-time updates every 5 seconds
-- Visual effects for new records or new challengers
-- Trophy icon for top 3 racers
-- Auto-scroll functionality to show all participants
-
-### Timer
-- Precise lap time tracking (millisecond precision)
-- Record, save, and manage lap times
-- Visual indicators for time limits (yellow and red warnings)
-- Keyboard shortcuts for timer controls
-- Best lap time and last lap time display
-- Lap time cancellation and rejection functionality
-- Sound effects for new records
-
-## Technology Stack
-
-- **Frontend**: React-based single-page application (SPA)
-- **Backend**: AWS Amplify with serverless functions
-- **Database**: Amazon DynamoDB
-- **Authentication**: Amazon Cognito
-- **Hosting**: AWS Amplify Hosting (S3 and CloudFront)
-- **Storage**: Amazon S3 for storing league logos
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **Authentication**: NextAuth.js with Google OAuth
+- **Database**: AWS DynamoDB
+- **Deployment**: AWS Amplify
+- **Package Manager**: pnpm
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js and npm
-- AWS Account
-- AWS Amplify CLI
+- Node.js 20+
+- pnpm
+- AWS Account with DynamoDB tables
+- Google OAuth credentials (for authentication)
 
 ### Installation
 
-1. Install and configure the Amplify CLI:
-
-```bash
-npm install -g @aws-amplify/cli
-amplify configure
-```
-
-2. Clone the repository:
-
+1. Clone the repository:
 ```bash
 git clone https://github.com/nalbam/deepracer-board.git
 cd deepracer-board
 ```
 
-3. Install dependencies:
-
+2. Install dependencies:
 ```bash
-npm install
+pnpm install
 ```
 
-4. Initialize Amplify:
-
+3. Set up environment variables:
 ```bash
-amplify init
+cp .env.example .env.local
 ```
 
-5. Add authentication:
+4. Update `.env.local` with your AWS credentials and Google OAuth settings.
 
+5. Run the development server:
 ```bash
-amplify auth add
+pnpm dev
 ```
 
-6. Add analytics:
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-amplify analytics add
-```
+## Environment Variables
 
-7. Add API:
+```env
+# Auth Settings
+AUTH_ENABLED="true" # 인증 시스템 전체 활성화 여부 (true/false)
+AUTH_DEBUG="false"  # 디버그 모드 설정
 
-```bash
-amplify api add
-```
+AUTH_SECRET= # openssl rand -hex 32
 
-8. Push the configuration to AWS:
+AUTH_TRUST_HOST=1
 
-```bash
-amplify push
-```
+# NextAuth
+NEXTAUTH_URL="http://localhost:3000"
 
-9. Pull the configuration from AWS:
+# AWS Credentials
+AUTH_AWS_REGION="ap-northeast-2"
+AUTH_AWS_ACCOUNT_ID=
+AUTH_AWS_ACCESS_KEY_ID=
+AUTH_AWS_SECRET_ACCESS_KEY=
 
-```bash
-amplify pull --appId d4dv0vnpaosfd --envName dev
-```
+# Google Auth
+AUTH_GOOGLE_ENABLED="true"
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
 
-### Local Development
-
-Start the local development server:
-
-```bash
-npm start
-```
-
-The application will be available at http://localhost:3000
-
-## Deployment
-
-1. Add hosting:
-
-```bash
-amplify hosting add
-```
-
-2. Publish the application:
-
-```bash
-amplify publish
-```
-
-### URL Rewrite Rules
-
-Add the following rewrite rule to your hosting configuration:
-
-```
-</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|json|mp3)$)([^.]+$)/>	    /index.html    200
+# AWS DynamoDB
+NEXT_DYNAMODB_LEAGUES_TABLE="deepracer-board-leagues"
+NEXT_DYNAMODB_RACERS_TABLE="deepracer-board-racers"
 ```
 
 ## Project Structure
 
 ```
 deepracer-board/
-├── amplify/                # AWS Amplify configuration
-│   ├── backend/            # Backend resources
-│   │   ├── analytics/      # Analytics configuration
-│   │   ├── api/            # API configuration
-│   │   ├── auth/           # Authentication configuration
-│   │   ├── function/       # Lambda functions
-│   │   ├── hosting/        # Hosting configuration
-│   │   └── storage/        # Storage configuration
-├── public/                 # Public assets
-│   ├── fonts/              # Font files
-│   ├── images/             # Image files
-│   └── sounds/             # Sound files
-├── src/                    # Source code
-│   ├── component/          # React components
-│   ├── config/             # Configuration files
-│   ├── context/            # React context
-│   └── pages/              # Page components
-├── architecture.md         # Architecture documentation
-├── package.json            # Project dependencies
-└── README.md               # Project documentation
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   │   ├── leagues/       # League management
+│   │   └── racers/        # Racer management
+│   ├── league/            # Leaderboard pages
+│   ├── login/             # Authentication
+│   └── manage/            # Admin pages
+├── components/             # React components
+│   ├── ui/                # Base UI components
+│   ├── league/            # League components
+│   └── racer/             # Racer components
+├── lib/                   # Utilities and services
+│   ├── auth.ts           # NextAuth configuration
+│   ├── dynamodb.ts       # DynamoDB client
+│   ├── types.ts          # TypeScript types
+│   └── utils.ts          # Utility functions
+└── docs/                  # Documentation
 ```
 
-## Related Projects
+## API Endpoints
 
-- [DeepRacer Timer](https://github.com/nalbam/deepracer-timer) - Standalone timer for AWS DeepRacer
+### Leagues
+- `GET /api/leagues` - Get user's leagues
+- `GET /api/leagues?all=true` - Get all public leagues
+- `POST /api/leagues` - Create/update league
+- `GET /api/leagues/[id]` - Get specific league
+- `DELETE /api/leagues/[id]` - Delete league
+
+### Racers
+- `GET /api/racers/[league]` - Get league leaderboard
+- `POST /api/racers` - Create/update/delete racer
+
+## Database Schema
+
+### Leagues Table
+```
+league (PK)    # League code
+title          # League title
+logo           # Logo URL
+dateOpen       # Start date
+dateClose      # End date
+userId         # Creator ID
+registered     # Created timestamp
+modified       # Modified timestamp
+```
+
+### Racers Table
+```
+league (PK)    # League code
+email (SK)     # Racer email
+racerName      # Display name
+laptime        # Best lap time (milliseconds)
+registered     # Created timestamp
+modified       # Modified timestamp
+```
+
+### Users Table
+```
+id (PK)        # User email (lowercase)
+email          # User email
+name           # Display name
+image          # Profile image URL
+provider       # OAuth provider (google)
+lastLogin      # Last login timestamp
+createdAt      # Created timestamp
+updatedAt      # Updated timestamp
+```
+
+## Deployment
+
+The application is deployed using AWS Amplify:
+
+```yaml
+# amplify.yml
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install -g pnpm
+        - pnpm install
+    build:
+      commands:
+        - env | grep -e AUTH >> .env
+        - env | grep -e NEXT >> .env
+        - pnpm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Links
+
+- **Production**: [deepracerboard.com](https://deepracerboard.com)
+- **Documentation**: [docs/](./docs/)
+- **Architecture**: [docs/project-analysis.md](./docs/project-analysis.md)
+- **Migration Plan**: [docs/nextjs-migration-plan.md](./docs/nextjs-migration-plan.md)
