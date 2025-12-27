@@ -18,7 +18,11 @@ export function MyLeagues() {
         const data = await response.json();
 
         if (data.success) {
-          setLeagues(data.data || []);
+          // registered 역순으로 정렬 (최신 등록 순)
+          const sortedLeagues = (data.data || []).sort((a: League, b: League) => {
+            return (b.registered || 0) - (a.registered || 0);
+          });
+          setLeagues(sortedLeagues);
         }
       } catch (error) {
         console.error('Failed to fetch my leagues:', error);
