@@ -106,15 +106,15 @@ a:hover {
 }
 
 .lb-rank1 {
-  background: linear-gradient(90deg, #fd4 0, #a61);
+  background: linear-gradient(90deg, #B8860B 0, #FFD700);
 }
 
 .lb-rank2 {
-  background: linear-gradient(90deg, #ccc 0, #666);
+  background: linear-gradient(90deg, #888 0, #DDD);
 }
 
 .lb-rank3 {
-  background: linear-gradient(90deg, #fc7 0, #864);
+  background: linear-gradient(90deg, #8B4513 0, #CD7F32);
 }
 
 /* Trophy Icon */
@@ -131,6 +131,8 @@ a:hover {
   font-variant-numeric: tabular-nums;
   font-weight: bold;
   letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 /* ===================================
@@ -332,15 +334,15 @@ a:hover {
 
 /* Popup Rank Colors */
 .pop-rank1 {
-  color: #fd4;
+  color: #FFD700;
 }
 
 .pop-rank2 {
-  color: #ccc;
+  color: #DDD;
 }
 
 .pop-rank3 {
-  color: #fc7;
+  color: #CD7F32;
 }
 
 /* ===================================
