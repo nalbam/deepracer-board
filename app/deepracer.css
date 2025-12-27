@@ -1,6 +1,12 @@
-/* DeepRacer Board v1 Design Styles */
+/* ===================================
+   DeepRacer Board v2 Styles
+   Based on v1 Design (Black Theme)
+   =================================== */
 
-/* Global styles */
+/* ===================================
+   1. Global Styles
+   =================================== */
+
 body {
   background-color: #000;
   color: #eee;
@@ -9,7 +15,21 @@ body {
   padding: 0;
 }
 
-/* Leaderboard container */
+a {
+  color: #0ac;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0ce;
+  text-decoration: underline;
+}
+
+/* ===================================
+   2. Leaderboard Styles
+   =================================== */
+
+/* Leaderboard Container */
 .lb-items {
   display: block;
   width: 100%;
@@ -17,7 +37,7 @@ body {
   margin: 0 auto;
 }
 
-/* Leaderboard header */
+/* Leaderboard Header */
 .lb-header {
   display: flex;
   flex-direction: row;
@@ -42,7 +62,7 @@ body {
   text-align: right;
 }
 
-/* Leaderboard row */
+/* Leaderboard Row */
 .lb-row {
   background: linear-gradient(90deg, #456 0, #326);
   border-radius: 5px;
@@ -80,7 +100,7 @@ body {
   justify-content: flex-end;
 }
 
-/* Rank-specific styling */
+/* Rank-specific Gradients */
 .lb-rank0 {
   background: transparent;
 }
@@ -97,7 +117,7 @@ body {
   background: linear-gradient(90deg, #fc7 0, #864);
 }
 
-/* Trophy icon */
+/* Trophy Icon */
 .icon-trophy {
   height: 26px;
   width: auto;
@@ -105,15 +125,19 @@ body {
   vertical-align: middle;
 }
 
-/* League logo */
-.icon-logo {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
-  object-fit: contain;
+/* Laptime Display */
+.laptime {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
 
-/* League list 2-column layout */
+/* ===================================
+   3. League List Styles
+   =================================== */
+
+/* League List 2-Column Layout */
 .league-header-2col > div:nth-child(1) {
   flex: 0 0 120px;
   text-align: center;
@@ -134,47 +158,115 @@ body {
 
 .league-row-2col > div:nth-child(2) {
   flex: 1;
-  text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
 }
 
-/* League title and code spacing */
-.league-row-2col .league-title {
+/* League List Title and Code */
+.league-list-title {
   font-size: 28px;
-  line-height: 1.2;
+  line-height: 1.4;
   text-align: left;
 }
 
-.league-row-2col .league-code {
+.league-list-code {
+  font-size: 16px;
+  color: #aaa;
+  margin-top: 6px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* League Logo in List */
+.icon-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* ===================================
+   4. League Page Header Styles
+   =================================== */
+
+.App-header {
+  background-color: #000;
+  padding: 20px;
+  text-align: center;
+}
+
+.App-body {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.App-footer {
+  padding: 20px;
+  text-align: center;
+}
+
+/* League Page Header */
+.league-header {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.league-header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* League Page Logo */
+.league-logo-wrapper {
+  display: block;
+  height: 100px;
+  line-height: 0;
+  text-align: center;
+}
+
+.league-logo {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+}
+
+/* League Page Title */
+.league-page-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
+}
+
+/* League Page Code */
+.league-page-code {
   font-size: 16px;
   color: #aaa;
   margin-top: 4px;
-  line-height: 1.2;
-  text-align: left;
+  text-align: center;
 }
 
-/* Laptime display */
-.laptime {
-  font-family: Menlo, Monaco, 'Courier New', monospace;
-  font-variant-numeric: tabular-nums;
-  font-weight: bold;
-  letter-spacing: 0.05em;
+/* QR Code at Bottom Center */
+.qrcode-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-/* Links */
-a {
-  color: #0ac;
-  text-decoration: none;
-}
+/* ===================================
+   5. Special Effects
+   =================================== */
 
-a:hover {
-  color: #0ce;
-  text-decoration: underline;
-}
-
-/* Pollen effect */
+/* Pollen Effect */
 .pollen {
   display: block;
   z-index: 999999;
@@ -183,7 +275,7 @@ a:hover {
   top: 0;
 }
 
-/* Popup layer */
+/* Popup Layer */
 .pop-layer {
   height: 100%;
   left: 0;
@@ -238,6 +330,7 @@ a:hover {
   font-family: Menlo, Monaco, 'Courier New', monospace;
 }
 
+/* Popup Rank Colors */
 .pop-rank1 {
   color: #fd4;
 }
@@ -250,76 +343,10 @@ a:hover {
   color: #fc7;
 }
 
-/* Header styles */
-.App-header {
-  background-color: #000;
-  padding: 20px;
-  text-align: center;
-}
+/* ===================================
+   6. Button Styles
+   =================================== */
 
-.App-body {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.App-footer {
-  padding: 20px;
-  text-align: center;
-}
-
-/* League header styles */
-.league-header {
-  padding: 10px 20px;
-  margin-bottom: 10px;
-}
-
-.league-header-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.league-logo-wrapper {
-  display: block;
-  height: 100px;
-  line-height: 0;
-  text-align: center;
-}
-
-.league-logo {
-  height: 100%;
-  width: auto;
-  max-width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  object-fit: contain;
-}
-
-.league-title {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 0;
-  text-align: center;
-}
-
-.league-code {
-  font-size: 16px;
-  color: #aaa;
-  margin-top: 4px;
-  text-align: center;
-}
-
-/* QR Code at bottom center */
-.qrcode-bottom {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-/* Button styles */
 .btn-link,
 .btn-submit {
   background-color: #e71;
@@ -341,7 +368,10 @@ a:hover {
   background-image: linear-gradient(180deg, #f81 0, #e60);
 }
 
-/* Page header with logo */
+/* ===================================
+   7. Page Header (Home)
+   =================================== */
+
 .page-header {
   background-color: #000;
   border-bottom: 1px solid #333;

@@ -68,8 +68,8 @@ export default async function LeaderboardPage({ params }: Props) {
               </div>
             )}
             <div>
-              <h1 className="league-title">{league.title}</h1>
-              <p className="league-code">
+              <h1 className="league-page-title">{league.title}</h1>
+              <p className="league-page-code">
                 League Code: {league.league}
               </p>
             </div>

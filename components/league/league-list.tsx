@@ -84,12 +84,12 @@ export function LeagueList({ showAll = false }: LeagueListProps) {
             />
           </div>
           <div>
-            <div className="league-title">
+            <div className="league-list-title">
               <Link href={`/league/${league.league}`}>
                 {league.title}
               </Link>
             </div>
-            <div className="league-code">
+            <div className="league-list-code">
               {league.league}
             </div>
           </div>

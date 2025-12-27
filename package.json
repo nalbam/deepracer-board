@@ -1,6 +1,6 @@
 {
   "name": "deepracer-board",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "private": true,
   "description": "DeepRacer Board - Racing league management and leaderboard system",
   "repository": "https://github.com/nalbam/deepracer-board.git",
