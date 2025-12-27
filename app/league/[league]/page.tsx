@@ -9,7 +9,7 @@ import { QRCode } from '@/components/effects/qrcode';
 import { League } from '@/lib/types';
 
 type Props = {
-  params: { league: string };
+  params: Promise<{ league: string }>;
 };
 
 async function getLeague(leagueCode: string): Promise<League | null> {
@@ -25,7 +25,8 @@ async function getLeague(leagueCode: string): Promise<League | null> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const league = await getLeague(params.league);
+  const { league: leagueCode } = await params;
+  const league = await getLeague(leagueCode);
   
   if (!league) {
     return { title: 'League Not Found' };
@@ -43,12 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LeaderboardPage({ params }: Props) {
-  const league = await getLeague(params.league);
-  
+  const { league: leagueCode } = await params;
+  const league = await getLeague(leagueCode);
+
   if (!league) {
     notFound();
   }
-  
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -97,13 +99,13 @@ export default async function LeaderboardPage({ params }: Props) {
                   </p>
                 </div>
               </div>
-              <QRCode league={params.league} />
+              <QRCode league={leagueCode} />
             </div>
           </CardHeader>
         </Card>
 
         {/* Leaderboard */}
-        <LeaderBoard league={params.league} />
+        <LeaderBoard league={leagueCode} />
       </main>
     </div>
   );

@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import { upsertUser } from './services/user-service';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -20,28 +19,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.accessToken = token.accessToken as string;
       return session;
     },
-    async signIn({ user, account }) {
-      if (!user.email) return false;
-
-      try {
-        // 사용자 서비스를 통해 사용자 생성 또는 업데이트
-        const result = await upsertUser({
-          email: user.email,
-          name: user.name || 'Unknown',
-          image: user.image || undefined,
-          provider: account?.provider || 'unknown'
-        });
-
-        if (!result.success) {
-          console.error('Failed to upsert user:', result.error);
-          return false;
-        }
-
-        return true;
-      } catch (error) {
-        console.error('Error saving user:', error);
-        return false;
-      }
+    async signIn({ user }) {
+      // 이메일이 있으면 로그인 허용 (별도 DB 저장 없이)
+      return !!user.email;
     },
     async jwt({ token, account }) {
       if (account) {

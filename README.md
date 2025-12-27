@@ -72,6 +72,7 @@ NEXTAUTH_URL="http://localhost:3000"
 
 # AWS Credentials
 AUTH_AWS_REGION="ap-northeast-2"
+AUTH_AWS_ACCOUNT_ID=
 AUTH_AWS_ACCESS_KEY_ID=
 AUTH_AWS_SECRET_ACCESS_KEY=
 
@@ -83,7 +84,6 @@ AUTH_GOOGLE_SECRET=
 # AWS DynamoDB
 NEXT_DYNAMODB_LEAGUES_TABLE="deepracer-board-leagues"
 NEXT_DYNAMODB_RACERS_TABLE="deepracer-board-racers"
-NEXT_DYNAMODB_USERS_TABLE="deepracer-board-users"
 ```
 
 ## Project Structure
