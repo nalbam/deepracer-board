@@ -1,0 +1,192 @@
+/* ===================================
+   DeepRacer Timer Styles
+   Racing Venue Display Screen
+   =================================== */
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* 컨트롤 버튼 */
+.tm-controls {
+  position: fixed;
+  text-align: center;
+  top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  z-index: 10;
+}
+
+.tm-button {
+  background: transparent;
+  border: 2px solid;
+  border-radius: 4px;
+  font-family: Menlo, 'Noto Mono', monospace;
+  font-size: clamp(14px, 1.5vw, 24px);
+  margin: 0 0.5em;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tm-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px currentColor;
+}
+
+.tm-btn_start {
+  color: #3b7;
+  border-color: #3b7;
+}
+
+.tm-btn_pause {
+  color: #fa3;
+  border-color: #fa3;
+}
+
+.tm-btn_passed {
+  color: #4af;
+  border-color: #4af;
+}
+
+.tm-btn_reset {
+  color: #e43;
+  border-color: #e43;
+}
+
+.tm-btn_clear {
+  color: #ccc;
+  border-color: #ccc;
+}
+
+.tm-btn_drop {
+  color: #93e;
+  border-color: #93e;
+}
+
+.tm-btn_reject {
+  color: #e3e;
+  border-color: #e3e;
+}
+
+/* 리미터 (제한 시간) */
+.tm-limiter {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: clamp(32px, 6vw, 96px);
+  font-variant-numeric: tabular-nums;
+  position: fixed;
+  text-align: center;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tm-limiter_normal {
+  color: #ddd;
+}
+
+.tm-limiter_yellow {
+  color: #ea5;
+  text-shadow: 0 0 20px rgba(238, 170, 85, 0.5);
+}
+
+.tm-limiter_red {
+  color: #e55;
+  text-shadow: 0 0 20px rgba(238, 85, 85, 0.5);
+  animation: blinker 0.75s linear infinite;
+}
+
+/* 메인 디스플레이 (타이머) */
+.tm-display {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: clamp(64px, 15vw, 280px);
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  color: #fff;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.05em;
+}
+
+/* Best Lap */
+.tm-bestlap {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: clamp(24px, 5vw, 80px);
+  font-variant-numeric: tabular-nums;
+  position: fixed;
+  text-align: center;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  color: #4af;
+  text-shadow: 0 0 20px rgba(68, 170, 255, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Last Lap */
+.tm-lastlap {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: clamp(20px, 4vw, 64px);
+  font-variant-numeric: tabular-nums;
+  position: fixed;
+  text-align: center;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  color: #3b7;
+  text-shadow: 0 0 15px rgba(51, 187, 119, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Results List */
+.tm-results {
+  font-family: Menlo, Monaco, 'Courier New', monospace;
+  font-size: clamp(12px, 2vw, 32px);
+  font-variant-numeric: tabular-nums;
+  position: fixed;
+  right: 2%;
+  top: 10%;
+  width: 15%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  color: #aaa;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.tm-results li {
+  padding: 0.2em 0;
+}
+
+.tm-best_time {
+  color: #4af;
+  text-shadow: 0 0 10px rgba(68, 170, 255, 0.5);
+}
+
+.blink {
+  animation: blinker 0.75s linear;
+}
+
+/* Helper Text */
+.tm-helper {
+  position: fixed;
+  bottom: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Menlo, 'Noto Mono', monospace;
+  font-size: clamp(10px, 1vw, 16px);
+  color: #666;
+  text-align: center;
+}

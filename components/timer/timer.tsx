@@ -1,8 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import '@/app/timer/timer.css'
 
 interface TimerProps {
   limitMinutes?: number
@@ -15,7 +14,7 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
   const [bestLap, setBestLap] = useState('')
   const [lastLap, setLastLap] = useState('')
   const [results, setResults] = useState<number[][]>([])
-  const [limiterClass, setLimiterClass] = useState('text-foreground')
+  const [limiterClass, setLimiterClass] = useState('tm-limiter_normal')
 
   // refs
   const runningRef = useRef(false)
@@ -24,6 +23,7 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
   const limitRef = useRef([limitMinutes, 0, 0])
   const recordsRef = useRef<number[][]>([])
   const animationFrameRef = useRef<number>()
+  const prevBestRef = useRef<number[] | null>(null) // 이전 최고 기록 저장
 
   // 오디오
   const ding1Ref = useRef<HTMLAudioElement>()
@@ -94,11 +94,11 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
 
     // 리미터 색상 업데이트
     if (limitRef.current[0] <= 0 && limitRef.current[1] <= 30) {
-      setLimiterClass('text-red-500')
+      setLimiterClass('tm-limiter_red')
     } else if (limitRef.current[0] <= 0 && limitRef.current[1] <= 60) {
-      setLimiterClass('text-yellow-500')
+      setLimiterClass('tm-limiter_yellow')
     } else {
-      setLimiterClass('text-foreground')
+      setLimiterClass('tm-limiter_normal')
     }
   }, [])
 
@@ -269,11 +269,13 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
 
     // 사운드 재생
     if (prevBest !== nowBest) {
+      // ding1.mp3: 더 좋은 랩타임으로 갱신되었을 때 (New Record!)
       if (ding1Ref.current) {
         ding1Ref.current.loop = false
         ding1Ref.current.play()
       }
     } else {
+      // ding2.mp3: 랩타임이 기록되었을 때 (일반 랩)
       if (ding2Ref.current) {
         ding2Ref.current.loop = false
         ding2Ref.current.play()
@@ -281,62 +283,74 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
     }
   }
 
+  // Best lap 찾기
+  const bestIndex = results.length > 0
+    ? [...results].map((time, idx) => ({ time, idx }))
+        .sort((a, b) => compare(a.time, b.time))[0].idx
+    : -1
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#000',
+      color: '#eee',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
       {/* 컨트롤 버튼 */}
-      <nav className="flex flex-wrap gap-2 mb-8 justify-center">
-        <Button onClick={start} variant="default" size="lg">
+      <nav className="tm-controls">
+        <button onClick={start} className="tm-button tm-btn_start">
           Start (Q)
-        </Button>
-        <Button onClick={pause} variant="secondary" size="lg">
+        </button>
+        <button onClick={pause} className="tm-button tm-btn_pause">
           Pause (W)
-        </Button>
-        <Button onClick={passed} variant="default" size="lg">
+        </button>
+        <button onClick={passed} className="tm-button tm-btn_passed">
           Passed (E)
-        </Button>
-        <Button onClick={reset} variant="outline" size="lg">
+        </button>
+        <button onClick={reset} className="tm-button tm-btn_reset">
           Reset (R)
-        </Button>
-        <Button onClick={clear} variant="outline" size="lg">
+        </button>
+        <button onClick={clear} className="tm-button tm-btn_clear">
           Clear (T)
-        </Button>
-        <Button onClick={drop} variant="destructive" size="lg">
+        </button>
+        <button onClick={drop} className="tm-button tm-btn_drop">
           Drop (D)
-        </Button>
-        <Button onClick={reject} variant="destructive" size="lg">
+        </button>
+        <button onClick={reject} className="tm-button tm-btn_reject">
           Reject (F)
-        </Button>
+        </button>
       </nav>
 
       {/* 리미터 */}
-      <div className={cn("text-6xl font-mono mb-4", limiterClass)}>
+      <div className={`tm-limiter ${limiterClass}`}>
         {limiter}
       </div>
 
       {/* 메인 디스플레이 */}
-      <div className="text-9xl font-mono font-bold mb-8 tabular-nums">
+      <div className="tm-display">
         {display}
       </div>
 
-      {/* 최고/최근 랩타임 */}
-      <div className="text-center space-y-2 mb-8">
-        {bestLap && (
-          <div className="text-3xl font-mono text-green-500 transition-all duration-300">
-            {bestLap}
-          </div>
-        )}
-        {lastLap && (
-          <div className="text-2xl font-mono text-blue-500 transition-all duration-300">
-            {lastLap}
-          </div>
-        )}
-      </div>
+      {/* 최고 랩타임 */}
+      {bestLap && (
+        <div className="tm-bestlap">
+          {bestLap}
+        </div>
+      )}
+
+      {/* 최근 랩타임 */}
+      {lastLap && (
+        <div className="tm-lastlap">
+          {lastLap}
+        </div>
+      )}
 
       {/* 결과 목록 */}
       {results.length > 0 && (
-        <ul className="space-y-1 text-xl font-mono max-h-64 overflow-y-auto">
+        <ul className="tm-results">
           {results.map((time, index) => (
-            <li key={index} className="text-muted-foreground">
+            <li key={index} className={index === bestIndex ? 'tm-best_time' : ''}>
               {index + 1}. {format(time)}
             </li>
           ))}
@@ -344,8 +358,8 @@ export function Timer({ limitMinutes = 4 }: TimerProps) {
       )}
 
       {/* 사용 안내 */}
-      <div className="mt-8 text-sm text-muted-foreground text-center">
-        <p>키보드 단축키: Q-시작, W-정지, E-통과, R-리셋, T-초기화, D-취소, F-거부</p>
+      <div className="tm-helper">
+        Q-시작 | W-정지 | E-통과 | R-리셋 | T-초기화 | D-취소 | F-거부
       </div>
     </div>
   )
