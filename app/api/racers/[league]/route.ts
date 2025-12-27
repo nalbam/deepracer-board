@@ -1,7 +1,8 @@
 import { NextRequest } from 'next/server';
-import { docClient, RACERS_TABLE, apiSuccess, apiError } from '@/lib/dynamodb';
-import { QueryCommand } from '@aws-sdk/lib-dynamodb';
-import { Racer, LeaderboardEntry } from '@/lib/types';
+import { auth } from '@/lib/auth';
+import { docClient, RACERS_TABLE, LEAGUES_TABLE, apiSuccess, apiError } from '@/lib/dynamodb';
+import { QueryCommand, DeleteCommand, GetCommand, BatchWriteCommand } from '@aws-sdk/lib-dynamodb';
+import { Racer, LeaderboardEntry, League } from '@/lib/types';
 
 // 문자열 laptime을 밀리초로 변환 (예: "00:12.864" -> 12864)
 function parseLaptime(laptime: string | number): number {
@@ -76,5 +77,86 @@ export async function GET(
   } catch (error) {
     console.error('Failed to fetch racers:', error);
     return apiError('Failed to fetch racers');
+  }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ league: string }> }
+) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return apiError('Unauthorized', 401);
+    }
+
+    const { league } = await params;
+
+    // 리그 소유자 확인
+    const getLeagueCommand = new GetCommand({
+      TableName: LEAGUES_TABLE,
+      Key: {
+        league,
+      },
+    });
+
+    const leagueResult = await docClient.send(getLeagueCommand);
+
+    if (!leagueResult.Item) {
+      return apiError('League not found', 404);
+    }
+
+    const leagueData = leagueResult.Item as League;
+
+    if (leagueData.userId !== session.user.id) {
+      return apiError('Forbidden: You can only delete racers from your own leagues', 403);
+    }
+
+    // 리그의 모든 레이서 조회
+    const queryCommand = new QueryCommand({
+      TableName: RACERS_TABLE,
+      KeyConditionExpression: 'league = :league',
+      ExpressionAttributeValues: {
+        ':league': league,
+      },
+    });
+
+    const queryResult = await docClient.send(queryCommand);
+    const racers = queryResult.Items || [];
+
+    if (racers.length === 0) {
+      return apiSuccess({ message: 'No racers to delete', deletedCount: 0 });
+    }
+
+    // BatchWrite로 모든 레이서 삭제 (최대 25개씩)
+    const chunks = [];
+    for (let i = 0; i < racers.length; i += 25) {
+      chunks.push(racers.slice(i, i + 25));
+    }
+
+    for (const chunk of chunks) {
+      const batchWriteCommand = new BatchWriteCommand({
+        RequestItems: {
+          [RACERS_TABLE]: chunk.map((racer) => ({
+            DeleteRequest: {
+              Key: {
+                league: racer.league,
+                email: racer.email,
+              },
+            },
+          })),
+        },
+      });
+
+      await docClient.send(batchWriteCommand);
+    }
+
+    return apiSuccess({
+      message: 'All racers deleted successfully',
+      deletedCount: racers.length
+    });
+  } catch (error) {
+    console.error('Failed to delete racers:', error);
+    return apiError('Failed to delete racers');
   }
 }

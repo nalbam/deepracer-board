@@ -3,13 +3,16 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Settings, Users, Trophy } from 'lucide-react';
+import { Settings, Users, Trophy, Trash2 } from 'lucide-react';
 import { League } from '@/lib/types';
 import { formatDate } from '@/lib/utils';
+import { DeleteLeagueModal } from './delete-league-modal';
 
 export function MyLeagues() {
   const [leagues, setLeagues] = useState<League[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [leagueToDelete, setLeagueToDelete] = useState<League | null>(null);
 
   useEffect(() => {
     async function fetchMyLeagues() {
@@ -33,6 +36,19 @@ export function MyLeagues() {
 
     fetchMyLeagues();
   }, []);
+
+  const handleDeleteClick = (league: League) => {
+    setLeagueToDelete(league);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteSuccess = () => {
+    // 삭제된 리그를 목록에서 제거
+    if (leagueToDelete) {
+      setLeagues(leagues.filter((l) => l.league !== leagueToDelete.league));
+    }
+    setLeagueToDelete(null);
+  };
 
   if (isLoading) {
     return (
@@ -105,10 +121,28 @@ export function MyLeagues() {
                 <Settings className="w-4 h-4" />
                 <span>리그 수정</span>
               </Link>
+              <button
+                onClick={() => handleDeleteClick(league)}
+                className="btn-link btn-danger"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>리그 삭제</span>
+              </button>
             </div>
           </div>
         </div>
       ))}
+
+      {/* Delete League Modal */}
+      {leagueToDelete && (
+        <DeleteLeagueModal
+          isOpen={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          leagueCode={leagueToDelete.league}
+          leagueTitle={leagueToDelete.title}
+          onDelete={handleDeleteSuccess}
+        />
+      )}
     </div>
   );
 }
