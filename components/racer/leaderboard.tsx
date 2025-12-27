@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Pollen, PollenRef } from '@/components/effects/pollen';
 import { Popup, PopupRef } from '@/components/effects/popup';
 import { Scroll, ScrollRef } from '@/components/effects/scroll';
+import { LogoPopup, LogoPopupRef } from '@/components/effects/logo-popup';
 import { LeaderboardEntry } from '@/lib/types';
 import { formatLaptime } from '@/lib/utils';
 
@@ -29,11 +30,13 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
     message: '',
     footer: '',
   });
+  const [leagueInfo, setLeagueInfo] = useState<{ logo?: string; title?: string }>({});
   const pollenRef = useRef<PollenRef>(null);
   const popupRef = useRef<PopupRef>(null);
   const scrollRef = useRef<ScrollRef>(null);
+  const logoPopupRef = useRef<LogoPopupRef>(null);
 
-  const tada = (rank: number, type: number, racerName: string, laptime: string) => {
+  const tada = (rank: number, type: number, racerName: string, laptime: string, showLogo: boolean = false) => {
     if (racers.length === 0) return;
 
     let header;
@@ -54,30 +57,84 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
 
     console.log(`tada ${rank} ${racerName} ${laptime}`);
 
-    // Scroll to rank
-    if (scrollRef.current) {
-      scrollRef.current.scroll(rank);
-    }
+    // If showLogo is true, show logo first, then racer info
+    if (showLogo && logoPopupRef.current) {
+      // Show league logo first
+      logoPopupRef.current.start(3000);
 
-    // Start pollen effect
-    if (pollenRef.current) {
-      pollenRef.current.start(5000);
-    }
+      // After 3 seconds, show racer popup
+      setTimeout(() => {
+        // Scroll to rank
+        if (scrollRef.current) {
+          scrollRef.current.scroll(rank);
+        }
 
-    // Start popup
-    if (popupRef.current) {
-      popupRef.current.start(5000);
-    }
+        // Start pollen effect
+        if (pollenRef.current) {
+          pollenRef.current.start(5000);
+        }
 
-    // Play fanfare sound for manual trigger (type 0)
-    if (type === 0) {
-      const fanfare = new Audio('/sounds/fanfare.mp3');
-      fanfare.loop = false;
-      fanfare.play().catch(() => {
-        // Ignore audio play errors
-      });
+        // Start popup
+        if (popupRef.current) {
+          popupRef.current.start(5000);
+        }
+
+        // Play fanfare sound
+        if (type === 0) {
+          const fanfare = new Audio('/sounds/fanfare.mp3');
+          fanfare.loop = false;
+          fanfare.play().catch(() => {
+            // Ignore audio play errors
+          });
+        }
+      }, 3000);
+    } else {
+      // Normal behavior without logo
+      // Scroll to rank
+      if (scrollRef.current) {
+        scrollRef.current.scroll(rank);
+      }
+
+      // Start pollen effect
+      if (pollenRef.current) {
+        pollenRef.current.start(5000);
+      }
+
+      // Start popup
+      if (popupRef.current) {
+        popupRef.current.start(5000);
+      }
+
+      // Play fanfare sound for manual trigger (type 0)
+      if (type === 0) {
+        const fanfare = new Audio('/sounds/fanfare.mp3');
+        fanfare.loop = false;
+        fanfare.play().catch(() => {
+          // Ignore audio play errors
+        });
+      }
     }
   };
+
+  // Fetch league info
+  useEffect(() => {
+    async function fetchLeagueInfo() {
+      try {
+        const response = await fetch(`/api/leagues/${league}`);
+        const data = await response.json();
+        if (data.success && data.data) {
+          setLeagueInfo({
+            logo: data.data.logo,
+            title: data.data.title,
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch league info:', error);
+      }
+    }
+
+    fetchLeagueInfo();
+  }, [league]);
 
   useEffect(() => {
     async function fetchRacers() {
@@ -142,11 +199,11 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (racers.length === 0) return;
 
-      // Enter 키: 1등 Congratulations!
+      // Enter 키: 1등 Congratulations! (리그 로고 먼저 표시)
       if (e.key === 'Enter') {
         const firstRacer = racers.find((r) => r.rank === 1);
         if (firstRacer) {
-          tada(1, 0, firstRacer.racerName, formatLaptime(firstRacer.laptime));
+          tada(1, 0, firstRacer.racerName, formatLaptime(firstRacer.laptime), true);
         }
       }
       // 숫자 1 키: 1등 New Record!
@@ -210,6 +267,7 @@ export function LeaderBoard({ league }: LeaderBoardProps) {
     <>
       {/* 시각 효과 컴포넌트 */}
       <Pollen ref={pollenRef} />
+      <LogoPopup ref={logoPopupRef} logoUrl={leagueInfo.logo} leagueTitle={leagueInfo.title} />
       <Popup ref={popupRef} popInfo={popInfo} />
       <Scroll ref={scrollRef} items={racers.filter(r => r.rank > 0).length} />
 

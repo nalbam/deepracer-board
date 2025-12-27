@@ -90,6 +90,10 @@ a:hover {
   text-align: left;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .lb-row > div:nth-child(3) {
@@ -277,6 +281,47 @@ a:hover {
   top: 0;
 }
 
+/* Logo Popup */
+.logo-popup-layer {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 400;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+.logo-popup-layer .logo-popup-bg {
+  background: #000;
+  height: 100%;
+  left: 0;
+  opacity: 0.9;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.logo-popup-layer .logo-popup-container {
+  height: 100%;
+  left: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  width: 100%;
+}
+
+.logo-popup-layer .logo-popup-image {
+  max-width: 70vmin;
+  max-height: 70vmin;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.5));
+}
+
 /* Popup Layer */
 .pop-layer {
   height: 100%;
@@ -312,30 +357,31 @@ a:hover {
   text-align: center;
   top: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
 }
 
 .pop-layer .pop-container .pop-header {
-  font-size: 5vw;
-  margin-top: 8%;
-  padding: 1%;
+  font-size: clamp(24px, 5vmin, 80px);
   color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
-}
-
-.pop-layer .pop-container .pop-message {
-  font-size: 13vw;
-  font-weight: bold;
-  padding: 1%;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
 }
 
+.pop-layer .pop-container .pop-message {
+  font-size: clamp(48px, 12vmin, 200px);
+  font-weight: bold;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+}
+
 .pop-layer .pop-container .pop-footer {
-  font-size: 7vw;
-  padding: 1%;
+  font-size: clamp(32px, 7vmin, 120px);
   font-family: Menlo, Monaco, 'Courier New', monospace;
   font-weight: bold;
   color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
 }
 
 /* Popup Rank Colors */
